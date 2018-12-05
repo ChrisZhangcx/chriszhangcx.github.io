@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="这里是markdown语法的测试这里是正经的文字内容，我相信写多了之后，应该会更有动力去修改这个博客的格式的，现在先搁置吧$\alpha$$$\sum_1^1(123)$$ 段落测试1. 序号测试 2. 公式测试$\alpha$ 下面是其他内容">
+<meta name="description" content="1. 凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生">
 <meta name="keywords" content="凸优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记(1): 凸集">
 <meta property="og:url" content="https://chriszhangcx.github.io/凸优化笔记-1-凸集/index.html">
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
-<meta property="og:description" content="这里是markdown语法的测试这里是正经的文字内容，我相信写多了之后，应该会更有动力去修改这个博客的格式的，现在先搁置吧$\alpha$$$\sum_1^1(123)$$ 段落测试1. 序号测试 2. 公式测试$\alpha$ 下面是其他内容">
+<meta property="og:description" content="1. 凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-04T11:39:58.813Z">
+<meta property="og:updated_time" content="2018-12-05T12:45:15.755Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化笔记(1): 凸集">
-<meta name="twitter:description" content="这里是markdown语法的测试这里是正经的文字内容，我相信写多了之后，应该会更有动力去修改这个博客的格式的，现在先搁置吧$\alpha$$$\sum_1^1(123)$$ 段落测试1. 序号测试 2. 公式测试$\alpha$ 下面是其他内容">
+<meta name="twitter:description" content="1. 凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生">
 
 
 
@@ -369,10 +369,26 @@
       
 
       
-        <h1 id="这里是markdown语法的测试"><a href="#这里是markdown语法的测试" class="headerlink" title="这里是markdown语法的测试"></a>这里是markdown语法的测试</h1><p>这里是正经的文字内容，<br>我相信写多了之后，应该会更有动力去修改这个博客的格式的，现在先搁置吧<br>$\alpha$<br>$$<br>\sum_1^1(123)<br>$$</p>
-<h2 id="段落测试"><a href="#段落测试" class="headerlink" title="段落测试"></a>段落测试</h2><pre><code>1. 序号测试
-2. 公式测试$\alpha$
-</code></pre><p>下面是其他内容</p>
+        <h1 id="1-凸优化的笔记：序"><a href="#1-凸优化的笔记：序" class="headerlink" title="1. 凸优化的笔记：序"></a>1. 凸优化的笔记：序</h1><p>想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。</p>
+<p>到研究生阶段想划水的，奈何身边的人都太强了，有种不努力就会被社会抛弃的紧张感，所以想重新捡起统计学习方法看，争取把推导看懂吧……然后回忆起早年自闭的过程，想了想，算了，先去看看凸优化吧。</p>
+<p>学习的参考教材是Stamford大学又帅又有魅力的Boyd教授的<strong>《Convex Optimation》</strong>（考虑到努力不给自己艰难的学习过程再下绊子，选择的是王书宁版的中译本），结合Boyd教授录制的授课视频与slides一起学习。笔记的篇章估计也会按书本的目录顺序来，除非我看到自闭打算删掉这些笔记装作一切都没发生过，否则我会努力把所有书本的重点都呈现到笔记中去。</p>
+<p>另外，值得一提的是，现在深度学习打得火热，我也有看到有关统计学家与炼金术士之间因为神经网络非凸，效果又异常的好而相互看不起的说法出现，感觉还怪有意思的。可能有一天我会发现凸优化并没有我想象中那么好用，不过在学习过程中带来的痛并快乐的感觉确是实实在在的。不管怎么说，现在的我选择要开始这段旅程了。</p>
+<p>是为序。</p>
+<h1 id="2-凸集"><a href="#2-凸集" class="headerlink" title="2. 凸集"></a>2. 凸集</h1><p>书本的<strong>第一章</strong>是绪论，没有讲太多实质性内容，合并到这里进行叙述：主要介绍了数学优化问题的通用形式，随后讲了最小二乘和线性规划的内容，并说明了它们是凸问题中比较典型的问题，而且最小二乘与线性规划问题是很容易识别的，然而凸问题很多时候非常难识别（就是说，有时候你觉得它和凸问题一点关系没有，但是稍微做个简单变换，忽然就发现变成凸问题了。书里面没有给出直接例子，但是我记得看视频的时候Boyd教授是讲过一个例子的）。最后简单总结：课程的主要目的就是为了教大家如何辨识一个凸问题并求解它——当然为了达到这个目的，首先会讲相当一部分枯燥的概念。</p>
+<p>下面正式开始第二章：凸集的内容。也就是Boyd教授所说的枯燥的概念的部分。</p>
+<p>除了基本的概念以外，我会努力阐述我的理解，不照着书本上面直接抄的（后者是我读不懂的时候会采取的让自己觉得自己学会了的方法）——<em>但是为了不产生误导，所有我自己的理解我都会用斜体表示。</em></p>
+<h2 id="2-1-仿射集合和凸集"><a href="#2-1-仿射集合和凸集" class="headerlink" title="2.1 仿射集合和凸集"></a>2.1 仿射集合和凸集</h2><p><strong>直线</strong></p>
+<blockquote>
+<p>设$x_1\neq x_2$是$R^n$空间中的两个点，那么具有下列形式的点会构成一条穿过$x_1, x_2$两点的直线<br>$$y=\theta x_1+(1-\theta)x_2, \theta\in R$$</p>
+</blockquote>
+<p><strong>仿射集合</strong></p>
+<blockquote>
+<p>如果集合中任意两个点所构成的直线中的所有点都在这个集合中，就认为这个集合是仿射的。用数学语言表达就是，一个集合$C$是仿射的当且仅当：对于$\forall x_1, x_2\in C$以及$\theta\in R$，有$\theta x_1+(1-\theta)x_2\in C$。<br><em>（所以仿射集合中至少有两个点？）</em><br>另外书中提到，可以把结论推广到任意元素的情况，即对多个$x$进行加权，约束它们的系数和为1，获得的结果也在集合$C$中，那么这个集合就是仿射集合。</p>
+</blockquote>
+<p><strong>凸集</strong></p>
+<blockquote>
+<p>凸集就是把$\theta$的值约束了一下：仿射集合中$\theta\in R$，把$\theta$限制到$[0,1]$之间，以保证每个$x$前面的系数都$\in[0,1]$，就是凸集的定义了。<br>换句话说，如果仿射集合中的两点确定的<strong>直线</strong>中的所有点都在集合中，那么凸集中的两点确定的<strong>线段</strong>中的所有点都在集合中。</p>
+</blockquote>
 
       
     </div>
@@ -403,15 +419,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -559,7 +575,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#这里是markdown语法的测试"><span class="nav-number">1.</span> <span class="nav-text">这里是markdown语法的测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#段落测试"><span class="nav-number">1.1.</span> <span class="nav-text">段落测试</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">1. 凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-凸集"><span class="nav-number">2.</span> <span class="nav-text">2. 凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 仿射集合和凸集</span></a></li></ol></li></ol></div>
             
 
           </div>
