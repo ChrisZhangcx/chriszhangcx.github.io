@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-06T03:56:13.571Z">
+<meta property="og:updated_time" content="2018-12-06T04:24:21.119Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化笔记(1): 凸集">
 <meta name="twitter:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
@@ -444,8 +444,10 @@
 <li>$\preceq_K$是自反的，就是如果$x\preceq_Ky$并且$y\preceq_Kx$，那么$x=y$</li>
 <li>$\preceq_K$对于极限运算也是保序的，这点稍微难理解一点，但是我感觉没啥用，就不生搬定义了。</li>
 </ul>
-<h3 id="最小元与极小元"><a href="#最小元与极小元" class="headerlink" title="最小元与极小元"></a>最小元与极小元</h3><p>我们常说的空间$R_+$（其实就是第一象限）中存在着最小元$x=0$，而我们定义的正常锥的空间中也存在这样的最小元的定义，对于整个空间$K$来说，其实就是尖点$x=0$。但是因为正常锥$K$空间中的某一个集合$S$并不一定包含这个尖点，所以对于集合$S$，我们可以这样定义$S$中的最小元$x$（如果存在）：</p>
-<script type="math/tex; mode=display">\forall y\in S, x\preceq_Ky</script><p>这里其实满足了两个条件：首先$x$对所有$S$中的元素必须是<strong>可比</strong>的——不像我们的数字一定是可比的，空间中的点并不一定可比。这点很好理解，比如二维空间中的两个点$(0,1)$与$(1,0)$，它们在空间$R^2_+$上并不可比。我想起了我的导师在数据仓库里面提到的skyline</p>
+<h3 id="最小元与极小元"><a href="#最小元与极小元" class="headerlink" title="最小元与极小元"></a>最小元与极小元</h3><p>我们常说的空间$R_+$（其实就是第一象限）中存在着最小元$x=0$，而我们定义的正常锥的空间中也存在这样的最小元的定义，对于整个空间$K$来说，其实就是尖点$x=0$。但是因为正常锥$K$空间中的某一个集合$S$并不一定包含这个尖点，所以对于集合$S$，我们可以这样定义$S$中的<strong>最小元$x$（如果存在）</strong>：</p>
+<script type="math/tex; mode=display">\forall y\in S, x\preceq_Ky</script><p>这里其实满足了两个条件：首先$x$对所有$S$中的元素必须是<strong>可比</strong>的——不像我们的数字一定是可比的，空间中的点并不一定可比。这点很好理解，比如二维空间中的两个点$(0,1)$与$(1,0)$，它们在空间$R^2_+$上并不可比。我想起了我的导师在数据仓库里面提到的数据的skyline，感觉差不多就是这个意思。</p>
+<p>因为$S$中的数据并不一定都可比，所以不一定有最小元的存在，但是一定有极小元的存在。一个集合$S$的<strong>极小元$x$</strong>的定义为：如果$y\in S, y\preceq_Kx$可以推得$y=x$，那么称$x$是$S$关于广义不等式$\prec_K$的极小元。换句话说，如果一个$x$比所有$S$中它可比的$y$都要小，那么它就是个极小元。所以我们可以考虑这样一种特殊情况：集合$S$中有一个元素$x$与其它任何元素都不可比（其实我并不确定$K$的定义是否允许有这样的情况存在），那么$x$一定是一个极小元。</p>
+<h2 id="分离与支撑超平面"><a href="#分离与支撑超平面" class="headerlink" title="分离与支撑超平面"></a>分离与支撑超平面</h2><p>好的，经过了艰难的跋涉之后，我们来到了分离与支撑超平面(sperate and support hyperplane)的定义。我不明白这个概念放在这里有什么上下文的意义，不过我感觉Boyd教授可能是把所有零散的概念都放进来了。</p>
 
       
     </div>
@@ -632,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保持凸性的运算"><span class="nav-number">2.3.</span> <span class="nav-text">保持凸性的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义不等式"><span class="nav-number">2.4.</span> <span class="nav-text">广义不等式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常锥"><span class="nav-number">2.4.1.</span> <span class="nav-text">正常锥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的定义"><span class="nav-number">2.4.2.</span> <span class="nav-text">广义不等式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的性质"><span class="nav-number">2.4.3.</span> <span class="nav-text">广义不等式的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小元与极小元"><span class="nav-number">2.4.4.</span> <span class="nav-text">最小元与极小元</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保持凸性的运算"><span class="nav-number">2.3.</span> <span class="nav-text">保持凸性的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义不等式"><span class="nav-number">2.4.</span> <span class="nav-text">广义不等式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常锥"><span class="nav-number">2.4.1.</span> <span class="nav-text">正常锥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的定义"><span class="nav-number">2.4.2.</span> <span class="nav-text">广义不等式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的性质"><span class="nav-number">2.4.3.</span> <span class="nav-text">广义不等式的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小元与极小元"><span class="nav-number">2.4.4.</span> <span class="nav-text">最小元与极小元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分离与支撑超平面"><span class="nav-number">2.5.</span> <span class="nav-text">分离与支撑超平面</span></a></li></ol></li></ol></div>
             
 
           </div>
