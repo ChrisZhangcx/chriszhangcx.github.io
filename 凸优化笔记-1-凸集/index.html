@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-06T04:24:21.119Z">
+<meta property="og:updated_time" content="2018-12-06T06:41:58.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化笔记(1): 凸集">
 <meta name="twitter:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
@@ -421,7 +421,7 @@
 </li>
 <li><strong>透视函数</strong>：简单解释就是，首先把一个向量的每个元素都除以最后一个元素的值（当然这样操作之后最后一维元素值变为1），之后最后一维舍弃掉，得到一个新的向量，这个向量是保持原向量的凸性的。因为这个变换很像对向量进行透视，所以叫做透视函数。</li>
 <li><strong>线性分式函数</strong>：线性分式函数其实是由仿射函数与透视函数复合而成的，可以看成是对凸集的一种投射。形式化表述为：$f(x)=(Ax+b)/(c^Tx+d), \mathrm{dom}f=(x\mid c^Tx+d&gt;0)$。<blockquote>
-<p>当$c=0,d&gt;0$时，可以看出$f$就是一个仿射函数，所以放射函数是特殊的线性分式函数。</p>
+<p>当$c=0,d&gt;0$时，可以看出$f$就是一个仿射函数，所以仿射函数是特殊的线性分式函数。</p>
 </blockquote>
 </li>
 </ol>
@@ -446,8 +446,39 @@
 </ul>
 <h3 id="最小元与极小元"><a href="#最小元与极小元" class="headerlink" title="最小元与极小元"></a>最小元与极小元</h3><p>我们常说的空间$R_+$（其实就是第一象限）中存在着最小元$x=0$，而我们定义的正常锥的空间中也存在这样的最小元的定义，对于整个空间$K$来说，其实就是尖点$x=0$。但是因为正常锥$K$空间中的某一个集合$S$并不一定包含这个尖点，所以对于集合$S$，我们可以这样定义$S$中的<strong>最小元$x$（如果存在）</strong>：</p>
 <script type="math/tex; mode=display">\forall y\in S, x\preceq_Ky</script><p>这里其实满足了两个条件：首先$x$对所有$S$中的元素必须是<strong>可比</strong>的——不像我们的数字一定是可比的，空间中的点并不一定可比。这点很好理解，比如二维空间中的两个点$(0,1)$与$(1,0)$，它们在空间$R^2_+$上并不可比。我想起了我的导师在数据仓库里面提到的数据的skyline，感觉差不多就是这个意思。</p>
-<p>因为$S$中的数据并不一定都可比，所以不一定有最小元的存在，但是一定有极小元的存在。一个集合$S$的<strong>极小元$x$</strong>的定义为：如果$y\in S, y\preceq_Kx$可以推得$y=x$，那么称$x$是$S$关于广义不等式$\prec_K$的极小元。换句话说，如果一个$x$比所有$S$中它可比的$y$都要小，那么它就是个极小元。所以我们可以考虑这样一种特殊情况：集合$S$中有一个元素$x$与其它任何元素都不可比（其实我并不确定$K$的定义是否允许有这样的情况存在），那么$x$一定是一个极小元。</p>
-<h2 id="分离与支撑超平面"><a href="#分离与支撑超平面" class="headerlink" title="分离与支撑超平面"></a>分离与支撑超平面</h2><p>好的，经过了艰难的跋涉之后，我们来到了分离与支撑超平面(sperate and support hyperplane)的定义。我不明白这个概念放在这里有什么上下文的意义，不过我感觉Boyd教授可能是把所有零散的概念都放进来了。</p>
+<p>因为$S$中的数据并不一定都可比，所以不一定有最小元的存在，但是一定有极小元的存在。一个集合$S$的<strong>极小元$x$</strong>的定义为：如果$y\in S, y\preceq_Kx$可以推得$y=x$，那么称$x$是$S$关于广义不等式$\prec_K$的极小元。换句话说，如果一个$x$比所有$S$中它可比的$y$都要小，那么它就是个极小元。所以我们可以考虑这样一种特殊情况：集合$S$中有一个元素$x$与其它任何元素都不可比（其实我并不确定$K$的定义是否允许有这样的情况存在），那么$x$一定是一个极小元（<em>其实极小元更符合skyline的定义</em>）。</p>
+<h2 id="分离与支撑超平面"><a href="#分离与支撑超平面" class="headerlink" title="分离与支撑超平面"></a>分离与支撑超平面</h2><p>好的，经过了艰难的跋涉之后，我们来到了分离与支撑超平面(sperate and support hyperplane)的定义。我不明白这个概念放在这里有什么上下文的意义，窃以为Boyd教授可能是把所有零散的概念都放到这一章了。</p>
+<p><strong>超平面分离定理</strong>是这样的一个定理：</p>
+<blockquote>
+<p>假设集合$C, D$是两个不相交的凸集，即$C\cap D=\emptyset$，那么存在$a\neq 0$和$b$使得$a^Tx\leq b, x\in C$，并且$a^Tx\geq b, x\in D$。</p>
+</blockquote>
+<p><em>当然按照定义，两个等号不能同时取到，不然两个集合就相交了XD。</em></p>
+<p><em>其实上面凸集和不相交两个约束都比较重要，如果两个集合相交那肯定不能分离它们，而如果两个集合不是凸集，想象一个被分离的太极图，如果分离得不是那么远，其实是找不到一个平面把它们分割开来的。</em></p>
+<p>与之相对的，<strong>支撑超平面</strong>是指：</p>
+<blockquote>
+<p>对于凸集$C$上的一点$x_0$，如果有一个超平面$\{x\mid a^Tx=a^Tx_0\}, a\neq 0$（显然这个超平面和凸集交于点$x_0$），对于$\forall x\in C$，有$a^Tx\leq a^Tx_0$，那么就称这个超平面在点$x_0$支撑$C$。</p>
+</blockquote>
+<p><em>换句话说，就是一个超平面和一个凸集仅有一个交点，另外超平面的参数$a$需要是朝着凸集$C$的反向的，准确来说是：$a^T$所在的直线就是点$x_0$在凸集上的切线，这种情况下$a$有两种方向，一种指向凸集内部，一种指向外部，根据定义需要指向凸集的外部，以保证所有的$x\in C, a^Tx\leq a^Tx_0$。</em></p>
+<h2 id="对偶锥与广义不等式"><a href="#对偶锥与广义不等式" class="headerlink" title="对偶锥与广义不等式"></a>对偶锥与广义不等式</h2><h3 id="对偶锥"><a href="#对偶锥" class="headerlink" title="对偶锥"></a>对偶锥</h3><p>来到了第二章最后的部分。从上面我们知道了，广义不等式是建立在一个正常锥$K$的定义上的，而这部分Boyd教授讲述了正常锥的对偶锥，既然正常锥$K$可以推出一个广义不等式，那么它的对偶锥$K^*$想必也能推出一个广义不等式。这两个广义不等式之间应该存在着一定的关系，这个关系就是下面要讨论的。</p>
+<p><strong>对偶锥</strong>的形式定义是：$K^*=\{y\mid x^Ty\geq0, \forall x\in K\}$。要注意，锥一定有对偶锥，而正常锥的对偶锥也是正常锥。</p>
+<p><em>怎么来理解这个对偶锥呢，可以这么来考虑：对于一个锥$K$，我们考虑它的一个元素$x\in K$，这个$x$与锥的尖点（即零点）共同确定了一条直线。现在根据定义，我们先考虑它的转置$x^T$，这个转置也确定了一个方向，和前者所指定的方向关于整个$K$定义的空间是垂直的，这一点是显然的。那么，现在我们要找一个$y$，令$x^Ty\geq 0$，就意味着$y$的方向与$x^T$的方向的夹角不会超过$180^\circ$。这就是$y$的含义了。那么前面整个说的是关于锥$K$中的一个点$x$成立，现在要求这个条件要关于整个锥$K$中的所有点都成立，就把这个$y$限制在了一个特定的范围内，这个范围也是一个锥，这个锥就是$K$的对偶锥。</em></p>
+<p><em>不知道失不失一般性的，我们可以这样来找一个锥$K$的对偶锥：$K$的边界是两条射线，那么分别经过$K$的尖点做这两条射线的垂直的射线，射线所指的方向是与$K$中元素夹角不超过$180^\circ$的方向。这两条垂线及其$&lt;180^\circ$的夹角及其内部构成了$K$的对偶锥。</em></p>
+<p>通过以上描述我们也可以知道，锥$K$与其对偶锥的两个夹角是互补的，其相加为$180^\circ$，特别地，一个$90^\circ$的正常锥$K$的对偶锥就是它自身，这种情况称为<strong>自对偶</strong>。容易知道，$R^n_+$是自对偶的。</p>
+<p>上面扯了一大堆对对偶锥自己的理解，下面是书中所提出的对偶锥所拥有的性质：（另外，由于Mathjax与Markdown渲染机制中对*这个符号存在冲突，所以原来书中对对偶锥的记号$K^*$，在下面统一改成$K^-$）</p>
+<ul>
+<li>$K^-$是闭凸锥</li>
+<li>$K_1\subseteq K_2$可以推出$K^-_2\subseteq K^-_1$，因为对偶锥互补嘛，你包了我，那我的对偶肯定包了你，大家和和气气</li>
+<li>如果$K$有非空内部，那么$K^-$是尖的</li>
+<li>如果$K$的闭包是尖的，那么$K^-$具有非空内部。反正这两条意思就是尖和非空应该是能互推的。</li>
+<li>$K^{—}$是$K$的凸包的闭包</li>
+</ul>
+<h3 id="广义不等式的对偶"><a href="#广义不等式的对偶" class="headerlink" title="广义不等式的对偶"></a>广义不等式的对偶</h3><p>既然正常锥确定了一个广义不等式，那么正常锥的对偶锥也确定了一个广义不等式，把后者称为前者的对偶，即：$\preceq_{K^-}$是广义不等式$\preceq_K$的对偶。值得注意的是，在正常锥中，有$K^{—}=K$。</p>
+<p>对应的，$K$上的<strong>最小元</strong>也有对应的对偶性质。$x$是$S$上关于广义不等式$\preceq_K$的最小元的充要条件是（注意$S$不一定需要是凸集）：对于所有的$\lambda\succ_{K^-}0$，$x$是在$z\in S$上极小化$\lambda^Tz$的唯一最优解。又是一个难以理解的定义，不过Boyd教授阐述了几何上的解释：这意味着对于$\forall \lambda\succ_{K^-}0$，超平面$\{z\mid \lambda^T(z-x)=0\}$是在$x$处对$S$的一个支撑超平面。我仔细考虑了一下，实在是表达不出来那种似懂非懂的感觉。</p>
+<p>接下来是<strong>极小元</strong>的对偶性质，和最小元对偶是类似的，只是$x$从极小化$\lambda^Tz$的唯一最优解变成了只要求极小化就行，<em>也就是不需要唯一（或者不需要最优？我感觉是不需要唯一比较靠谱，当然我一点都不靠谱）</em></p>
+<h3 id="Pareto最优制造前沿"><a href="#Pareto最优制造前沿" class="headerlink" title="Pareto最优制造前沿"></a>Pareto最优制造前沿</h3><p>在章节的末尾，Boyd教授给出了一个例子，正巧我的数据仓库学习的skyline与这个例子含义十分接近，让我来根据我的数据仓库所学来篡改这个例子，以说明最小元与极小元的区别：</p>
+<p>我们对外滩上的酒店进行打分，简单来说：如果一个酒店价格更低，我们认为这个酒店更好；如果这个酒店距离外滩更近，我们也认为这个酒店更好。每个酒店都是一个二维的元组$(price, dist)$，以price为$x$轴，dist为$y$轴，我们能把酒店标在一个二维平面坐标系中。</p>
+<p>那么，最小元就是这样的一个酒店：所有酒店中没有酒店离外滩的距离比它更近，没有酒店的价格比它更低；而极小元就是满足这些条件的酒店：这些酒店至少在价格或者距离任意一维上不会比任何其它酒店要差。</p>
+<p>从这个示例中我们可以轻易的看出，最小元是不一定存在的，但是极小元一定存在。</p>
 
       
     </div>
@@ -634,7 +665,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保持凸性的运算"><span class="nav-number">2.3.</span> <span class="nav-text">保持凸性的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义不等式"><span class="nav-number">2.4.</span> <span class="nav-text">广义不等式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常锥"><span class="nav-number">2.4.1.</span> <span class="nav-text">正常锥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的定义"><span class="nav-number">2.4.2.</span> <span class="nav-text">广义不等式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的性质"><span class="nav-number">2.4.3.</span> <span class="nav-text">广义不等式的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小元与极小元"><span class="nav-number">2.4.4.</span> <span class="nav-text">最小元与极小元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分离与支撑超平面"><span class="nav-number">2.5.</span> <span class="nav-text">分离与支撑超平面</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保持凸性的运算"><span class="nav-number">2.3.</span> <span class="nav-text">保持凸性的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义不等式"><span class="nav-number">2.4.</span> <span class="nav-text">广义不等式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常锥"><span class="nav-number">2.4.1.</span> <span class="nav-text">正常锥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的定义"><span class="nav-number">2.4.2.</span> <span class="nav-text">广义不等式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的性质"><span class="nav-number">2.4.3.</span> <span class="nav-text">广义不等式的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小元与极小元"><span class="nav-number">2.4.4.</span> <span class="nav-text">最小元与极小元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分离与支撑超平面"><span class="nav-number">2.5.</span> <span class="nav-text">分离与支撑超平面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶锥与广义不等式"><span class="nav-number">2.6.</span> <span class="nav-text">对偶锥与广义不等式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶锥"><span class="nav-number">2.6.1.</span> <span class="nav-text">对偶锥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义不等式的对偶"><span class="nav-number">2.6.2.</span> <span class="nav-text">广义不等式的对偶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pareto最优制造前沿"><span class="nav-number">2.6.3.</span> <span class="nav-text">Pareto最优制造前沿</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
