@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-06T01:33:03.240Z">
+<meta property="og:updated_time" content="2018-12-06T03:37:38.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化笔记(1): 凸集">
 <meta name="twitter:description" content="凸优化的笔记：序想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。">
@@ -351,7 +351,7 @@
 
       
         <h1 id="凸优化的笔记：序"><a href="#凸优化的笔记：序" class="headerlink" title="凸优化的笔记：序"></a>凸优化的笔记：序</h1><p>想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。</p>
-<p>到研究生阶段想划水的，奈何身边的人都太强了，有种不努力就会被社会抛弃的紧张感，所以想重新捡起统计学习方法看，争取把推导看懂吧……然后回忆起早年自闭的过程，想了想，算了，先去看看凸优化吧。</p>
+<p>到研究生阶段想划水的，奈何身边的人都太强了，有种不努力就会被社会抛弃的紧张感，所以想重新捡起《统计学习方法》看，争取把推导看懂吧……然后回忆起早年自闭的过程，想了想，算了，先去看看凸优化吧。</p>
 <p>学习的参考教材是Stamford大学又帅又有魅力的Boyd教授的<strong>《Convex Optimation》</strong>（考虑到努力不给自己艰难的学习过程再下绊子，选择的是王书宁版的中译本），结合Boyd教授录制的授课视频与slides一起学习。笔记的篇章估计也会按书本的目录顺序来，除非我看到自闭打算删掉这些笔记装作一切都没发生过，否则我会努力把所有书本的重点都呈现到笔记中去。</p>
 <p>另外，值得一提的是，现在深度学习打得火热，我也有看到有关统计学家与炼金术士之间因为神经网络非凸，效果又异常的好而相互看不起的说法出现，感觉还怪有意思的。可能有一天我会发现凸优化并没有我想象中那么好用，不过在学习过程中带来的痛并快乐的感觉确是实实在在的。不管怎么说，现在的我选择要开始这段旅程了。</p>
 <p>是为序。</p>
@@ -360,8 +360,8 @@
 <p>除了基本的概念以外，我会努力阐述我的理解，不照着书本上面直接抄的（后者是我读不懂的时候会采取的让自己觉得自己学会了的方法）——<em>但是为了不产生误导，所有我自己的理解我都会用斜体表示。</em></p>
 <h2 id="仿射集合和凸集"><a href="#仿射集合和凸集" class="headerlink" title="仿射集合和凸集"></a>仿射集合和凸集</h2><p><strong>直线</strong></p>
 <blockquote>
-<p>设$x_1\neq x_2$是$R^n$空间中的两个点，那么具有下列形式的点会构成一条穿过$x_1, x_2$两点的直线<br>$$y=\theta x_1+(1-\theta)x_2, \theta\in R$$</p>
-</blockquote>
+<p>设$x_1\neq x_2$是$R^n$空间中的两个点，那么具有下列形式的点会构成一条穿过$x_1, x_2$两点的直线</p>
+<script type="math/tex; mode=display">y=\theta x_1+(1-\theta)x_2, \theta\in R</script></blockquote>
 <p><strong>仿射集合</strong></p>
 <blockquote>
 <p>如果集合中任意两个点所构成的直线中的所有点都在这个集合中，就认为这个集合是仿射的。用数学语言表达就是，一个集合$C$是仿射的当且仅当：对于$\forall x_1, x_2\in C$以及$\theta\in R$，有$\theta x_1+(1-\theta)x_2\in C$。<br><em>（所以仿射集合中至少有两个点？）</em><br>另外书中提到，可以把结论推广到任意元素的情况，即对多个$x$进行加权，约束它们的系数和为1，获得的结果也在集合$C$中，那么这个集合就是仿射集合。</p>
@@ -375,20 +375,65 @@
 <blockquote>
 <p>集合$C$中所有的点的凸组合称为凸包。换句话说，凸包是包含$C$的最小凸集。<em>回想一下算法课上学的求凸包的方法（虽然已经忘记是什么方法了），可以想象出，凸包就是把一个集合最外面的点围起来构成的一个多边形。</em></p>
 </blockquote>
-<p><strong>锥</strong></p>
+<p><strong>凸锥</strong></p>
 <blockquote>
-<p>锥的定义是和仿射集、凸集有异曲同工之妙的：锥要求所有$x$的系数非负。<br>另外，参照凸集、凸组合和凸包之间的关系，也有锥、锥组合与锥包的相对定义，在此不再赘述。</p>
+<p>锥的定义是和仿射集、凸集有异曲同工之妙的：锥要求所有$x$的系数非负。而凸锥要求：对于$\forall x_1, x_2\in C, \theta_1 x_1+\theta_2 x_2\in C$。<br>另外，参照凸集、凸组合和凸包之间的关系，也有锥、锥组合与锥包的相对定义，在此不再赘述。</p>
 </blockquote>
 <p><strong>综合上面的叙述，大概总结这些概念就是：</strong></p>
 <ul>
-<li>不管是仿射集合、凸集，都有定义：对于$x_1, x_2\in C$，$y=\theta x_1+(1-\theta)x_2\in C$，其中要求了$x_1, x_2$前面的系数$\theta_i$之和为1。仿射集与凸集定义的不同点在于$\theta$的取值范围</li>
-<li>仿射集合定义里面的$\theta\in R$</li>
-<li>凸集里面的$\theta\in[0,1]$</li>
+<li>不管是仿射集合与凸集，都有定义：对于$x_1, x_2\in C$，$y=\theta x_1+(1-\theta)x_2\in C$，这个式子隐性要求了$x_1, x_2$前面的系数$\theta_i$之和为1。仿射集与凸集定义的不同点在于$\theta$的取值范围</li>
+<li>仿射集合定义里面的$\theta\in R$，这样对应的$y$取值是一条直线。</li>
+<li>凸集里面的$\theta\in[0,1]$，对应的$y$取值是一条线段。</li>
 <li>锥的定义中不要求系数和为1，而是约束的所有的系数$\theta_i\geq 0, i\in N$</li>
 <li>仿射集、凸集与锥的定义中只涉及了$x_1$与$x_2$。但是一般的，对于大于两个变量$x$的形如$\theta_1 x_1+…+\theta_k x_k$这样的组合，可以形成对应的仿射组合/凸组合/锥组合；而使用了所有的$x$的组合（即当$k=n$时）被称为包（仿射包/凸包/锥包）</li>
 </ul>
 <h2 id="重要的凸集们"><a href="#重要的凸集们" class="headerlink" title="重要的凸集们"></a>重要的凸集们</h2><p>这里面主要讲了：超平面和半空间，Euclid球和椭球，范数球和范数锥，多面体，以及半正定锥这些例子，因为这些凸集会在书本后面内容中反复多次出现。</p>
 <p>所以又是一堆概念：</p>
+<p><strong>超平面和半空间</strong></p>
+<blockquote>
+<p>这两个概念放在一起讲是因为它俩之间只有一个符号的区别。<br><strong>超平面</strong>是所有满足条件的$x$的集合：$\{x\mid a^Tx=b \}$，其中$a\in R^n$，是一个向量（注意$a$表示一个向量，而$A$才表示一个矩阵）。<em>所以解集$x$可以看成所有与向量$a^T$的点乘是常数$b$的向量，想象一个空间中存在一个向量$a$，它的转置与它呈$90^\circ$，而向量$x$与它的点积是一个常数，也就是说$x$与$a^T$在一个平面上。$b$约束了这个平面关于该平面零点$O$的距离</em>。<br>与之相对，<strong>半空间</strong>也就是把超平面中的$=$符号改成了$\leq$或者$\geq$，这样$x$表征的就不是一个平面了，而是在由这个平面分割的上/下一半的空间。如果不等式中没有等号，则称为<strong>开半空间</strong>。</p>
+</blockquote>
+<p><strong>Euclid球与椭球</strong></p>
+<blockquote>
+<p><strong>Euclid球</strong>在$R^n$空间中，形式定义如下：</p>
+<script type="math/tex; mode=display">B(x_c,r)=\{x\mid ||x-x_c||_2\leq r\}=\{x\mid (x-x_c)^T(x-x_c)\leq r^2\}</script><p>$||.||_2$表征的是Euclid范数，也就是空间中所定义的’距离’。上式的含义就是与给定的圆心$x_c$的距离在给定常数$r$以内的所有$x$向量的集合，也就是大家所理解的球。（可以考虑证明：Euclid球是个凸集-使用凸集的性质以及范数上满足的三角不等式性质）<br><strong>椭球</strong><br>$\varepsilon=\{x\mid (x-x_c)^TP^{-1}(x-x_c)\leq 1\}$，其中$P=P^T\succ 0$，即矩阵$P$是对称正定的，$\succ$表示左边的每个元素都大于右边对应的元素。$P$决定了椭球从$x_c$向各个方向扩展的幅度，<em>我感觉我矩阵论没学好，愣是看不懂$P$是怎么决定扩展幅度的，但是我努力的把这个定义背下来了，不求甚解不求甚解……</em></p>
+</blockquote>
+<p><strong>范数球与范数锥</strong></p>
+<blockquote>
+<p>顾名思义，就是由范数定义的球和锥。其实Euclid球就是由Euclid范数定义的球，所以是范数球的一种。范数锥是集合$C=\{(x,t)\mid ||x||\leq t\}\subseteq R^{n+1}$</p>
+</blockquote>
+<p><strong>多面体</strong></p>
+<blockquote>
+<p>多面体就是由一些超平面和一些半空间的交集，也就是它们围起来的一块，想象三个$a$向外的半空间，其交点所构成的三角形内部就是一个多面体。形式化的定义为：$\mathcal{P}=\{x\mid Ax\preceq b, Cx=d\}$</p>
+</blockquote>
+<p>使用$S^n$表示对称的$n\times n$矩阵的集合，$S^n_+$表示对称的半正定矩阵，那么更进一步，$S^n_{++}$表示对称的正定矩阵。半正定锥会用到这些概念。</p>
+<p><strong>半正定锥</strong></p>
+<blockquote>
+<p>所谓的用到上面的概念，不如说，集合$S^n_+$就是一个凸锥，也就是半正定锥。可以看到这个概念本身就符合凸锥的定义，所以不多赘述。书中给出一个$S^2$空间中 的半正定锥的定义，<em>我并不能看懂它为什么是这样</em>。<br>值得一提的是，正定锥和半正定锥的区别在于，半正定锥能在不等式中取到等号。</p>
+</blockquote>
+<p>上面的所有概念都是凸集，如果闲着没事，可以尝试用凸集的定义来证明它们。用翟起滨老师的话说，这样就能对这些凸集的例子手拿把下XD。</p>
+<h2 id="保持凸性的运算"><a href="#保持凸性的运算" class="headerlink" title="保持凸性的运算"></a>保持凸性的运算</h2><p>总的来说，保持凸性的运算有以下四个：</p>
+<ol>
+<li><strong>交运算</strong>：两个集合是凸的，那么它们的交集也是凸的。这个性质可以扩展到无穷集合的交集上。作为一个例子：多面体实际上是多个超平面与半空间的交集所以它也是凸的——<strong><em>这是一种不从定义本身来证明一个集合是凸的的方法</em></strong>。</li>
+<li><strong>仿射函数</strong>：对于函数$f(x)=Ax+b$，其中$A\in R^{m\times n}, b\in R^m$，如果一个集合是凸的，那么对集合中每个元素$x$做仿射变换$f(x)$，最终获得的另一个集合也是凸的。也就是说，线性变换不改变集合的凸性。<blockquote>
+<p>两个比较典型的例子是伸缩和平移：分别是$b=0$与$A=1$时的特殊情况，可以想象对一个凸集进行伸缩和平移并不影响它的凸性。</p>
+</blockquote>
+</li>
+<li><strong>透视函数</strong>：简单解释就是，首先把一个向量的每个元素都除以最后一个元素的值（当然这样操作之后最后一维元素值变为1），之后最后一维舍弃掉，得到一个新的向量，这个向量是保持原向量的凸性的。因为这个变换很像对向量进行透视，所以叫做透视函数。</li>
+<li><strong>线性分式函数</strong>：线性分式函数其实是由仿射函数与透视函数复合而成的，可以看成是对凸集的一种投射。形式化表述为：$f(x)=(Ax+b)/(c^Tx+d), \mathrm{dom}f=(x\mid c^Tx+d&gt;0)$。<blockquote>
+<p>当$c=0,d&gt;0$时，可以看出$f$就是一个仿射函数，所以放射函数是特殊的线性分式函数。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="广义不等式"><a href="#广义不等式" class="headerlink" title="广义不等式"></a>广义不等式</h2><p>要理解广义不等式的含义，首先要对<strong>正常锥</strong>进行定义。称一个锥$K$是正常锥(proper cone)，如果它满足以下条件：</p>
+<ul>
+<li>$K$是凸(convex)的，也就是$K$是个凸锥</li>
+<li>$K$是闭(close)的，也就是说两端的边界要能取到</li>
+<li>$K$是实(solid)的，就是说内部必须非空。这里要提一下，大家可能会想，锥不都是非空的吗，哪有空的锥？——Boyd教授给出了一个反例：一条射线满足凸锥的定义，但是它根本不存在内部，更没有非空一说。</li>
+<li>$K$是尖(pointed)的，就是说$K$不包含直线，或者说$K$中要存在点$x=0$</li>
+</ul>
+<p><strong>广义不等式</strong>通过上面正常锥的定义得到：</p>
+<script type="math/tex; mode=display">x\preceq _Ky \Leftrightarrow y-x\in K</script><p>当然，如果左侧的不等式中没有等号，可以说这个广义不等式是<strong>严格的</strong>，否则就是<strong>不严格的</strong>。<br>怎么理解这个广义不等式呢，就是说如果两个向量$x,y$相减得到的结果$y-x\in K$，就认为$x$在正常锥$K$定义的广义不等式中$\preceq_K y$。<em>我的理解是，由于正常锥$K$本身的定义，保证了在里面的每个向量都是相对于其中的零点（定义中是尖的那个点）$x=0$要大的，所以如果$y-x\in K$，说明了$y$与$x$相减得到的差要大于这个正常锥所定义的集合中的零点，所以也就是在$K$条件下$&gt;0$。因此，如果$y-x\in K$成立，说明$y$在条件$K$下比$x$要大，这就是广义条件下的不等式了。</em><br>特别地，如果$K=R_+$时，广义不等式中的不等号$\preceq$就是我们常说的不等号$\leq$。按我上面所说的理解，这是因为$y-x$大于了$R_+$中的零点——也就是0，所以有了$x\leq y$（我的逻辑居然自洽了，真开心）。</p>
 
       
     </div>
@@ -575,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化的笔记：序"><span class="nav-number">1.</span> <span class="nav-text">凸优化的笔记：序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸集"><span class="nav-number">2.</span> <span class="nav-text">凸集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿射集合和凸集"><span class="nav-number">2.1.</span> <span class="nav-text">仿射集合和凸集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的凸集们"><span class="nav-number">2.2.</span> <span class="nav-text">重要的凸集们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保持凸性的运算"><span class="nav-number">2.3.</span> <span class="nav-text">保持凸性的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义不等式"><span class="nav-number">2.4.</span> <span class="nav-text">广义不等式</span></a></li></ol></li></ol></div>
             
 
           </div>
