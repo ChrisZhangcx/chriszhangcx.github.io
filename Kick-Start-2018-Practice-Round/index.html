@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-07T02:40:31.117Z">
+<meta property="og:updated_time" content="2018-12-07T05:17:34.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kick Start 2018-Practice Round">
 <meta name="twitter:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
@@ -352,9 +352,9 @@
       
         <p>Google的<a href="https://codingcompetitions.withgoogle.com/" target="_blank" rel="noopener">Competitions with Google</a>上有三个类型的练习：</p>
 <ul>
-<li>Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? <del>Of course I am not.</del></li>
-<li>Code Jam: <del>编程果酱？？</del> 反正就是用多轮的算法问题来进行比赛，最后获胜者还有奖金，又问了一句Do u have what it takes? <del>emmmm..</del></li>
-<li>Kick Start: 今天的重头戏，介绍中说主要是磨炼自己的coding水平，受众是学生和新接触编程的人 <del>我</del> ，也是按轮次进行的，可以只参加一轮也可以全部参加，最后的问题是What are u waiting for? 这看起来就正常多了，不像是向一个算法渣挑衅的言论，给好评。</li>
+<li><strong>Hash Code</strong>: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? <del>Of course I am not.</del></li>
+<li><strong>Code Jam</strong>: <del>编程果酱？？</del> 反正就是用多轮的算法问题来进行比赛，最后获胜者还有奖金，又问了一句Do u have what it takes? <del>emmmm..</del></li>
+<li><strong>Kick Start</strong>: 今天的重头戏，介绍中说主要是磨炼自己的coding水平，受众是学生 <del>我</del> 和新接触编程的人 <del>我</del> ，也是按轮次进行的，可以只参加一轮也可以全部参加，最后的问题是What are u waiting for? 这看起来就正常多了，不像是向一个算法渣挑衅的言论，给好评。</li>
 </ul>
 <p>Kick Start的轮次是一个Practice Round和A~H八轮，其中除了Practice Round给了24h解题外，其它的八个轮次都是只给3h解题时间，所以介绍中所说的’可以只参加一轮’是哪一轮呢？别问，问就是自闭。</p>
 <h1 id="Quick-Start-Guide"><a href="#Quick-Start-Guide" class="headerlink" title="Quick-Start Guide"></a>Quick-Start Guide</h1><p>没错，在开始解题之前，我还要学习怎么使用Kick Start平台。本来不想写这部分的，后来粗粗看了看，发现解题形式和我之前常用的POJ或Leetcode <del>其实我不常用，但是常用一词会显得我在这方面非常qualified</del> 差别还是不小的，所以来这里整理一下：</p>
@@ -376,12 +376,15 @@
 <p>关于读取input.file并输出output.file</p>
 <p><strong>对于C++</strong></p>
 <p>在solution.cpp中编写解决问题的代码，输入输出使用cin与cout即可，在编译时使用以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ solution.cpp -o solution ./solution input_file.txt output_file.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ solution.cpp -o solution</span><br><span class="line">./solution &lt; input_file.txt &gt; output_file.txt</span><br></pre></td></tr></table></figure>
+<p>第一步是为了生成名为solution的可执行文件，当然如果嫌麻烦直接省去-o参数，直接生成a.out也行。</p>
+<p>第二步是运行这个可执行文件，并指定输入文件名为input_file.txt，输出到output_file.txt中。</p>
 <p><strong>对于Python</strong></p>
 <p>使用raw_input()函数读取，使用print输出以及format方法控制格式即可。在执行时输入以下指令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 solution.py input_file.txt output_file.txt</span><br></pre></td></tr></table></figure>
-<p>可以看到，和平时解题的输入输出相比几乎没有区别，只是在执行代码时添加了条件。</p>
-<h1 id="Problem-A-GBus-count"><a href="#Problem-A-GBus-count" class="headerlink" title="Problem A. GBus count"></a>Problem A. GBus count</h1>
+<p>Python的执行语句就非常的简单粗暴了。通过以上的例子可以发现，实际编写代码时和平时其它平台上的输入输出相比几乎没有区别，只是在执行代码时添加了条件。</p>
+<h1 id="Problem-A-GBus-count"><a href="#Problem-A-GBus-count" class="headerlink" title="Problem A. GBus count"></a>Problem A. GBus count</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn = 5050;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int res[maxn];</span><br><span class="line">    int T, N, P;</span><br><span class="line">    cin&gt;&gt;T;</span><br><span class="line">    for(int i=0;i&lt;T;i++)&#123;</span><br><span class="line">        memset(res, 0, sizeof(res));</span><br><span class="line">        cin&gt;&gt;N;</span><br><span class="line">        int a, b;</span><br><span class="line">        for(int j=0;j&lt;N;j++)&#123;</span><br><span class="line">            cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">            for(int k=a;k&lt;=b;k++) res[k]++;</span><br><span class="line">        &#125;</span><br><span class="line">        cin&gt;&gt;P;</span><br><span class="line">        int c;</span><br><span class="line">        vector&lt;int&gt;r;</span><br><span class="line">        for(int j=0;j&lt;P;j++)&#123;</span><br><span class="line">            cin&gt;&gt;c;</span><br><span class="line">            r.push_back(res[c]);</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;&quot;Case #&quot;&lt;&lt;i+1&lt;&lt;&quot;: &quot;;</span><br><span class="line">        for(int j=0;j&lt;r.size();j++) !j ? cout&lt;&lt;r[j] : cout&lt;&lt;&quot; &quot;&lt;&lt;r[j];</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
