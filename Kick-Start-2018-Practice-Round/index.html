@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-07T01:43:42.237Z">
+<meta property="og:updated_time" content="2018-12-07T02:40:31.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kick Start 2018-Practice Round">
 <meta name="twitter:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
@@ -359,13 +359,29 @@
 <p>Kick Start的轮次是一个Practice Round和A~H八轮，其中除了Practice Round给了24h解题外，其它的八个轮次都是只给3h解题时间，所以介绍中所说的’可以只参加一轮’是哪一轮呢？别问，问就是自闭。</p>
 <h1 id="Quick-Start-Guide"><a href="#Quick-Start-Guide" class="headerlink" title="Quick-Start Guide"></a>Quick-Start Guide</h1><p>没错，在开始解题之前，我还要学习怎么使用Kick Start平台。本来不想写这部分的，后来粗粗看了看，发现解题形式和我之前常用的POJ或Leetcode <del>其实我不常用，但是常用一词会显得我在这方面非常qualified</del> 差别还是不小的，所以来这里整理一下：</p>
 <ol>
-<li><p>如果是比赛要在contest’s home page（当然还要在比赛举行时间），如果是练习就滚去<a href="https://code.google.com/codejam/past-contests" target="_blank" rel="noopener">Past Problems</a>，选择自己想自闭的轮次</p>
+<li><p>如果想参加的是比赛，要在contest’s home page（当然还要在比赛举行时间）进行解题，如果是练习就滚去<a href="https://code.google.com/codejam/past-contests" target="_blank" rel="noopener">Past Problems</a>，选择自己想自闭的轮次</p>
 </li>
-<li></li>
+<li><p>要注意limits模块中的内容，因为很多时候不是WA，而是TLE，就像最难过的事情不是我不行，而是我本可以。</p>
+</li>
+<li><p>下载问题文件之后，需要生成result文件并提交。在practice中只需要提交result文件，在competition中还需要提交code文件。提交结果有三种：<br>A. Correct<br>B. Rejected：就是提交被并非对错的原因被否决了，比如传错了文件<br>C. Incorrect：回答错误</p>
+</li>
+<li><p>比较有意思的是，Kick Start中的设定是，先写自己的程序，写完觉得没问题了点击下载数据集，一开始只能下载Small规模的数据集，从下载后开始计时，小问题是4分钟，解答正确后才能下载大数据集，大问题是8分钟。需要在指定时间内提交答案，如果提交答案正确，结束计时；如果提交Rejected，计时会继续走，还能继续提交；如果提交答案错误，会被计一次罚时，<strong>值得注意的是，如果计时结束也没有提交或者还是Rejected，也会自动判为Incorrect，此时已经没有提交机会了</strong>。</p>
+</li>
+<li><p>大数据集评分只有在比赛结束后才能看到，也就是说，提交之后是看不到自己的结果的。对于大数据集，只会judge最后一次上传的结果，可以在8分钟限时内反复提交。</p>
+</li>
+<li><p><strong>当然，以上所有的解题时间限制在Practice mode下不会生效，这是给自闭儿童的一大福利。</strong></p>
+</li>
 </ol>
-<p>不扯了，开始Practice Round的解题报告。</p>
 <hr>
-
+<p>关于读取input.file并输出output.file</p>
+<p><strong>对于C++</strong></p>
+<p>在solution.cpp中编写解决问题的代码，输入输出使用cin与cout即可，在编译时使用以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ solution.cpp -o solution ./solution input_file.txt output_file.txt</span><br></pre></td></tr></table></figure>
+<p><strong>对于Python</strong></p>
+<p>使用raw_input()函数读取，使用print输出以及format方法控制格式即可。在执行时输入以下指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 solution.py input_file.txt output_file.txt</span><br></pre></td></tr></table></figure>
+<p>可以看到，和平时解题的输入输出相比几乎没有区别，只是在执行代码时添加了条件。</p>
+<h1 id="Problem-A-GBus-count"><a href="#Problem-A-GBus-count" class="headerlink" title="Problem A. GBus count"></a>Problem A. GBus count</h1>
       
     </div>
     
@@ -555,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Quick-Start-Guide"><span class="nav-number">1.</span> <span class="nav-text">Quick-Start Guide</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Quick-Start-Guide"><span class="nav-number">1.</span> <span class="nav-text">Quick-Start Guide</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Problem-A-GBus-count"><span class="nav-number">2.</span> <span class="nav-text">Problem A. GBus count</span></a></li></ol></div>
             
 
           </div>
