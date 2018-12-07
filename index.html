@@ -260,6 +260,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/重修数据结构：线段树/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我永远喜欢结城明日奈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/重修数据结构：线段树/" itemprop="url">重修数据结构：线段树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-07T19:19:00+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="什么是线段树，为什么要用线段树"><a href="#什么是线段树，为什么要用线段树" class="headerlink" title="什么是线段树，为什么要用线段树"></a>什么是线段树，为什么要用线段树</h1><p>首先，我们来回答什么是<strong>线段树</strong>。顾名思义，<strong>线段树就是</strong><del>线段构成的🌲</del><strong>用树结构来表示线段</strong>，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。</p>
+<p>举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,20,5]$。现在小明想知道不同编号区间里最贵冰棍的价格，比如：$[0,2]$号最贵冰棍的价格（我们都知道是20）。</p>
+<p>对于用<strong>数组</strong>保存的冰棍价格，他就需要遍历下标$[0,2]$，找出其中最大的数。</p>
+<p>现在来考虑<strong>线段树</strong>。线段树是一个树结构，用下图来表示：</p>
+<p><img src="/重修数据结构：线段树/001.png" alt="线段树"></p>
+<p>线段树的节点中保存的不仅仅是这个区间，其中也保存了这个区间里面最贵的冰棍的价格。现在我们想知道$[0,2]$区间最贵的冰棍的价格，我们找到区间$[0,1]$与$[2,2]$，因为这两个区间合并就是我们要搜索的区间，这两个对应的节点中的值取更大的那个，就是我们想知道的值。</p>
+<p>从上面的例子可以看出，线段树所需要比较重要的性质就是<strong>局部的值会影响全局的值</strong>。比如说对于冰棍，我们想要查询的是编号$i$到$j$的最贵冰棍的价格，这样$[i,j]$区间内的值会被其中最贵冰棍的价格所影响，这个最贵价格会被保存在$[i,j]$区间中，这种情况下才适合使用线段树。<strong>准确而言，线段树解决的问题类型是：一维空间上的几何统计。</strong></p>
+<h1 id="线段树的使用"><a href="#线段树的使用" class="headerlink" title="线段树的使用"></a>线段树的使用</h1><h2 id="构建一棵线段树"><a href="#构建一棵线段树" class="headerlink" title="构建一棵线段树"></a>构建一棵线段树</h2><p>扯了一个我感觉还算过得去的例子后，我们来看看怎么构建一棵线段树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct SegmentTreeNode&#123;</span><br><span class="line">    int start, end, max;            // 区间左边界，右边界与[start,end]之间的最大值</span><br><span class="line">    SegmentTreeNode *left, *right;  // 节点的左右子节点</span><br><span class="line">    // 构造函数</span><br><span class="line">    SegmentTreeNode(int start, int end, int max)&#123;</span><br><span class="line">        this.start = start;</span><br><span class="line">        this.end = end;</span><br><span class="line">        this.max = max;</span><br><span class="line">        this.left = this.right = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体中定义了这棵树所表示的区间$[\mathrm{start},\mathrm{end}]$以及这个区间中最贵的冰棍的价格$\mathrm{max}$</p>
+<p>好了，现在要用给定的数组来初始化这棵线段树，主要体现一种递归的思想</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 主函数：递归创建一棵线段树</span><br><span class="line">SegmentTreeNode build(vector&lt;int&gt; A)&#123;</span><br><span class="line">    buildNode()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 递归构建树节点</span><br><span class="line">SegmentTreeNode buildNode(int left, int right, vector&lt;int&gt; &amp;A)&#123;</span><br><span class="line">    // 如果超出边界，返回null</span><br><span class="line">    if(left &gt; right) return null;</span><br><span class="line"></span><br><span class="line">    // 如果节点有意义，创建根节点，并用区间最左边的值初始化</span><br><span class="line">    SegmentTreeNode root = new SegmentTreeNode(left, right, A[left]);</span><br><span class="line">    // 检验节点是否为叶子节点，若是则直接返回（已经初始化完毕了这个节点的所有属性值）</span><br><span class="line">    if(left == right) return root;</span><br><span class="line"></span><br><span class="line">    // 从中间对区间进行切分，递归创建当前节点的左右子节点</span><br><span class="line">    int mid = (left+right)/2;</span><br><span class="line">    root.left = buildNode(left, mid, A);</span><br><span class="line">    root.right = buildNode(mid+1, right, A);</span><br><span class="line">    root.max = max(root.left.max, root.right.max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树的更新"><a href="#线段树的更新" class="headerlink" title="线段树的更新"></a>线段树的更新</h2><p>在上面，我们已经使用了一个给定的数组$A$初始化了一棵线段树，树节点中的$\mathrm{max}$属性是树节点对应区间中的最大值。</p>
+<p>现在的问题是，用来创建线段树的数组$A$发生了改变，怎么更新这棵线段树呢？<strong>还是使用递归的方式</strong>。具体的，我们从根节点开始一路查询所有包含被更新节点的区间，然后把这些区间里面的值全部更新一遍，由于树深为$\mathrm{log}_2n$，所以更新的时间复杂度是$\mathrm{log}_2n$。</p>
+<p>下面是具体的实现代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 传入当前所在的区间，被更改数字在$A$中的下标，以及更改后的数字value</span><br><span class="line">void update(SegmentTreeNode root, int index, int value)&#123;</span><br><span class="line">    // 如果这个节点是叶子节点，并且是要修改的结点，就进行修改，并直接返回</span><br><span class="line">    if(root.start==root.end &amp;&amp; root.start==index)&#123;root.max = value; return;&#125;</span><br><span class="line"></span><br><span class="line">    // 开始分割区间，进行递归的修改</span><br><span class="line">    int mid = (root.start+root.end)/2;</span><br><span class="line">    // 被修改的节点在当前区间的左子区间</span><br><span class="line">    if(index &lt;= mid) update(root.left, index, value);</span><br><span class="line">    // 被修改的节点在当前区间的右子区间</span><br><span class="line">    else update(root.right, index, value);</span><br><span class="line"></span><br><span class="line">    // 更新当前节点的max值</span><br><span class="line">    root.max = max(root.max, value);</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树的使用：查询"><a href="#线段树的使用：查询" class="headerlink" title="线段树的使用：查询"></a>线段树的使用：查询</h2><p>终于讲到了线段树被使用的最终目的：<strong>查询</strong>了。正如更新一样，线段树的查询也是沿着一棵树向下查，因此时间复杂度仅仅是$\mathrm{log}_2n$（这也是线段树比数组优越的根本原因！）</p>
+<p>查询的区间可能出现一半在左子区间，一半又有部分在右子区间的情况，总之可能正好不被包在一个节点里面，所以我们需要设计递归查找的逻辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 线段树的节点，以及待查询的左右子区间</span><br><span class="line">int query(SegmentTreeNode root, int start, int end)&#123;</span><br><span class="line">    // 情况1：当前节点区间完全在待查询区间内，它成为待查询结果的一种候选结果，直接返回这个区间</span><br><span class="line">    if(root.start&gt;=start &amp;&amp; root.end&lt;=end) return root.max;</span><br><span class="line"></span><br><span class="line">    // 对于其他情况，要对线段树进行分割</span><br><span class="line">    int mid = (root.start+root.end)/2;</span><br><span class="line">    int res = INT_MIN;      // 初始化查询结果</span><br><span class="line">    // 要继续向下分割直到待查询区间完全包裹住某一节点为止——最差的情况是只包裹住了叶子节点</span><br><span class="line">    if(mid &gt;= start) res = max(res, query(root.left, start, end));</span><br><span class="line">    if(mid+1 &lt;= end) res = max(res, query(root.right, start, end));</span><br><span class="line">    // 返回查询结果</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树编程总结"><a href="#线段树编程总结" class="headerlink" title="线段树编程总结"></a>线段树编程总结</h2><p>对上面的内容进行一下实践上的总结。要创建并使用一棵线段树，我们需要编写这些代码：</p>
+<ol>
+<li><strong>建立线段树的结构(struct定义)</strong>：即包括左右区间的范围，待统计的值，以及左右子节点的指针</li>
+<li><strong>初始化线段树(init函数)</strong>：要根据当前的数组来初始化线段树</li>
+<li><strong>更新线段树(update函数)</strong>：当数组可能发生改变时，要编写修改线段树的函数<em>否则不用写这个函数</em></li>
+<li><strong>最最重要的，对线段树执行查询(query函数)</strong>：即对于一个输入的区间，我们要使用线段树来查询这个区间里面的统计值是多少</li>
+</ol>
+<h1 id="没那么简单"><a href="#没那么简单" class="headerlink" title="没那么简单"></a>没那么简单</h1><p>上面的线段树实现我都用二级标题，肯定不是因为我强迫症发作，而是我在学习线段树资料的时候，看到了网上所流传的<strong>清华大学-张昆玮</strong>的一份讲述线段树的PPT，其中把线段树的诸般变化和优化讲述的神乎其神。在这里占个坑，待我 <del>有空</del> 仔细研读后再来更新。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="#">统计的力量-线段树.张昆玮.清华大学 （此处没有超链接请勿点击）</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/Kick-Start-2018-Practice-Round/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -353,7 +522,8 @@
       
         
           
-            <p>Google的<a href="https://codingcompetitions.withgoogle.com/" target="_blank" rel="noopener">Competitions with Google</a>上有三个类型的练习：</p>
+            <p>2018-12-07 09:08:35。我要测试一下如果不填写date，会不会根据我最后提交的时间进行修改呢</p>
+<p>Google的<a href="https://codingcompetitions.withgoogle.com/" target="_blank" rel="noopener">Competitions with Google</a>上有三个类型的练习：</p>
 <ul>
 <li><strong>Hash Code</strong>: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? <del>Of course I am not.</del></li>
 <li><strong>Code Jam</strong>: <del>编程果酱？？</del> 反正就是用多轮的算法问题来进行比赛，最后获胜者还有奖金，又问了一句Do u have what it takes? <del>emmmm..</del></li>
@@ -372,7 +542,7 @@
 </li>
 <li><p>大数据集评分只有在比赛结束后才能看到，也就是说，提交之后是看不到自己的结果的。对于大数据集，只会judge最后一次上传的结果，可以在8分钟限时内反复提交。</p>
 </li>
-<li><p><strong>当然，以上所有的解题时间限制在Practice mode下不会生效，这是给自闭儿童的一大福利。</strong></p>
+<li><p><strong>当然，以上所有的限制在Practice mode下不会生效，这是给自闭儿童的一大福利。</strong></p>
 </li>
 </ol>
 <hr>
@@ -386,7 +556,22 @@
 <p>使用raw_input()函数读取，使用print输出以及format方法控制格式即可。在执行时输入以下指令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 solution.py input_file.txt output_file.txt</span><br></pre></td></tr></table></figure>
 <p>Python的执行语句就非常的简单粗暴了。通过以上的例子可以发现，实际编写代码时和平时其它平台上的输入输出相比几乎没有区别，只是在执行代码时添加了条件。</p>
-<h1 id="Problem-A-GBus-count"><a href="#Problem-A-GBus-count" class="headerlink" title="Problem A. GBus count"></a>Problem A. GBus count</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn = 5050;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int res[maxn];</span><br><span class="line">    int T, N, P;</span><br><span class="line">    cin&gt;&gt;T;</span><br><span class="line">    for(int i=0;i&lt;T;i++)&#123;</span><br><span class="line">        memset(res, 0, sizeof(res));</span><br><span class="line">        cin&gt;&gt;N;</span><br><span class="line">        int a, b;</span><br><span class="line">        for(int j=0;j&lt;N;j++)&#123;</span><br><span class="line">            cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">            for(int k=a;k&lt;=b;k++) res[k]++;</span><br><span class="line">        &#125;</span><br><span class="line">        cin&gt;&gt;P;</span><br><span class="line">        int c;</span><br><span class="line">        vector&lt;int&gt;r;</span><br><span class="line">        for(int j=0;j&lt;P;j++)&#123;</span><br><span class="line">            cin&gt;&gt;c;</span><br><span class="line">            r.push_back(res[c]);</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;&quot;Case #&quot;&lt;&lt;i+1&lt;&lt;&quot;: &quot;;</span><br><span class="line">        for(int j=0;j&lt;r.size();j++) !j ? cout&lt;&lt;r[j] : cout&lt;&lt;&quot; &quot;&lt;&lt;r[j];</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Problem-A-GBus-count"><a href="#Problem-A-GBus-count" class="headerlink" title="Problem A. GBus count"></a>Problem A. GBus count</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>这道题算是签到题吧，忽略输入输出的格式要求，题目内容是这样的：</p>
+<blockquote>
+<p>存在一些城市，从1开始向后编号。现在有$N$辆公交车，其中第$i$辆公交从$A_i$开往$B_i$（前后都能取到），那么现在问城市$j$有几辆公交车可以到达。</p>
+</blockquote>
+<h2 id="拍脑袋：Brute-Force"><a href="#拍脑袋：Brute-Force" class="headerlink" title="拍脑袋：Brute Force"></a>拍脑袋：Brute Force</h2><p>最容易想到的解法是这样的：</p>
+<pre><code>开辟一个数组，表示每个城市有几辆公交可以到达，城市有多少我数组就开多大。数组的值初始化为0。
+每读入一个数据，比如第$5$辆公交车从$10$开往$15$，那就把下标是$10$到$15$的数组中的数字全部增加1。
+对所有的公交车都处理完毕之后，能到达第$i$座城市的公交车数量，就是数组中下标为$i$元素的值。
+</code></pre><p>啊，好简单，然后写了代码，测试了一下，居然还过了。 <del>这是我个人的一小步，是Brute Force掌控世界的一大步</del></p>
+<p><img src="/Kick-Start-2018-Practice-Round/001.png" alt="small case"></p>
+<p><img src="/Kick-Start-2018-Practice-Round/002.png" alt="large case"></p>
+<p>然而如果不欺骗自己的话，就能想到这个办法是很愚蠢的。因为我不想一一列举这个方法有多愚蠢就像我不想证明自己很愚蠢一样，所以我只是说明一下结果，这个方法会因为城市数的增加以及一些不好的数据（比如所有公交车能到达的两个城市都隔得很远）等情况，导致时间复杂度太高而解不出题目来。</p>
+<p>我大概能明白因为这是Practice轮次的题又是第一题，所以Googler并不想为难我们，但是还是要认真思考一下怎么做。</p>
+<h2 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h2><p>我深知学习的过程就是一个不断递归的过程，就好比我要用线段树求解这道题，我就要先把这篇博文压栈，跑去学什么是线段树，然后写一篇<strong><a href="/重修数据结构：线段树/" title="重修数据结构：线段树">重修数据结构：线段树</a></strong>，写完以后再恢复这篇文章的环境，继续开始写一样。如果我在学习线段树的过程中又出现问题，那我就要二次压栈，就像生活把重担一次又一次压在我的肩头。</p>
+<p>那么怎么用线段树来解这道题呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">const int maxn = 5050;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int res[maxn];</span><br><span class="line">    int T, N, P;</span><br><span class="line">    cin&gt;&gt;T;</span><br><span class="line">    for(int i=0;i&lt;T;i++)&#123;</span><br><span class="line">        memset(res, 0, sizeof(res));</span><br><span class="line">        cin&gt;&gt;N;</span><br><span class="line">        int a, b;</span><br><span class="line">        for(int j=0;j&lt;N;j++)&#123;</span><br><span class="line">            cin&gt;&gt;a&gt;&gt;b;</span><br><span class="line">            for(int k=a;k&lt;=b;k++) res[k]++;</span><br><span class="line">        &#125;</span><br><span class="line">        cin&gt;&gt;P;</span><br><span class="line">        int c;</span><br><span class="line">        vector&lt;int&gt;r;</span><br><span class="line">        for(int j=0;j&lt;P;j++)&#123;</span><br><span class="line">            cin&gt;&gt;c;</span><br><span class="line">            r.push_back(res[c]);</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;&quot;Case #&quot;&lt;&lt;i+1&lt;&lt;&quot;: &quot;;</span><br><span class="line">        for(int j=0;j&lt;r.size();j++) !j ? cout&lt;&lt;r[j] : cout&lt;&lt;&quot; &quot;&lt;&lt;r[j];</span><br><span class="line">        cout&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1074,7 +1259,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1085,7 +1270,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1096,7 +1281,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

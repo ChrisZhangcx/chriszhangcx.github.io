@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是线段树，为什么要用线段树首先，我们来回答什么是线段树。顾名思义，线段树就是线段构成的🌲用树结构来表示线段，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。 举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重修数据结构：线段树">
+<meta property="og:url" content="/重修数据结构：线段树/index.html">
+<meta property="og:site_name" content="我永远喜欢结城明日奈">
+<meta property="og:description" content="什么是线段树，为什么要用线段树首先，我们来回答什么是线段树。顾名思义，线段树就是线段构成的🌲用树结构来表示线段，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。 举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="/重修数据结构：线段树/001.png">
+<meta property="og:updated_time" content="2018-12-07T13:30:25.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重修数据结构：线段树">
+<meta name="twitter:description" content="什么是线段树，为什么要用线段树首先，我们来回答什么是线段树。顾名思义，线段树就是线段构成的🌲用树结构来表示线段，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。 举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,">
+<meta name="twitter:image" content="/重修数据结构：线段树/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/重修数据结构：线段树/">
+
+
+
+
+
+  <title>重修数据结构：线段树 | 我永远喜欢结城明日奈</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我永远喜欢结城明日奈</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-菜单测试">
+          <a href="/menutest" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-mt"></i> <br>
+            
+            菜单测试
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/重修数据结构：线段树/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我永远喜欢结城明日奈">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">重修数据结构：线段树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-07T19:19:00+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是线段树，为什么要用线段树"><a href="#什么是线段树，为什么要用线段树" class="headerlink" title="什么是线段树，为什么要用线段树"></a>什么是线段树，为什么要用线段树</h1><p>首先，我们来回答什么是<strong>线段树</strong>。顾名思义，<strong>线段树就是</strong><del>线段构成的🌲</del><strong>用树结构来表示线段</strong>，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。</p>
+<p>举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,20,5]$。现在小明想知道不同编号区间里最贵冰棍的价格，比如：$[0,2]$号最贵冰棍的价格（我们都知道是20）。</p>
+<p>对于用<strong>数组</strong>保存的冰棍价格，他就需要遍历下标$[0,2]$，找出其中最大的数。</p>
+<p>现在来考虑<strong>线段树</strong>。线段树是一个树结构，用下图来表示：</p>
+<p><img src="/重修数据结构：线段树/001.png" alt="线段树"></p>
+<p>线段树的节点中保存的不仅仅是这个区间，其中也保存了这个区间里面最贵的冰棍的价格。现在我们想知道$[0,2]$区间最贵的冰棍的价格，我们找到区间$[0,1]$与$[2,2]$，因为这两个区间合并就是我们要搜索的区间，这两个对应的节点中的值取更大的那个，就是我们想知道的值。</p>
+<p>从上面的例子可以看出，线段树所需要比较重要的性质就是<strong>局部的值会影响全局的值</strong>。比如说对于冰棍，我们想要查询的是编号$i$到$j$的最贵冰棍的价格，这样$[i,j]$区间内的值会被其中最贵冰棍的价格所影响，这个最贵价格会被保存在$[i,j]$区间中，这种情况下才适合使用线段树。<strong>准确而言，线段树解决的问题类型是：一维空间上的几何统计。</strong></p>
+<h1 id="线段树的使用"><a href="#线段树的使用" class="headerlink" title="线段树的使用"></a>线段树的使用</h1><h2 id="构建一棵线段树"><a href="#构建一棵线段树" class="headerlink" title="构建一棵线段树"></a>构建一棵线段树</h2><p>扯了一个我感觉还算过得去的例子后，我们来看看怎么构建一棵线段树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct SegmentTreeNode&#123;</span><br><span class="line">    int start, end, max;            // 区间左边界，右边界与[start,end]之间的最大值</span><br><span class="line">    SegmentTreeNode *left, *right;  // 节点的左右子节点</span><br><span class="line">    // 构造函数</span><br><span class="line">    SegmentTreeNode(int start, int end, int max)&#123;</span><br><span class="line">        this.start = start;</span><br><span class="line">        this.end = end;</span><br><span class="line">        this.max = max;</span><br><span class="line">        this.left = this.right = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结构体中定义了这棵树所表示的区间$[\mathrm{start},\mathrm{end}]$以及这个区间中最贵的冰棍的价格$\mathrm{max}$</p>
+<p>好了，现在要用给定的数组来初始化这棵线段树，主要体现一种递归的思想</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 主函数：递归创建一棵线段树</span><br><span class="line">SegmentTreeNode build(vector&lt;int&gt; A)&#123;</span><br><span class="line">    buildNode()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 递归构建树节点</span><br><span class="line">SegmentTreeNode buildNode(int left, int right, vector&lt;int&gt; &amp;A)&#123;</span><br><span class="line">    // 如果超出边界，返回null</span><br><span class="line">    if(left &gt; right) return null;</span><br><span class="line"></span><br><span class="line">    // 如果节点有意义，创建根节点，并用区间最左边的值初始化</span><br><span class="line">    SegmentTreeNode root = new SegmentTreeNode(left, right, A[left]);</span><br><span class="line">    // 检验节点是否为叶子节点，若是则直接返回（已经初始化完毕了这个节点的所有属性值）</span><br><span class="line">    if(left == right) return root;</span><br><span class="line"></span><br><span class="line">    // 从中间对区间进行切分，递归创建当前节点的左右子节点</span><br><span class="line">    int mid = (left+right)/2;</span><br><span class="line">    root.left = buildNode(left, mid, A);</span><br><span class="line">    root.right = buildNode(mid+1, right, A);</span><br><span class="line">    root.max = max(root.left.max, root.right.max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树的更新"><a href="#线段树的更新" class="headerlink" title="线段树的更新"></a>线段树的更新</h2><p>在上面，我们已经使用了一个给定的数组$A$初始化了一棵线段树，树节点中的$\mathrm{max}$属性是树节点对应区间中的最大值。</p>
+<p>现在的问题是，用来创建线段树的数组$A$发生了改变，怎么更新这棵线段树呢？<strong>还是使用递归的方式</strong>。具体的，我们从根节点开始一路查询所有包含被更新节点的区间，然后把这些区间里面的值全部更新一遍，由于树深为$\mathrm{log}_2n$，所以更新的时间复杂度是$\mathrm{log}_2n$。</p>
+<p>下面是具体的实现代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 传入当前所在的区间，被更改数字在$A$中的下标，以及更改后的数字value</span><br><span class="line">void update(SegmentTreeNode root, int index, int value)&#123;</span><br><span class="line">    // 如果这个节点是叶子节点，并且是要修改的结点，就进行修改，并直接返回</span><br><span class="line">    if(root.start==root.end &amp;&amp; root.start==index)&#123;root.max = value; return;&#125;</span><br><span class="line"></span><br><span class="line">    // 开始分割区间，进行递归的修改</span><br><span class="line">    int mid = (root.start+root.end)/2;</span><br><span class="line">    // 被修改的节点在当前区间的左子区间</span><br><span class="line">    if(index &lt;= mid) update(root.left, index, value);</span><br><span class="line">    // 被修改的节点在当前区间的右子区间</span><br><span class="line">    else update(root.right, index, value);</span><br><span class="line"></span><br><span class="line">    // 更新当前节点的max值</span><br><span class="line">    root.max = max(root.max, value);</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树的使用：查询"><a href="#线段树的使用：查询" class="headerlink" title="线段树的使用：查询"></a>线段树的使用：查询</h2><p>终于讲到了线段树被使用的最终目的：<strong>查询</strong>了。正如更新一样，线段树的查询也是沿着一棵树向下查，因此时间复杂度仅仅是$\mathrm{log}_2n$（这也是线段树比数组优越的根本原因！）</p>
+<p>查询的区间可能出现一半在左子区间，一半又有部分在右子区间的情况，总之可能正好不被包在一个节点里面，所以我们需要设计递归查找的逻辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 线段树的节点，以及待查询的左右子区间</span><br><span class="line">int query(SegmentTreeNode root, int start, int end)&#123;</span><br><span class="line">    // 情况1：当前节点区间完全在待查询区间内，它成为待查询结果的一种候选结果，直接返回这个区间</span><br><span class="line">    if(root.start&gt;=start &amp;&amp; root.end&lt;=end) return root.max;</span><br><span class="line"></span><br><span class="line">    // 对于其他情况，要对线段树进行分割</span><br><span class="line">    int mid = (root.start+root.end)/2;</span><br><span class="line">    int res = INT_MIN;      // 初始化查询结果</span><br><span class="line">    // 要继续向下分割直到待查询区间完全包裹住某一节点为止——最差的情况是只包裹住了叶子节点</span><br><span class="line">    if(mid &gt;= start) res = max(res, query(root.left, start, end));</span><br><span class="line">    if(mid+1 &lt;= end) res = max(res, query(root.right, start, end));</span><br><span class="line">    // 返回查询结果</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树编程总结"><a href="#线段树编程总结" class="headerlink" title="线段树编程总结"></a>线段树编程总结</h2><p>对上面的内容进行一下实践上的总结。要创建并使用一棵线段树，我们需要编写这些代码：</p>
+<ol>
+<li><strong>建立线段树的结构(struct定义)</strong>：即包括左右区间的范围，待统计的值，以及左右子节点的指针</li>
+<li><strong>初始化线段树(init函数)</strong>：要根据当前的数组来初始化线段树</li>
+<li><strong>更新线段树(update函数)</strong>：当数组可能发生改变时，要编写修改线段树的函数<em>否则不用写这个函数</em></li>
+<li><strong>最最重要的，对线段树执行查询(query函数)</strong>：即对于一个输入的区间，我们要使用线段树来查询这个区间里面的统计值是多少</li>
+</ol>
+<h1 id="没那么简单"><a href="#没那么简单" class="headerlink" title="没那么简单"></a>没那么简单</h1><p>上面的线段树实现我都用二级标题，肯定不是因为我强迫症发作，而是我在学习线段树资料的时候，看到了网上所流传的<strong>清华大学-张昆玮</strong>的一份讲述线段树的PPT，其中把线段树的诸般变化和优化讲述的神乎其神。在这里占个坑，待我 <del>有空</del> 仔细研读后再来更新。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="#">统计的力量-线段树.张昆玮.清华大学 （此处没有超链接请勿点击）</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Kick-Start-2018-Practice-Round/" rel="next" title="Kick Start 2018-Practice Round">
+                <i class="fa fa-chevron-left"></i> Kick Start 2018-Practice Round
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是线段树，为什么要用线段树"><span class="nav-number">1.</span> <span class="nav-text">什么是线段树，为什么要用线段树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线段树的使用"><span class="nav-number">2.</span> <span class="nav-text">线段树的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构建一棵线段树"><span class="nav-number">2.1.</span> <span class="nav-text">构建一棵线段树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线段树的更新"><span class="nav-number">2.2.</span> <span class="nav-text">线段树的更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线段树的使用：查询"><span class="nav-number">2.3.</span> <span class="nav-text">线段树的使用：查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线段树编程总结"><span class="nav-number">2.4.</span> <span class="nav-text">线段树编程总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#没那么简单"><span class="nav-number">3.</span> <span class="nav-text">没那么简单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
