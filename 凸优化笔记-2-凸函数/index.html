@@ -3,7 +3,7 @@
 
 
 
-<html class="theme-next gemini" lang="">
+<html class="theme-next gemini" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下把。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta name="description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
 <meta name="keywords" content="凸优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="凸优化笔记(2): 凸函数">
 <meta property="og:url" content="/凸优化笔记-2-凸函数/index.html">
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
-<meta property="og:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下把。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-06T13:09:30.491Z">
+<meta property="og:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-08T01:46:18.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="凸优化笔记(2): 凸函数">
-<meta name="twitter:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下把。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta name="twitter:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
 
 
 
@@ -104,7 +104,7 @@
     motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -136,7 +136,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            Home
+            首页
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            Categories
+            分类
           </a>
         </li>
       
@@ -224,7 +224,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -284,21 +284,35 @@
         <div class="post-meta">
           <span class="post-time">
             
+            
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表时间</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-06T14:44:19+08:00">
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-06T14:44:19+08:00">
                 2018-12-06
               </time>
             
 
             
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2018-12-08T09:46:18+08:00" content="2018-12-08">
+                2018-12-08
+              </time>
+            </span>
+            
 
             
           </span>
+          
 
           
             <span class="post-category">
@@ -309,7 +323,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类</span>
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
@@ -351,9 +365,10 @@
 
       
         <p>让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。</p>
-<p>写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下把。</p>
+<p>写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。</p>
 <h1 id="基本性质与例子"><a href="#基本性质与例子" class="headerlink" title="基本性质与例子"></a>基本性质与例子</h1><p>首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigraph)<del>这个中译有点无力吐槽</del>说明了凸函数与凸集之间的关系，最后对Jensen不等式进行了简要论述。</p>
 <p>按我的理解，这一小节其实是给出了证明一个函数是凸函数的三种方法：定义，一阶条件与二阶条件。</p>
+<a id="more"></a>
 <h2 id="凸函数与扩展值延伸"><a href="#凸函数与扩展值延伸" class="headerlink" title="凸函数与扩展值延伸"></a>凸函数与扩展值延伸</h2><p>给出如下定义：一个函数$f:R^n\rightarrow R$是<strong>凸</strong>的，如果：</p>
 <ol>
 <li>$x$的定义域是凸集，即$x$的取值范围是凸集</li>
@@ -487,10 +502,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -510,8 +525,8 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
@@ -521,8 +536,8 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
                 </a>
               </div>
             
@@ -532,8 +547,8 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
                 </a>
               </div>
             
