@@ -86,7 +86,7 @@
 <meta property="og:description" content="什么是线段树，为什么要用线段树首先，我们来回答什么是线段树。顾名思义，线段树就是线段构成的🌲用树结构来表示线段，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。 举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/重修数据结构：线段树/001.png">
-<meta property="og:updated_time" content="2018-12-08T01:46:29.615Z">
+<meta property="og:updated_time" content="2018-12-08T05:03:48.046Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重修数据结构：线段树">
 <meta name="twitter:description" content="什么是线段树，为什么要用线段树首先，我们来回答什么是线段树。顾名思义，线段树就是线段构成的🌲用树结构来表示线段，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。 举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,">
@@ -306,7 +306,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-08T09:46:29+08:00" content="2018-12-08">
+              <time itemprop="dateUpdated" datetime="2018-12-08T13:03:48+08:00" content="2018-12-08">
                 2018-12-08
               </time>
             </span>
@@ -370,10 +370,14 @@
 <p>举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,20,5]$。现在小明想知道不同编号区间里最贵冰棍的价格，比如：$[0,2]$号最贵冰棍的价格（我们都知道是20）。</p>
 <a id="more"></a>
 <p>对于用<strong>数组</strong>保存的冰棍价格，他就需要遍历下标$[0,2]$，找出其中最大的数。</p>
-<p>现在来考虑<strong>线段树</strong>。线段树是一个树结构，用下图来表示：</p>
+<p>那么用线段树怎么寻找最贵的冰棍呢？来考虑<strong>线段树</strong>（用下图来表示）：</p>
 <p><img src="/重修数据结构：线段树/001.png" alt="线段树"></p>
-<p>线段树的节点中保存的不仅仅是这个区间，其中也保存了这个区间里面最贵的冰棍的价格。现在我们想知道$[0,2]$区间最贵的冰棍的价格，我们找到区间$[0,1]$与$[2,2]$，因为这两个区间合并就是我们要搜索的区间，这两个对应的节点中的值取更大的那个，就是我们想知道的值。</p>
-<p>从上面的例子可以看出，线段树所需要比较重要的性质就是<strong>局部的值会影响全局的值</strong>。比如说对于冰棍，我们想要查询的是编号$i$到$j$的最贵冰棍的价格，这样$[i,j]$区间内的值会被其中最贵冰棍的价格所影响，这个最贵价格会被保存在$[i,j]$区间中，这种情况下才适合使用线段树。<strong>准确而言，线段树解决的问题类型是：一维空间上的几何统计。</strong></p>
+<p>线段树的节点中保存的不仅仅是这个区间，其中也保存了这个区间里面最贵的冰棍的价格。现在我们想知道$[0,2]$区间最贵的冰棍的价格。</p>
+<p>首先从树的根节点$[0,3]$开始找起，$[0,3]$中保存的值是编号$0\sim 3$的冰棍的最贵价格，显然是20（这个20是在构建这棵树的时候就已经算得并且保存进去的，下文中会阐述如何计算），但是这个20并不是我们想知道的答案，为什么呢，因为编号$0\sim 3$号冰棍的最贵价格是20，并不能说明$0\sim 2$号冰棍的最贵价格也是20——有可能3号冰棍的价格是20，此时我们的计算结果就是不正确的，这个很好理解。所以从根节点中找不到我们想要的答案，我们继续往下搜索：</p>
+<p>先考虑左子节点表示的区间$[0,1]$，这个区间是在我们要找的区间$[0,2]$之内的，所以前者的最贵价格一定可以给我们的答案提供一个参考，我们记录这个结果：$[0,1]$区间的最贵价格是15。</p>
+<p>继续考虑$[0,3]$的右子节点，表示的区间是$[2,3]$。和上面的分析相同，这个节点中的结果不能表征$[0,2]$的冰棍（因为3号冰棍还在里面呢），我们继续向下寻找。此时$[2,3]$的左子节点表示的区间是$[2,2]$，它其实是一个叶子节点，代表了2号冰棍，这个节点中存储的是$[2,2]$区间里的冰棍最贵价格——其实就是2号冰棍的价格，这个区间是在要求的$[0,2]$之内的，我们把这个值记录下来，为最终结果提供参考，这个值是：20。最后，$[2,3]$的右子节点$[3,3]$（也就是3号冰棍）完全不在我们要考虑的区间内，把它抛弃就是了。</p>
+<p>最后我们获得了两个信息：区间$[0,1]$的最贵价格是15，以及区间$[2,2]$的最贵价格是20。我们要求的是区间$[0,2]$的最贵冰棍价格，那取这两个价格中更大的那个就是了，最终我们的结果就是：区间$[0,2]$的冰棍中最贵价格是$\mathrm{max}(15,20)=20$。</p>
+<p>从上面的例子可以看出，线段树所需要比较重要的性质就是<strong>局部的值会影响全局的值</strong>。比如说对于冰棍，我们想要查询的是编号$i$到$j$的最贵冰棍的价格，这样$[i,j]$区间内的值会被其中最贵冰棍的价格所影响，这个最贵价格会被保存在$[i,j]$区间中，这种情况下才适合使用线段树，另外一般还有：求区间的最小值，求区间的和等等。<strong>准确而言，线段树解决的问题类型是：一维空间上的几何统计。</strong></p>
 <h1 id="线段树的使用"><a href="#线段树的使用" class="headerlink" title="线段树的使用"></a>线段树的使用</h1><h2 id="构建一棵线段树"><a href="#构建一棵线段树" class="headerlink" title="构建一棵线段树"></a>构建一棵线段树</h2><p>扯了一个我感觉还算过得去的例子后，我们来看看怎么构建一棵线段树</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct SegmentTreeNode&#123;</span><br><span class="line">    int start, end, max;            // 区间左边界，右边界与[start,end]之间的最大值</span><br><span class="line">    SegmentTreeNode *left, *right;  // 节点的左右子节点</span><br><span class="line">    // 构造函数</span><br><span class="line">    SegmentTreeNode(int start, int end, int max)&#123;</span><br><span class="line">        this.start = start;</span><br><span class="line">        this.end = end;</span><br><span class="line">        this.max = max;</span><br><span class="line">        this.left = this.right = null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结构体中定义了这棵树所表示的区间$[\mathrm{start},\mathrm{end}]$以及这个区间中最贵的冰棍的价格$\mathrm{max}$</p>
