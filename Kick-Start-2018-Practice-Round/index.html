@@ -88,7 +88,7 @@
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/001.png">
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/002.png">
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/003.png">
-<meta property="og:updated_time" content="2018-12-08T05:11:23.267Z">
+<meta property="og:updated_time" content="2018-12-08T05:12:27.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kick Start 2018-Practice Round">
 <meta name="twitter:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
@@ -308,7 +308,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-08T13:11:23+08:00" content="2018-12-08">
+              <time itemprop="dateUpdated" datetime="2018-12-08T13:12:27+08:00" content="2018-12-08">
                 2018-12-08
               </time>
             </span>
@@ -408,10 +408,10 @@
 <p>存在一些城市，从1开始向后编号。现在有$N$辆公交车，其中第$i$辆公交从城市编号$A_i$开往$B_i$（前后都能取到），那么现在问城市$j$有几辆公交车可以到达。</p>
 </blockquote>
 <h2 id="拍脑袋：Brute-Force"><a href="#拍脑袋：Brute-Force" class="headerlink" title="拍脑袋：Brute Force"></a>拍脑袋：Brute Force</h2><p>最容易想到的解法是这样的：</p>
-<pre><code>开辟一个数组，表示每个城市有几辆公交可以到达，城市有多少我数组就开多大。数组的值初始化为0。
-每读入一个数据，比如第$5$辆公交车从$10$开往$15$，那就把下标是$10$到$15$的数组中的数字全部增加1。
-对所有的公交车都处理完毕之后，能到达第$i$座城市的公交车数量，就是数组中下标为$i$元素的值。
-</code></pre><p>啊，好简单，然后写了代码，测试了一下，居然还过了。 <del>这是我个人的一小步，是Brute Force掌控世界的一大步</del></p>
+<blockquote>
+<p>开辟一个数组，表示每个城市有几辆公交可以到达，城市有多少我数组就开多大。数组的值初始化为0。<br>每读入一个数据，比如第$5$辆公交车从$10$开往$15$，那就把下标是$10$到$15$的数组中的数字全部增加1。<br>对所有的公交车都处理完毕之后，能到达第$i$座城市的公交车数量，就是数组中下标为$i$元素的值。</p>
+</blockquote>
+<p>啊，好简单，然后写了代码，测试了一下，居然还过了。 <del>这是我个人的一小步，是Brute Force掌控世界的一大步</del></p>
 <p><img src="/Kick-Start-2018-Practice-Round/001.png" alt="small case"></p>
 <p><img src="/Kick-Start-2018-Practice-Round/002.png" alt="large case"></p>
 <p>然而如果不欺骗自己的话，就能想到这个办法是很愚蠢的。因为我不想一一列举这个方法有多愚蠢就像我不想证明自己很愚蠢一样，所以我只是说明一下结果，这个方法会因为城市数的增加以及一些不好的数据（比如所有公交车能到达的两个城市都隔得很远）等情况，导致时间复杂度太高而解不出题目来。</p>
