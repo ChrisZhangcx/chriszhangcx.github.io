@@ -88,7 +88,7 @@
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/001.png">
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/002.png">
 <meta property="og:image" content="/Kick-Start-2018-Practice-Round/003.png">
-<meta property="og:updated_time" content="2018-12-08T05:12:27.969Z">
+<meta property="og:updated_time" content="2018-12-08T05:13:48.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kick Start 2018-Practice Round">
 <meta name="twitter:description" content="Google的Competitions with Google上有三个类型的练习：  Hash Code: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? Of course I am not. Code Jam: 编程果酱？？ 反正就是用多轮的算法问题来进">
@@ -308,7 +308,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-08T13:12:27+08:00" content="2018-12-08">
+              <time itemprop="dateUpdated" datetime="2018-12-08T13:13:48+08:00" content="2018-12-08">
                 2018-12-08
               </time>
             </span>
@@ -420,7 +420,7 @@
 <p>为什么会想到用线段树来做这道题呢？其实我也不知道……因为如我在线段树博文中所说的，这道题其实是不满足<strong>局部影响全局的特性的</strong>。如果要找到一个影响全局的值，那可以设置为：经过这个区间的公交的总数(sum)，但是最后查询却不是一个区间，而是一个确定的值——那数组的查询效率是$O(1)$啊！线段树反而要花费$O(\mathrm{log}n)$的时间，为什么要看不起数组呢？</p>
 <p><strong><em>因为我查了网上的解题资料，ACPC的大神们都是用线段树解题的。我和大神的思路差距实在是相去甚远啊，拜服。</em></strong></p>
 <hr>
-<p>大概看了一下大神的代码，就是说使用线段树来存储区间的更新，然后在查询的时候把更新的结果一路向下带到叶子节点中去（是否要向下带要看设置的标志位，向下带之后修改标志位即可）。那么这个解法的时间复杂度是多少呢，如果城市有$m$座，公交车有$n$辆，查询的次数是$k$次。</p>
+<p>大概看了一下<a href="https://blog.csdn.net/maverick1990/article/details/41093921" target="_blank" rel="noopener">大神的代码</a>，就是说使用线段树来存储区间的更新，然后在查询的时候把更新的结果一路向下带到叶子节点中去（是否要向下带要看设置的标志位，向下带之后修改标志位即可）。那么这个解法的时间复杂度是多少呢，如果城市有$m$座，公交车有$n$辆，查询的次数是$k$次。</p>
 <blockquote>
 <p>大神把线段树保存在数组中，数组的下标对应于树的结点编号，也就是说$i$的父节点编号是$i&lt;<1$，子节点编号是$i>&gt;1,i&gt;&gt;1|1$，节省了存储空间（权且作为一个trick吧）</1$，子节点编号是$i></p>
 </blockquote>
