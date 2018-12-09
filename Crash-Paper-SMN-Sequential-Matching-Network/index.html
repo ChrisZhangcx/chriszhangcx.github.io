@@ -88,7 +88,7 @@
 <meta property="og:image" content="/Crash-Paper-SMN-Sequential-Matching-Network/001.png">
 <meta property="og:image" content="/Crash-Paper-SMN-Sequential-Matching-Network/002.png">
 <meta property="og:image" content="/Crash-Paper-SMN-Sequential-Matching-Network/003.png">
-<meta property="og:updated_time" content="2018-12-09T09:38:46.034Z">
+<meta property="og:updated_time" content="2018-12-09T11:47:24.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crash Paper: SMN-Sequential Matching Network">
 <meta name="twitter:description" content="Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots乱七八糟的序BDP课上组长大人布置下来的任务，是要研读这篇论文（因为名字太长了我写在了一级标题里面，让所有人都能第一时间看到它，下面统一使用SMN来指代论文中提出的模型）。我是属于">
@@ -308,7 +308,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-09T17:38:46+08:00" content="2018-12-09">
+              <time itemprop="dateUpdated" datetime="2018-12-09T19:47:24+08:00" content="2018-12-09">
                 2018-12-09
               </time>
             </span>
@@ -373,6 +373,7 @@
 <blockquote>
 <p>目前常用的对话建模方式有检索式、生成式以及两者融合的方式。<br>顾名思义，<strong>检索式</strong>就是对于一个提出的问题，我从当前已经有的资料中搜索出这个问题可能匹配的答案，候选答案可能有多个，但是在对话中最终回复的答案只能是一个，所以需要找到一种最优的算法来对这些候选答案进行筛选，选出可能性最大的那一个。<br><strong>生成式</strong>模型是指我先把目前所有已知的知识用来训练出一个模型，然后不管你说什么，我都用这个模型来解读你的问题，并用模型的输出来回答。<br>最后，<strong>检索与生成相结合的方法</strong>就是把前两者糅合起来，正也因此可以玩得花里胡哨，比如用检索模型获得的候选答案们，我训练一个生成模型来对这些答案排个序，或者用生成模型生成的答案放在检索模型给出的候选答案中，一起参与 <em>谁是大明星</em> 的角逐，又或者对于一个检索式模型获得的答案，我用生成式模型对它进行改进，等等等等。</p>
 </blockquote>
+<a id="more"></a>
 <p>那么好了，下面要讲的SMN属于哪一种模型呢？当然是 <del>两者结合的模型</del> <strong>检索式模型</strong>啦！</p>
 <p><img src="/Crash-Paper-SMN-Sequential-Matching-Network/001.png" alt="没错，正是在下.jpg"></p>
 <p>……</p>
