@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="凸优化,">
+  <meta name="keywords" content="Google,">
 
 
 
@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
-<meta name="keywords" content="凸优化">
+<meta name="description" content="本文是对Google的 Software Engineering Prep Doc 的文档进行解读，好让自己知道面试过程的一些细节与考查内容。  祝你在即将到来的interview中好运！这里是一些对你准备有所帮助的tips，我们希望你能花一点时间来阅读其中的条目与链接。但是要注意，这里的很多内容都来自第三方，这些建议本身没有经过Google的直接认可。">
+<meta name="keywords" content="Google">
 <meta property="og:type" content="article">
-<meta property="og:title" content="凸优化笔记(2): 凸函数">
-<meta property="og:url" content="/凸优化笔记-2-凸函数/index.html">
+<meta property="og:title" content="Internship: 关于Software Engineering Prep Doc">
+<meta property="og:url" content="/Internship-关于Software-Engineering-Prep-Doc/index.html">
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
-<meta property="og:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta property="og:description" content="本文是对Google的 Software Engineering Prep Doc 的文档进行解读，好让自己知道面试过程的一些细节与考查内容。  祝你在即将到来的interview中好运！这里是一些对你准备有所帮助的tips，我们希望你能花一点时间来阅读其中的条目与链接。但是要注意，这里的很多内容都来自第三方，这些建议本身没有经过Google的直接认可。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T01:46:18.562Z">
+<meta property="og:updated_time" content="2018-12-10T09:32:51.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="凸优化笔记(2): 凸函数">
-<meta name="twitter:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta name="twitter:title" content="Internship: 关于Software Engineering Prep Doc">
+<meta name="twitter:description" content="本文是对Google的 Software Engineering Prep Doc 的文档进行解读，好让自己知道面试过程的一些细节与考查内容。  祝你在即将到来的interview中好运！这里是一些对你准备有所帮助的tips，我们希望你能花一点时间来阅读其中的条目与链接。但是要注意，这里的很多内容都来自第三方，这些建议本身没有经过Google的直接认可。">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/凸优化笔记-2-凸函数/">
+  <link rel="canonical" href="/Internship-关于Software-Engineering-Prep-Doc/">
 
 
 
 
 
-  <title>凸优化笔记(2): 凸函数 | 我永远喜欢结城明日奈</title>
+  <title>Internship: 关于Software Engineering Prep Doc | 我永远喜欢结城明日奈</title>
   
 
 
@@ -251,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/凸优化笔记-2-凸函数/">
+    <link itemprop="mainEntityOfPage" href="/Internship-关于Software-Engineering-Prep-Doc/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +268,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">凸优化笔记(2): 凸函数</h1>
+          <h1 class="post-title" itemprop="name headline">Internship: 关于Software Engineering Prep Doc</h1>
         
 
         <div class="post-meta">
@@ -281,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-06T14:44:19+08:00">
-                2018-12-06
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-10T15:27:45+08:00">
+                2018-12-10
               </time>
             
 
@@ -294,8 +294,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-08T09:46:18+08:00" content="2018-12-08">
-                2018-12-08
+              <time itemprop="dateUpdated" datetime="2018-12-10T17:32:51+08:00" content="2018-12-10">
+                2018-12-10
               </time>
             </span>
             
@@ -317,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/凸优化/" itemprop="url" rel="index">
-                    <span itemprop="name">凸优化</span>
+                  <a href="/categories/Internship/" itemprop="url" rel="index">
+                    <span itemprop="name">Internship</span>
                   </a>
                 </span>
 
@@ -354,48 +354,98 @@
       
 
       
-        <p>让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。</p>
-<p>写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。</p>
-<h1 id="基本性质与例子"><a href="#基本性质与例子" class="headerlink" title="基本性质与例子"></a>基本性质与例子</h1><p>首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigraph)<del>这个中译有点无力吐槽</del>说明了凸函数与凸集之间的关系，最后对Jensen不等式进行了简要论述。</p>
-<p>按我的理解，这一小节其实是给出了证明一个函数是凸函数的三种方法：定义，一阶条件与二阶条件。</p>
-<a id="more"></a>
-<h2 id="凸函数与扩展值延伸"><a href="#凸函数与扩展值延伸" class="headerlink" title="凸函数与扩展值延伸"></a>凸函数与扩展值延伸</h2><p>给出如下定义：一个函数$f:R^n\rightarrow R$是<strong>凸</strong>的，如果：</p>
-<ol>
-<li>$x$的定义域是凸集，即$x$的取值范围是凸集</li>
-<li>对于$\forall x, y\in\mathrm{dom} f, \theta\in[0,1]$，有：$f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)$</li>
-</ol>
-<p>特别地，如果2中的不等式中没有等号，称函数是<strong>严格凸的</strong>。</p>
-<p>基于上述定义，我们可以知道：一个仿射函数$f(x)=Ax+b$肯定是凸的——事实上，仿射函数既是凸的也是凹的，因为仿射函数在上式中始终取到等号。</p>
-<p>为了更好的简化符号的描述，书中对凸函数的定义域进行了延伸，即：一个凸函数在其定义域中取到值$f(x)$，而在其它不在定义域的范围内取到$+\infty$。这样的延伸约定不会改变不等式性质，Boyd教授对此是十分推崇的<del>可能数学家对定义域或者论证严谨性都有很高的要求吧我总觉得这些东西无关紧要至少不需要单开一小节来说明TAT</del>。</p>
-<p>另外提到了凸集的<strong>示性函数</strong>，简单说一下，其实顾名思义就是这个函数是用来展示凸性的，所以$x\in C$的部分都取0，表示这些域里是凸的，其它也就是$x\notin C$的部分都取作$+\infty$，和上面的扩展值延伸巧妙的重合了。</p>
-<h2 id="一阶条件"><a href="#一阶条件" class="headerlink" title="一阶条件"></a>一阶条件</h2><p>假设$f$可微（也就是梯度在开集$\mathrm{dom}f$内处处存在），则函数$f$是凸函数的<strong>充要条件</strong>是：$\mathrm{dom}f$是凸集，并且对于任意的$x,y\in\mathrm{dom}f$，有下式成立：</p>
-<script type="math/tex; mode=display">f(y)\geq f(x)+\nabla f(x)^T(y-x)</script><p>Boyd说：上面的不等式说明从一个凸函数的局部信息（即它在某点$x$的函数值与导数），我们可以得到一些全局信息，这也许是凸函数的最重要的信息。比如说我们知道在$x$点的$\nabla f(x)=0$，那么对于所有在$f$定义域中的点$y$，根据不等式都有$f(y)\geq f(x)$，也就是说$x$是函数$f$的全局极小点。</p>
-<p>对一阶条件的充要性的证明可以从构造$g(t)=f(ty+(1-t)x)$着手：对于充分性，有$g(1)\geq g(0)+g^\prime(0)$；必要性直接按步骤推导即可。</p>
-<h2 id="二阶条件"><a href="#二阶条件" class="headerlink" title="二阶条件"></a>二阶条件</h2><p>二阶条件首先要求函数$f$二阶可微，即对于开集$\mathrm{dom}f$内的任意一点，它的Hessian矩阵或者二阶导数$\nabla^2f$存在。</p>
+        <p>本文是对Google的 <code>Software Engineering Prep Doc</code> 的文档进行解读，好让自己知道面试过程的一些细节与考查内容。</p>
 <blockquote>
-<p>关于Hessian矩阵，又称海赛阵，这个名字我在本科数值计算方法里学过但是忘记了，查了查资料试着捡起来：Hessian矩阵是一个二阶偏导数构成的方阵，描述了函数的局部曲率。Hessian具有对称性，因为如果函数$f$在定义域内二阶连续可导，那么二阶偏导数的求导顺序对求导结果没有影响。</p>
+<p>祝你在即将到来的interview中好运！这里是一些对你准备有所帮助的tips，我们希望你能花一点时间来阅读其中的条目与链接。但是要注意，这里的很多内容都来自第三方，这些建议本身没有经过Google的直接认可。</p>
 </blockquote>
-<p>好了，二阶条件实在非常简单，就是Hessian矩阵是半正定阵，即：</p>
-<script type="math/tex; mode=display">\nabla^2f(x)\succeq0</script><p>换句话说，这也是函数$f$是凸的充要条件。</p>
-<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><p>首先给出的是定义在$R$上的凸函数例子：</p>
+<a id="more"></a>
+<h2 id="1-Plan-Ahead"><a href="#1-Plan-Ahead" class="headerlink" title="1. Plan Ahead"></a>1. Plan Ahead</h2><ul>
+<li><strong>电话面试(Phone interview)</strong>：<br>你需要准备一台 <code>有网络连接的电脑</code>。在面试开始前，你会收到一个 <code>Google Doc</code> 的一个链接，在整个面试过程中你都会用到它，大部分是用于 <code>与代码相关的问题</code>。</li>
+<li><strong>现场面试(Onsite interviews)</strong>：<br>确保在面试的早晨准时来到我们的面试地点，准备好接下来 <code>一整天</code> 的 <code>技术类问题</code> ——你也希望在面试中尽力而为吧！</li>
+</ul>
+<h2 id="2-What-to-expect"><a href="#2-What-to-expect" class="headerlink" title="2. What to expect"></a>2. What to expect</h2><p>我们的面试主要考察你的计算机科学原理（包括 <code>编程能力，数据结构，算法，系统设计，复杂度分析</code> 等等），以及 <code>你如何在回答中使用它们</code> ，我们也可能对你在学校里/空闲时所做的项目进行 <code>开放式讨论</code> 。</p>
+<h2 id="3-Interview-Questions"><a href="#3-Interview-Questions" class="headerlink" title="3. Interview Questions"></a>3. Interview Questions</h2><p>面试的内容可能会包括：</p>
 <ul>
-<li><strong>指数函数</strong>：$f(x)=e^{ax}, a,x\in R$是凸的。</li>
-<li><strong>幂函数</strong>：$f(x)=x^a$在$a\in[0,1]$时是$R_{++}$上的凹函数，与之相对，$a\leq 0$或$a\geq 1$时在$R_{++}$上是凸函数。</li>
-<li><strong>绝对值幂函数</strong>：$f(x)=|x|^p$在$p\geq1$时是$R$上的凸函数</li>
-<li><strong>对数函数</strong>$\mathrm{log}x$在$R_{++}$上是凹函数</li>
-<li>etc, 懒得列举了。另外Boyd教授在视频中主要讨论的是四个函数（都是通过二阶Hessian矩阵的性质也就是二阶条件来证明凸/凹性的）<ul>
-<li>二次-线性分式函数$f(x)=x^2/y$，定义域$x\in R, y&gt;0$在$R^n$上是凸函数；</li>
-<li>指数和的对数$f(x)=\mathrm{log}(e^{x_1}+…+e^{x_n})$。Boyd教授提到这个一般用于EE中是为了起一个平滑的作用：把$x_i$看作第$i$个到来的信号，如果这个信号很大，其exp也会很大，所以要求和以后再求对数，来平滑这个很大的信号所造成的影响。</li>
-<li>几何平均：$f(x)=(\prod_{i=1}^nx_i)^{1/n}$，在定义域$R^n_{++}$上是凹函数；</li>
-<li>对数行列式：$f(x)=\mathrm{log}\mathrm{det}X$在定义域$S^n_{++}$上是凹函数，在视频中还进行了简单的证明。</li>
+<li>你简历中的任何内容</li>
+<li>在白板上回答编程问题</li>
+<li>设计复杂的算法并分析它的性能</li>
+<li>逻辑问题</li>
+<li>系统设计能力</li>
+<li>核心的计算机科学原理（哈希表/堆栈/数组等）</li>
+</ul>
+<p>因为项目的复杂性与规模，拥有上面这些计算机技术的基础是Google所有工程职位的必备条件。</p>
+<p>你可以访问 <strong><a href="https://www.topcoder.com/" target="_blank" rel="noopener">topcode.com</a></strong> 来进行练习，启动 <code>Arena</code> 部件并进入练习的房间即可。我们建议你在 <code>first/second division</code> 来做这些问题，以充分准备你的面试。</p>
+<h2 id="4-How-to-succeed"><a href="#4-How-to-succeed" class="headerlink" title="4. How to succeed"></a>4. How to succeed</h2><p>在Google，我们相信着合作与观点的交流，你有时候可能需要从 <code>面试官</code> 处得到 <code>更多的信息</code> ，来判断 <code>你的结果是否达到了最好</code>。</p>
+<ul>
+<li>询问你的面试官是OK的</li>
+<li>如果你不理解，可以直接寻求 <code>help</code> 或者 <code>clarification</code></li>
+<li>如果你需要对某些事情进行 <code>假设</code> ，可以先询问面试官这个假设是否正确</li>
+<li>在给出回答前，首先按你所理解的 <code>定义</code> 并 <code>构建</code> 问题</li>
+<li>描述你希望如何解决问题的 <code>每个部分</code><blockquote>
+<p>我理解下的回答范例：<br>我要解决的问题是，如何XXX<br>那么要解决这个问题，需要从以下几个方面来考虑：XXX/XXX/XXX<br>首先我们可以XXX，随后XXX，最后XXX，得到最终的结果<br>当然我们需要根据具体情况来选择回答的模式</p>
+</blockquote>
+</li>
+<li>让面试官知道你的 <code>思考过程</code> ——他对你的思考过程和你的最终答案都很感兴趣</li>
+<li>最后，要 <code>注意倾听</code> ，尤其是你的面试官尝试帮助你的时候</li>
+</ul>
+<h2 id="5-What-is-Google-looking-for"><a href="#5-What-is-Google-looking-for" class="headerlink" title="5. What is Google looking for"></a>5. What is Google looking for</h2><p>我们要寻找的工程师要 <code>不仅能解决之前遇到过的问题，也能找出之前没遇到过的问题的答案</code>。</p>
+<p>面试官将结果与思考过程视为同等重要的，你要注意自己是否：</p>
+<ul>
+<li>聆听并理解了问题</li>
+<li>在继续之前是否问了正确的问题</li>
+<li>享受寻找多个答案的过程</li>
+<li>寻找更多的观点与方法来解决这个问题</li>
+<li>看起来容易接受新的观点与建议</li>
+<li>有能力解决更加困难的问题</li>
+</ul>
+<p>Google重视 <code>高效、清晰、简洁的代码</code> 。</p>
+<h2 id="6-Technical-Preparation-tips"><a href="#6-Technical-Preparation-tips" class="headerlink" title="6. Technical Preparation tips"></a>6. Technical Preparation tips</h2><ul>
+<li><strong>算法复杂性</strong>：<br>阅读复杂的算法，包括大O时间复杂度</li>
+<li><strong>排序</strong>：<ul>
+<li>知道如何排序，不要写 <code>冒泡排序</code></li>
+<li>至少知道一种 <script type="math/tex">\mathrm{O}(n \mathrm{log} n)</script> 时间复杂度的排序算法，当然，最好知道两种，比如 <code>快速排序</code> 与 <code>归并排序</code> ——在快速排序不合适的时候，归并排序会很管用</li>
+</ul>
+</li>
+<li><strong>哈希表</strong>：<br>  描述哈希表示是 <code>如何工作</code> 的，使用大概一个面试的时间 <code>使用数组来实现</code> 一个</li>
+<li><strong>树与图</strong>:<ul>
+<li>学习树的 <code>构建，遍历与修改</code> 方法。你需要至少熟悉 <code>二叉树，n叉树与字典树</code> ，你需要了解至少一种 <code>平衡二叉树</code> 的体系，无论是 <code>红黑树、伸展树还是AVL树</code> ，以及它们是 <code>如何实现</code> 的。</li>
+<li>你需要熟悉树的 <code>BFS与DFS</code> ，并且了解 <code>前序、中序与后序遍历</code> 之间的区别。你需要了解它们的 <code>时间复杂度</code> ，它们考虑的情况以及如何在代码中 <code>实现</code> 它们。</li>
+<li>有三种方式在内存中表示一张图： <code>对象与指针</code> <code>邻接矩阵</code> 和 <code>邻接表</code> ，你需要对它们的 <code>表示</code> 与各自的 <code>优缺点</code> 有充分的了解。</li>
+<li>最后，如果有机会，学习一些更好的算法，比如Dijkstra与A*</li>
+</ul>
+</li>
+<li><strong>其它的数据结构</strong>：<br>  当然越多越好。另外需要了解最著名的几个 <code>NP-complete</code> 问题，比如 <code>旅行商问题</code> <code>背包问题</code> ，在面试官变相询问你的时候能够 <code>有效识别它们</code>  </li>
+<li><strong>操作系统、系统编程与并发</strong>：<ul>
+<li><code>进程</code> <code>线程</code> 与 <code>并发</code> 的问题。知道 <code>锁、互斥锁、信号量与监视器</code> 以及 <code>他们是怎么工作的</code> ，知道 <code>死锁与活锁</code> ，以及如何<code>避免死锁</code></li>
+<li>一个 <code>进程/线程需要哪些资源</code> ，如何进行 <code>上下文切换</code> ，以及操作系统与底层硬件如何初始化它们</li>
+<li>了解一些 <code>scheduling</code> 的知识，知道一些线代的 <code>并发结构</code></li>
+</ul>
+</li>
+<li><strong>编程</strong>：<ul>
+<li>对至少一种编程语言十分熟悉</li>
+<li>在面试中，你需要使用你最熟悉的语言 <code>编程</code> ，并且知道许多 <code>语言的细节</code></li>
+</ul>
+</li>
+<li><strong>数据结构与离散数学</strong>：<ul>
+<li>了解 <code>递归</code> 原理并使用它解决问题。与之相对，你要证明一个算法会按你指定的方式工作</li>
+<li>一些 <code>离散数学</code> 中相关的问题，如计数问题、概率问题</li>
+</ul>
+</li>
+<li><strong>系统设计</strong>：<br>  对于一个大问题，把它们 <code>分解成多个小问题</code> ，并且讨论解决这些小问题的方法</li>
+<li><strong>开发实践与开放式讨论</strong>：<ul>
+<li>包括验证设计，白板代码，代码的BUG、可维护性与可读性，代码的重构</li>
+<li>面临的最大问题，最佳/最差设计，表现评估与优化，关于现有产品的测试与想法</li>
 </ul>
 </li>
 </ul>
-<h2 id="下水平集与上境图"><a href="#下水平集与上境图" class="headerlink" title="下水平集与上境图"></a>下水平集与上境图</h2><p><strong>下水平集</strong>就是，对于好好的一个函数，我设定一个y值，然后把所有让函数$f(x)\leq y$的定义域$\mathrm{dom}f$择出来，这其中的性质是：如果函数$f$是凸集，那么它的<strong>任意</strong>下水平集都是凸集——值得注意的是，这个性质反过来是不成立的。</p>
-<p>上境图的翻译实在是无力吐槽，我用实际名词epigraph进行替代吧。<strong>epigraph</strong>就是所有在函数曲线上面的部分。这里直接反映了凸函数和凸集的关系：<strong>一个函数是凸函数，当且仅当这个函数的epigraph是凸集</strong>。</p>
-<h2 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h2><p>讲到这里的时候，Boyd教授忽然介绍了Jensen不等式，然后露出迷之微笑，说，大家可以看到Jensen不等式就是我们的凸函数的定义，在此再抄一遍，就是：</p>
-<script type="math/tex; mode=display">f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)</script><p>当然这里面的元素还可以扩展到多个。</p>
-<p>很多著名的不等式都可以通过把Jensen不等式应用到合适的凸函数来得到。<strong>书中说道：事实上，凸性和Jensen不等式可以构成不等式理论的基础</strong>，我把这句话摘出来并且加粗是因为从我这个数学外行角度来看，这是很厉害的一句话了。书里面举了个例子：对于算术-几何平均的不等式$\sqrt{ab}\leq (a+b)/2$，就是使用了凸性和Jensen不等式对函数$f(x)=-\mathrm{log}x$进行讨论，在$\theta=1/2$时候推导出来的结果。</p>
+<h2 id="7-Ask-more-questions"><a href="#7-Ask-more-questions" class="headerlink" title="7. Ask more questions!"></a>7. Ask more questions!</h2><p>除了Google的主要产品之外，确保对一项产品有自己的理解，详细了解我们在Google的工作。</p>
+<p>在面试的最后，可以问对公司/工作环境/经验有什么问题，可以事先 <code>准备几个要问的问题</code> ，如果对面试流程、薪水或者自己的表现有疑问，可以直接传达给面试人员。</p>
+<h2 id="8-一些个人观点："><a href="#8-一些个人观点：" class="headerlink" title="8. 一些个人观点："></a>8. 一些个人观点：</h2><ul>
+<li>与面试官的沟通是十分重要的，要把自己的思考过程表达出来，如果无法解决要及时寻求帮助</li>
+<li>解答问题时要条理清晰，回答问题的每一个部分</li>
+<li>代码足够的清晰与规范</li>
+<li>多准备数据结构</li>
+</ul>
 
       
     </div>
@@ -413,7 +463,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/凸优化/" rel="tag"># 凸优化</a>
+            <a href="/tags/Google/" rel="tag"># Google</a>
           
         </div>
       
@@ -426,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/凸优化笔记-1-凸集/" rel="next" title="凸优化笔记(1): 凸集">
-                <i class="fa fa-chevron-left"></i> 凸优化笔记(1): 凸集
+              <a href="/Crash-Paper-SMN-Sequential-Matching-Network/" rel="next" title="Crash Paper: SMN-Sequential Matching Network">
+                <i class="fa fa-chevron-left"></i> Crash Paper: SMN-Sequential Matching Network
               </a>
             
           </div>
@@ -435,10 +485,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Kick-Start-2018-Practice-Round/" rel="prev" title="Kick Start 2018-Practice Round">
-                Kick Start 2018-Practice Round <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -589,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本性质与例子"><span class="nav-number">1.</span> <span class="nav-text">基本性质与例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#凸函数与扩展值延伸"><span class="nav-number">1.1.</span> <span class="nav-text">凸函数与扩展值延伸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶条件"><span class="nav-number">1.2.</span> <span class="nav-text">一阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶条件"><span class="nav-number">1.3.</span> <span class="nav-text">二阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">1.4.</span> <span class="nav-text">一些例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下水平集与上境图"><span class="nav-number">1.5.</span> <span class="nav-text">下水平集与上境图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jensen不等式"><span class="nav-number">1.6.</span> <span class="nav-text">Jensen不等式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Plan-Ahead"><span class="nav-number">1.</span> <span class="nav-text">1. Plan Ahead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-What-to-expect"><span class="nav-number">2.</span> <span class="nav-text">2. What to expect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Interview-Questions"><span class="nav-number">3.</span> <span class="nav-text">3. Interview Questions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-How-to-succeed"><span class="nav-number">4.</span> <span class="nav-text">4. How to succeed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-What-is-Google-looking-for"><span class="nav-number">5.</span> <span class="nav-text">5. What is Google looking for</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Technical-Preparation-tips"><span class="nav-number">6.</span> <span class="nav-text">6. Technical Preparation tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Ask-more-questions"><span class="nav-number">7.</span> <span class="nav-text">7. Ask more questions!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-一些个人观点："><span class="nav-number">8.</span> <span class="nav-text">8. 一些个人观点：</span></a></li></ol></div>
             
 
           </div>
