@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="什么解题笔记，完全是抄答案笔记 我好菜啊 啊啊啊啊啊啊啊啊啊 89. 格雷编码给定数字$n$，把$0\sim 2^n-1$构成一个全排列。要求全排列相邻数字两两之间的二进制表示有且只有一位不同。  比如，给定$n=2$，则要获得一个$0,1,2,3$的全排列，答案$[0,1,3,2]$符合要求，因为$00,01,11,10$符合相邻二进制只有一位不同的情况（这也是题目叫做 格雷码 的原因）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-10T14:29:37.800Z">
+<meta property="og:updated_time" content="2018-12-12T14:07:15.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode: 89-100解题笔记">
 <meta name="twitter:description" content="什么解题笔记，完全是抄答案笔记 我好菜啊 啊啊啊啊啊啊啊啊啊 89. 格雷编码给定数字$n$，把$0\sim 2^n-1$构成一个全排列。要求全排列相邻数字两两之间的二进制表示有且只有一位不同。  比如，给定$n=2$，则要获得一个$0,1,2,3$的全排列，答案$[0,1,3,2]$符合要求，因为$00,01,11,10$符合相邻二进制只有一位不同的情况（这也是题目叫做 格雷码 的原因）">
@@ -294,8 +294,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-10T22:29:37+08:00" content="2018-12-10">
-                2018-12-10
+              <time itemprop="dateUpdated" datetime="2018-12-12T22:07:15+08:00" content="2018-12-12">
+                2018-12-12
               </time>
             </span>
             
@@ -382,7 +382,61 @@
 <li>整个递归函数的参数传递以及边界条件的设置是我要学习的地方。</li>
 </ul>
 <p>下面专门贴上递归部分的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 传入参数：当前的子集，整个数组元素（排过序的），当前待添加元素在数组中的下标</span><br><span class="line">void dfs(vector&lt;int&gt;&amp;temp, vector&lt;int&gt;&amp; nums, int index)&#123;</span><br><span class="line">    res.push_back(temp);</span><br><span class="line">    </span><br><span class="line">    for(int i=index;i&lt;nums.size();i++)&#123;</span><br><span class="line">        if(i &gt; index &amp;&amp; nums[i] == nums[i-1]) continue;</span><br><span class="line">        temp.push_back(nums[i]);</span><br><span class="line">        dfs(temp, nums, i+1);</span><br><span class="line">        temp.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">    return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传入参数：当前的子集，整个数组元素（排过序的），当前待添加元素在数组中的下标</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;temp, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    res.push_back(temp);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=index;i&lt;nums.size();i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i &gt; index &amp;&amp; nums[i] == nums[i<span class="number">-1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">        temp.push_back(nums[i]);</span><br><span class="line">        dfs(temp, nums, i+<span class="number">1</span>);</span><br><span class="line">        temp.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="91-解码方法"><a href="#91-解码方法" class="headerlink" title="91. 解码方法"></a>91. 解码方法</h2><p>说字母$A\sim Z$能够分别被编码成$1\sim26$，那么给一个数字构成的非空字符串，问能解码的方法数有多少个？</p>
+<p><del>网上说</del> 这其实是个动态规划的问题，假设已经知道了前$i$个字符串能够解码的方法数$\mathrm{dp[i]}$，现在要求$i+1$，需要考虑下面的情况：</p>
+<ol>
+<li>新字符与前一个字符能否构成一个有解码意义的数字。</li>
+<li>如果具备解码意义，当前字符能够独立构成一个具备解码意义的数字（说的就是你！字符0！）</li>
+</ol>
+<p>具体而言，对于一个新加入的字符$i+1$，我们结合前一个已经知道的字符$i$构成一个数字$n$，动态规划的递推方程是这样的：</p>
+<ul>
+<li>如果$n&gt;26$，说明当前字符与前一个字符不能构成解码的意义，此时：<blockquote>
+<p>如果当前字符为0，则当前字符串已经<strong>无法进行解码</strong>——此时实际$n=30/40/…/90$。<br>如果当前字符不为0，则当前字符能够单独成为一个解码后的字母，此时$dp[i+1]=dp[i]$，因为新到来的字符无法产生一种新的解码方式——此时$n&gt;26且n\mathrm{mod}\neq0$。</p>
+</blockquote>
+</li>
+</ul>
+<p>下面的所有情况中，都保证了$n\leq26$，但还有其它情况需要考虑：</p>
+<ul>
+<li>如果字符$i=0$，说明当前字符无法与字符$i$构成一个可解码的字符：<blockquote>
+<p>如果当前字符为0，则字符串$n=00$没有意义，当前字符串已经<strong>无法进行解码</strong>。<br>如果当前字符不为0，则当前字符能够单独成为一个解码后的字母，此时$dp[i+1]=dp[i]$——这种情况下，实际的$1\leq n\leq 9$。</p>
+</blockquote>
+</li>
+<li>如果字符$i\neq0$，则还有两种情况需要考虑：<blockquote>
+<p>如果当前字符为0，则当前字符不能单独进行解码（因为字符0没有意义），但是能配合字符$i$进行解码，所以没有增加解码方式，$dp[i+1]=dp[i-1]$——此时$n=10/20$<br>如果当前字符不为0，则当前字符能够配合上一个字符进行解码，此外自己也具备解码意义，所以$dp[i+1]=dp[i-1]+dp[i]$——$n=11\sim19/21\sim26$</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="92-反转链表"><a href="#92-反转链表" class="headerlink" title="92. 反转链表"></a>92. 反转链表</h2><p><code>不会做，感觉自己对链表系列的题目都不怎么熟练，等针对性练习后再来补全。</code></p>
+<h2 id="93-复原IP地址"><a href="#93-复原IP地址" class="headerlink" title="93. 复原IP地址"></a>93. 复原IP地址</h2><p>判断一个字符串是否能被复原成一个IP地址。首先从数字的位数初步判断，然后在三个不同点插入三个标记，将字符串分割成四个部分，然后判断这四个部分是否都在$[0,255]$之间就可以了。</p>
+<h2 id="94-二叉树的中序遍历"><a href="#94-二叉树的中序遍历" class="headerlink" title="94. 二叉树的中序遍历"></a>94. 二叉树的中序遍历</h2><p>题目本身很简单，但是附加部分有一点值得仔细思考一下：如果不用递归方式，而是用迭代的方式来求，怎么求呢？</p>
+<p>简单说一下：就是 <code>栈</code> 。</p>
+<p>具体地，对于一个二叉树，如果要求它的中序遍历（也就是’左中右’），可以对于一棵树，分别把它的右子结点、自身、左子节点压栈；每次从栈中弹出一个元素：如果这个元素是第一次被压栈，并且还有左右子节点，迭代地继续压栈，否则就把它输出。如果这个元素是第二次压栈，那么这一次它仅仅只是输出，不再继续入栈。</p>
+<p>为了实现判断一个节点是第一次入栈还是第二次入栈，我们需要定义一个结构体：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inorderNode</span>&#123;</span></span><br><span class="line">    TreeNode *root;</span><br><span class="line">    <span class="keyword">bool</span> scaned;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="95-amp-96-不同的二叉搜索树"><a href="#95-amp-96-不同的二叉搜索树" class="headerlink" title="95&amp;96. 不同的二叉搜索树"></a>95&amp;96. 不同的二叉搜索树</h2><p><code>同样占坑，等自己回头补完后再来补全。</code></p>
+<h2 id="97-交错字符串"><a href="#97-交错字符串" class="headerlink" title="97. 交错字符串"></a>97. 交错字符串</h2><p><code>难题先搁置</code></p>
+<h2 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a>98. 验证二叉搜索树</h2><p>要判断一棵树是否是有效的二叉搜索树。一棵二叉搜索树具有如下的特征：</p>
+<ol>
+<li>节点的左子树只包含小于当前节点的数。</li>
+<li>节点的右子树只包含大于当前节点的数。</li>
+<li>所有左子树和右子树自身必须也是二叉搜索树。</li>
+</ol>
+<p>解题很简单，对树进行中序遍历，如果遍历的节点元素序列严格递增，则该树是一棵二叉搜索树，否则就不是。</p>
+<h2 id="99-恢复二叉搜索树"><a href="#99-恢复二叉搜索树" class="headerlink" title="99. 恢复二叉搜索树"></a>99. 恢复二叉搜索树</h2><p>一个二叉搜索树里面有两个节点被人为交换了，所以它已经不再是一棵二叉搜索树了，问如何把这棵树恢复回去。</p>
+<p>首先我们还是进行中序遍历。中序遍历之后对于获得的结点值序列，存在两种情况：</p>
+<ol>
+<li>序列中只存在一个逆序对，如：$1,2,3,5,4,6,7,8$。</li>
+<li>序列中存在两个逆序对，如：$1,2,6,4,5,3,7,8$。</li>
+</ol>
+<p>对于前一种情况，我们可以知道就是逆序对的两个元素进行了互换；而后面一种情况，就是 <code>第一个逆序对的前面那个元素</code> ，与 <code>第二个逆序对的后面那个元素</code> 进行了交换。</p>
+<p>找到这两个元素值之后，接下来我们重新扫描一遍树，找到值为这两个元素的两个节点，然后把这两个节点中的元素值进行交换就可以了。 <del>刚开始做的时候我还傻乎乎的想把两个节点的链接关系也给换掉，或许是受到链表系列习题的荼毒太深了吧🤦‍</del></p>
+<h2 id="100-相同的树"><a href="#100-相同的树" class="headerlink" title="100. 相同的树"></a>100. 相同的树</h2><p>判断两棵树是否相同。</p>
+<p>这个很简单，两种实现方式：</p>
+<ol>
+<li>因为树的前序+中序/中序+后序遍历能够唯一确定一棵树，我们只需要给出两棵树的四个遍历结果，然后比较是否相同就可以了。</li>
+<li>使用逐个比较的方式依次比较树的每个节点值以及结构是否相同。</li>
+</ol>
 
       
     </div>
@@ -574,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#89-格雷编码"><span class="nav-number">1.</span> <span class="nav-text">89. 格雷编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#90-子集II"><span class="nav-number">2.</span> <span class="nav-text">90. 子集II</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#89-格雷编码"><span class="nav-number">1.</span> <span class="nav-text">89. 格雷编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#90-子集II"><span class="nav-number">2.</span> <span class="nav-text">90. 子集II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#91-解码方法"><span class="nav-number">3.</span> <span class="nav-text">91. 解码方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#92-反转链表"><span class="nav-number">4.</span> <span class="nav-text">92. 反转链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#93-复原IP地址"><span class="nav-number">5.</span> <span class="nav-text">93. 复原IP地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#94-二叉树的中序遍历"><span class="nav-number">6.</span> <span class="nav-text">94. 二叉树的中序遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#95-amp-96-不同的二叉搜索树"><span class="nav-number">7.</span> <span class="nav-text">95&amp;96. 不同的二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#97-交错字符串"><span class="nav-number">8.</span> <span class="nav-text">97. 交错字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#98-验证二叉搜索树"><span class="nav-number">9.</span> <span class="nav-text">98. 验证二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#99-恢复二叉搜索树"><span class="nav-number">10.</span> <span class="nav-text">99. 恢复二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#100-相同的树"><span class="nav-number">11.</span> <span class="nav-text">100. 相同的树</span></a></li></ol></div>
             
 
           </div>
