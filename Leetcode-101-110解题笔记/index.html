@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方式，判断左右子树是否是对称的。">
+<meta name="description" content="$101\sim110$是树的系列，做惯了以后会感到蜜汁畅快。果然简单题是成就感的来源啊。 101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方">
 <meta name="keywords" content="Leetcode,算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode: 101-110解题笔记">
 <meta property="og:url" content="/Leetcode-101-110解题笔记/index.html">
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
-<meta property="og:description" content="101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方式，判断左右子树是否是对称的。">
+<meta property="og:description" content="$101\sim110$是树的系列，做惯了以后会感到蜜汁畅快。果然简单题是成就感的来源啊。 101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-13T02:55:35.792Z">
+<meta property="og:updated_time" content="2018-12-13T05:52:49.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode: 101-110解题笔记">
-<meta name="twitter:description" content="101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方式，判断左右子树是否是对称的。">
+<meta name="twitter:description" content="$101\sim110$是树的系列，做惯了以后会感到蜜汁畅快。果然简单题是成就感的来源啊。 101. 对称二叉树给两棵树，判断是否对称。思路和上面那题 100. 相同的树 是一样的。还是通过 遍历 和 逐个比较 的方式：  对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。 同样进行递归方">
 
 
 
@@ -294,7 +294,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-13T10:55:35+08:00" content="2018-12-13">
+              <time itemprop="dateUpdated" datetime="2018-12-13T13:52:49+08:00" content="2018-12-13">
                 2018-12-13
               </time>
             </span>
@@ -332,13 +332,14 @@
       
 
       
-        <h2 id="101-对称二叉树"><a href="#101-对称二叉树" class="headerlink" title="101. 对称二叉树"></a>101. 对称二叉树</h2><p>给两棵树，判断是否对称。思路和上面那题 <a href="/Leetcode-89-100解题笔记/">100. 相同的树</a> 是一样的。还是通过 <code>遍历</code> 和 <code>逐个比较</code> 的方式：</p>
+        <p>$101\sim110$是树的系列，做惯了以后会感到蜜汁畅快。果然简单题是成就感的来源啊。</p>
+<h2 id="101-对称二叉树"><a href="#101-对称二叉树" class="headerlink" title="101. 对称二叉树"></a>101. 对称二叉树</h2><p>给两棵树，判断是否对称。思路和上面那题 <a href="/Leetcode-89-100解题笔记/">100. 相同的树</a> 是一样的。还是通过 <code>遍历</code> 和 <code>逐个比较</code> 的方式：</p>
 <ol>
 <li>对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。</li>
 <li>同样进行递归方式，判断左右子树是否是<strong>对称</strong>的。</li>
 </ol>
-<a id="more"></a>
 <h2 id="102-二叉树的层次遍历"><a href="#102-二叉树的层次遍历" class="headerlink" title="102. 二叉树的层次遍历"></a>102. 二叉树的层次遍历</h2><p>对一棵二叉树进行层次遍历。这个没什么好说的，用一个 <code>队列</code> 就可以了，每次出队当前节点，再把当前节点的左右子节点依次入队。</p>
+<a id="more"></a>
 <p>本题有一个注意点是<strong>所要求的输出格式不太一样</strong>，不是用一个数组输出，而是不同层的节点要放在一个数组中，然后所有数组合并成一个数组来输出。这就要求在出入队操作时还需要知道自己操作的是哪一层的节点。一个可行的解决办法是：建立一个结构体，保存节点指针与这个节点所在的层。当一个节点出队时，发现层数和上一个节点不一样了，说明来到了一个新的层，这个时候要把已经统计的结点数组加入到结果数组中，并把前者清空。</p>
 <h2 id="103-二叉树的锯齿形遍历"><a href="#103-二叉树的锯齿形遍历" class="headerlink" title="103. 二叉树的锯齿形遍历"></a>103. 二叉树的锯齿形遍历</h2><p>这题和 <code>102</code> 题几乎是一样的，唯一不同的是要求按 <code>左到右、右到左、左到右</code> 的顺序来输出 ，一开始想的是根据层数不同在入队的时候就进行左右和右左的顺序入队处理，后来发现这样<strong>是不对的</strong>，一个更简单并且更好做的方法是：按层次遍历的方法入队，然后对每一个数组，根据它的下标来判断是否进行reverse就可以了。如果数组的下标$\mathrm{i}$满足$\mathrm{i}\%2\neq0$，则将这个数组进行反转。</p>
 <h2 id="104-二叉树的最大深度"><a href="#104-二叉树的最大深度" class="headerlink" title="104. 二叉树的最大深度"></a>104. 二叉树的最大深度</h2><p>没什么好说的，随便一种递归遍历+到边界时更新最大深度即可。</p>
@@ -358,7 +359,24 @@
 <p>对于要输出的二维结果数组，如果有$A=[B, C, D, …]$，其中$B,C,D$是一维数组。<br>执行$\mathrm{reverse}(A)$之后，只会在二维数组层面对数组进行反转，而不会反转嵌套在里面的一维数组的内容。<br>即$\mathrm{reverse}(A)=[…, D, C, B]$——$B,C,D$的元素不会进行反转。</p>
 </blockquote>
 <p><strong>值得注意的是，对于 <code>103. 锯齿形遍历</code> 与 <code>107. 层次遍历II</code> ，哪怕程序要求的输出里面没有嵌套深度，我们也需要对深度进行嵌套，因为这些遍历过程需要对每层进行变换。</strong></p>
-<h2 id="108-有序链表转换二叉搜索树"><a href="#108-有序链表转换二叉搜索树" class="headerlink" title="108. 有序链表转换二叉搜索树"></a>108. 有序链表转换二叉搜索树</h2>
+<h2 id="108-将有序数组转换二叉搜索树"><a href="#108-将有序数组转换二叉搜索树" class="headerlink" title="108. 将有序数组转换二叉搜索树"></a>108. 将有序数组转换二叉搜索树</h2><p>对一个升序排列的数组，构建它的平衡二叉树。采用二分数组的方式递归创建就可以了：每次取数组区间里面中间的元素作为根节点，然后将左右区间用来创建根节点对应的左右子树。边界条件是区间不存在（此时返回NULL），或者左右区间已经指定到一个值（此时是树的一个叶子节点）。</p>
+<h2 id="109-有序链表转换二叉搜索树"><a href="#109-有序链表转换二叉搜索树" class="headerlink" title="109. 有序链表转换二叉搜索树"></a>109. 有序链表转换二叉搜索树</h2><p>和 <code>108. 将有序数组转换成二叉搜索树</code> 的唯一区别就是从一个升序数组改成了升序链表，而后者的特点在于没法使用index直接定位到中间那个元素。</p>
+<p>有两种解题方法：</p>
+<ol>
+<li>扫一遍链表将内容保存到数组，然后用108的解题方法依葫芦画瓢即可。</li>
+<li>每次扫描到链表的一半，然后把链表断开，前面的一半传给左子树，后面的一半传给右子树。这样的一个问题是要重复扫描链表来获得中间节点的位置。</li>
+</ol>
+<p>因为时间复杂度 <del>想要偷懒</del> ，实际解题时使用的是第一种方法。</p>
+<h2 id="110-平衡二叉树"><a href="#110-平衡二叉树" class="headerlink" title="110. 平衡二叉树"></a>110. 平衡二叉树</h2><p>判断一棵树是不是平衡二叉树。正常人的第一思维应该是这样的：</p>
+<blockquote>
+<p>要判断这个树是不是平衡二叉树，就要判断它的两个左右子树深度相差值是否为1，也就是分别求这两个子树的最大深度$d_1, d_2$，如果有$\mathrm{abs}(d_1-d_2)\leq 1$，则说明这棵树是平衡的。接下来继续递归求这棵树的两个子树是否是平衡二叉树。</p>
+</blockquote>
+<p>这个思路没有问题，但是时间复杂度会很高，因为在求一棵树的深度时是 <code>从上往下</code> 迭代来求的，特别地，深度为3的子树在判断深度为1已经深度为2的树是否是平衡二叉树时进行了两次扫描。出现这个问题的原因是 <code>递归中采用了前序遍历的思想</code> ：我先求中间的节点是否满足条件，再求两棵子树是否满足条件，这样会导致重复计算。</p>
+<p>为了减少时间复杂度，可以采用 <code>后序遍历</code> 的思想，即：先判断两棵子树是否平衡，并且在判断时使用引用传参的方式获得这两棵子树的深度。具体地：</p>
+<blockquote>
+<p>如果当前节点为空，则直接返回true，因为空树肯定满足平衡二叉树的条件。如果当前节点不为空，说明节点至少有一棵子树，此时先求当前节点的两棵子树是否是平衡二叉树，并且在计算过程中使用参数传递的方式获得两棵子树的深度。如果两棵子树都是平衡二叉树，并且深度相减$\leq1$，就说明当前的节点为根的树是一棵平衡二叉树，此时<strong>设置这棵树本身的深度</strong>为$\mathrm{max}(d_1,d_2)+1$，返回true即可。当然，其它所有情况都返回false。</p>
+</blockquote>
+
       
     </div>
     
@@ -549,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#101-对称二叉树"><span class="nav-number">1.</span> <span class="nav-text">101. 对称二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#102-二叉树的层次遍历"><span class="nav-number">2.</span> <span class="nav-text">102. 二叉树的层次遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#103-二叉树的锯齿形遍历"><span class="nav-number">3.</span> <span class="nav-text">103. 二叉树的锯齿形遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#104-二叉树的最大深度"><span class="nav-number">4.</span> <span class="nav-text">104. 二叉树的最大深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#105-从前序与中序遍历构造二叉树"><span class="nav-number">5.</span> <span class="nav-text">105. 从前序与中序遍历构造二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#106-从中序与后序遍历构造二叉树"><span class="nav-number">6.</span> <span class="nav-text">106. 从中序与后序遍历构造二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#107-二叉树的层次遍历II"><span class="nav-number">7.</span> <span class="nav-text">107. 二叉树的层次遍历II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#108-有序链表转换二叉搜索树"><span class="nav-number">8.</span> <span class="nav-text">108. 有序链表转换二叉搜索树</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#101-对称二叉树"><span class="nav-number">1.</span> <span class="nav-text">101. 对称二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#102-二叉树的层次遍历"><span class="nav-number">2.</span> <span class="nav-text">102. 二叉树的层次遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#103-二叉树的锯齿形遍历"><span class="nav-number">3.</span> <span class="nav-text">103. 二叉树的锯齿形遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#104-二叉树的最大深度"><span class="nav-number">4.</span> <span class="nav-text">104. 二叉树的最大深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#105-从前序与中序遍历构造二叉树"><span class="nav-number">5.</span> <span class="nav-text">105. 从前序与中序遍历构造二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#106-从中序与后序遍历构造二叉树"><span class="nav-number">6.</span> <span class="nav-text">106. 从中序与后序遍历构造二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#107-二叉树的层次遍历II"><span class="nav-number">7.</span> <span class="nav-text">107. 二叉树的层次遍历II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#108-将有序数组转换二叉搜索树"><span class="nav-number">8.</span> <span class="nav-text">108. 将有序数组转换二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#109-有序链表转换二叉搜索树"><span class="nav-number">9.</span> <span class="nav-text">109. 有序链表转换二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#110-平衡二叉树"><span class="nav-number">10.</span> <span class="nav-text">110. 平衡二叉树</span></a></li></ol></div>
             
 
           </div>

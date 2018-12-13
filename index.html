@@ -295,7 +295,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-13T10:55:35+08:00" content="2018-12-13">
+              <time itemprop="dateUpdated" datetime="2018-12-13T13:52:49+08:00" content="2018-12-13">
                 2018-12-13
               </time>
             </span>
@@ -334,11 +334,13 @@
 
       
         
-          <h2 id="101-对称二叉树"><a href="#101-对称二叉树" class="headerlink" title="101. 对称二叉树"></a>101. 对称二叉树</h2><p>给两棵树，判断是否对称。思路和上面那题 <a href="/Leetcode-89-100解题笔记/">100. 相同的树</a> 是一样的。还是通过 <code>遍历</code> 和 <code>逐个比较</code> 的方式：</p>
+          <p>$101\sim110$是树的系列，做惯了以后会感到蜜汁畅快。果然简单题是成就感的来源啊。</p>
+<h2 id="101-对称二叉树"><a href="#101-对称二叉树" class="headerlink" title="101. 对称二叉树"></a>101. 对称二叉树</h2><p>给两棵树，判断是否对称。思路和上面那题 <a href="/Leetcode-89-100解题笔记/">100. 相同的树</a> 是一样的。还是通过 <code>遍历</code> 和 <code>逐个比较</code> 的方式：</p>
 <ol>
 <li>对根节点的左右子树分别使用后序遍历(‘左右中’)与前序遍历(‘中左右’)，因为对称树的左子树左结点与右子树右结点应该是一样的，所以两个遍历结果应该是倒序相同的。</li>
 <li>同样进行递归方式，判断左右子树是否是<strong>对称</strong>的。</li>
 </ol>
+<h2 id="102-二叉树的层次遍历"><a href="#102-二叉树的层次遍历" class="headerlink" title="102. 二叉树的层次遍历"></a>102. 二叉树的层次遍历</h2><p>对一棵二叉树进行层次遍历。这个没什么好说的，用一个 <code>队列</code> 就可以了，每次出队当前节点，再把当前节点的左右子节点依次入队。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/Leetcode-101-110解题笔记/" rel="contents">
