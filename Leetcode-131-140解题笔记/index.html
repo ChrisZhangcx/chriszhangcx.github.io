@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
 <meta property="og:description" content="131. 分割回文串对于一个给定的字符串s，要把它分割成一些子串，让每个子串都是回文串。 使用递归的思路来解这道题，设置一个递归函数，传入：当前已经有的方案内容（的引用），当前划分到字符串的第i个下标，以及整个字符串（的引用）。 递归函数的逻辑：从第i个下标开始，直到字符串末尾，发现所有的回文字符串，加入到方案中，并递归进行查找（如i到j是回文字符串，则将 更新后的方案、j、字符串 递归传入函数中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-20T14:04:33.820Z">
+<meta property="og:updated_time" content="2018-12-21T07:39:42.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode: 131-140解题笔记">
 <meta name="twitter:description" content="131. 分割回文串对于一个给定的字符串s，要把它分割成一些子串，让每个子串都是回文串。 使用递归的思路来解这道题，设置一个递归函数，传入：当前已经有的方案内容（的引用），当前划分到字符串的第i个下标，以及整个字符串（的引用）。 递归函数的逻辑：从第i个下标开始，直到字符串末尾，发现所有的回文字符串，加入到方案中，并递归进行查找（如i到j是回文字符串，则将 更新后的方案、j、字符串 递归传入函数中">
@@ -294,8 +294,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-20T22:04:33+08:00" content="2018-12-20">
-                2018-12-20
+              <time itemprop="dateUpdated" datetime="2018-12-21T15:39:42+08:00" content="2018-12-21">
+                2018-12-21
               </time>
             </span>
             
@@ -363,6 +363,29 @@
 <p>最简单的思路是：找到所有方案，然后扫描方案中哪个分割后的子串数量最少。另外有一个简单的方案是，不再记录当前方案的内容，而是记录当前方案到下标i为止的切分次数，到每次扫到递归结束时，判断切分次数是否小于已经存在的最小值。</p>
 <p>👆上面的思路可能会存在大量冗余判断的情况，比如有一种扫法到i可能只要3次，一种到i要4次，所以可以维护一个数组来存储 <code>到达下标i时的最小切分次数</code> ，如果有一个回溯过程中到达i时的切分次数大于该数组中存储的数，那么直接return就好了，这其实是一个<strong>有趣的剪枝条件</strong>。</p>
 <p>但是，上面的剪枝条件仍然是会导致TLE的，另外我们需要手动添加一个剪枝条件：如果当前的切割方式并没有切到最后一个字符，那么至少还要向后切一次（即最好情况是直接切到当前字符串的最末端），所以还要判断i+1与当前的最好结果之间的大小，如果之后可预见的切割次数会大于最终最优解，那我们剪掉也罢。这一个剪枝条件避免的是如 <strong>aaaaaaaabaaaaaaaa</strong>这种一开始就直接找到最后的解的情况，这样我们就有效避免了明明一开始就找到了解，却还要一路递归下去的情况发生。</p>
+<h2 id="133-克隆图"><a href="#133-克隆图" class="headerlink" title="133. 克隆图"></a>133. 克隆图</h2><p>克隆一个用邻接表定义的无向图结构。</p>
+<p>这道题想了我很久，其实考的就是图的遍历。在DFS上，可以用递归来创建一个节点以及它下面的所有邻居，当然需要用一个map来快速查找一个原图上的节点是不是已经克隆了与之对应的节点。</p>
+<h2 id="134-加油站"><a href="#134-加油站" class="headerlink" title="134. 加油站"></a>134. 加油站</h2><p>一条环路上有N个加油站，其中第i个加油站有汽油gas[i]升，而从第i个加油站开往第i+1个加油站需要消耗汽油cost[i]升，现在要判断是否存在一个出发点，能绕这个环路一周。</p>
+<p>把数据转换成差值的格式：即gas[i]-cost[i]。那么首先可以知道的是：如果加油站i的gas[i]-cost[i]比0要小，肯定不可能是出发点。我们可以遍历从任何i点的出发能否遍历的情况，这种解法的时间复杂度是$O(n)^2$。</p>
+<p>另外可以增加一个剪枝条件，可以知道： <code>如果i作为出发点到j就没油了，那么i+1个加油站开始作为出发点到j肯定也会没油</code> ，所以可以减掉一大片的特殊情况。</p>
+<h2 id="135-分发糖果"><a href="#135-分发糖果" class="headerlink" title="135. 分发糖果"></a>135. 分发糖果</h2><p>老师按以下原则给孩子发糖果：</p>
+<ul>
+<li>每个孩子至少分配到1个糖果</li>
+<li>相邻的孩子中，评分更高的孩子必须获得更多的糖果</li>
+</ul>
+<p>给定N个孩子的评分，问至少需要准备多少的糖果。</p>
+<p>这道题我想了一段时间没有很好的思路，上网找了解题方法是这样的：首先给所有孩子默认发一个糖果；然后从前往后扫描，如果有个孩子比前面的孩子分数高，但是糖又没有多，根据原则2，把这个孩子的糖果变成前面孩子的糖果数+1；接着从后往前扫描，如果有个孩子比后面的孩子分数高，但是糖没有多，同理把这个孩子的糖果数变成它后面孩子的糖果数+1。</p>
+<p>编程很容易，也AC了，但是上述方法正确性的证明还是没有搞懂：为什么这样前后扫描一遍就能得到最少的糖果数呢？</p>
+<h2 id="136-只出现一次的数字"><a href="#136-只出现一次的数字" class="headerlink" title="136. 只出现一次的数字"></a>136. 只出现一次的数字</h2><p>这道题很有意思，算是变相地拓宽了一种解题思维。说一个非空数组，里面有一个元素出现了一次，其它所有的元素都出现了两次，要求用 <code>线性时间，常数空间</code> 来找到这个元素。</p>
+<p>初始化一个值0，对所有的数组元素取异或就可以了，因为出现两次的数字异或两次之后会重新变成0，只有那个出现了一次的数字会保留下来。</p>
+<h2 id="137-只出现一次的数字II"><a href="#137-只出现一次的数字II" class="headerlink" title="137. 只出现一次的数字II"></a>137. 只出现一次的数字II</h2><p>一个非空数组，里面一个元素出现了一次，其它所有的元素都出现了三次，同样要求 <code>线性时间，常数空间</code> 。</p>
+<p>这题就不能用异或了，因为出现三次的元素异或三次之后还是它本身，所以需要另外找一个方法。我们考虑到一个int类型的数保存的位数是32位，那么我们可以建立一个大小为32的数组，其中下标i表示所有的数在这一位为i的元素个数。完整扫描一遍数组后，下标i对应位为1的出现次数如果能被3整除，说明那个要找的数字在这一位上不是1，反之说明在这一位上为1，所以我们只需要在所有数字统计之后，遍历我们的辅助数组，重新复原要找的数字就好了。</p>
+<h2 id="138-复制待随机指针的链表"><a href="#138-复制待随机指针的链表" class="headerlink" title="138. 复制待随机指针的链表"></a>138. 复制待随机指针的链表</h2><p>给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点，要求返回这个链表的深度拷贝。</p>
+<p>和前面的图拷贝所考察的内容是一样的，使用递归一样复制一个链表就好了。</p>
+<h2 id="139-单词拆分"><a href="#139-单词拆分" class="headerlink" title="139. 单词拆分"></a>139. 单词拆分</h2><p>给定一个非空的字符串s和一个包含非空单词列表的字典wordDict，判断s是否可以被空格拆分为一个或多个在字典中出现的单词。</p>
+<p>正常的思路使用递归来做，传入当前要开始继续拆分的下标，递归结束条件就是下标到达了s的长度，这个时候判断是不是在字典中就好了。但是这样的递归运算会导致大量的重复计算，所以在这里我们使用 <code>动态规划</code> 来实现。</p>
+<p>具体地，设置数组dp[i]表示到下标i的s中的子串是否能被字典中的词切分，计算dp[i+1]时，我们需要遍历所有前面的可能情况，然后设置dp[i+1]的标志位：即存在j使得s[0:j]=true并且s[j:i]是字典中的一个单词。</p>
+<h2 id="140-单词拆分II"><a href="#140-单词拆分II" class="headerlink" title="140. 单词拆分II"></a>140. 单词拆分II</h2><p>和139题很相似，唯一的区别是要求输出所有的切分后的字符串，而不是只输出是否存在这样的切分方案。只需要对dp数组进行一个改动，其中dp[i].success保存是否有对s[0:i]这样的切分，而dp[i].breakPoints是一个数组，保存所有能产生这个切分的上一个字符下标。这样就可以通过一步步往回查的方式来复原出所有的切分方案。</p>
 
       
     </div>
@@ -554,7 +577,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#131-分割回文串"><span class="nav-number">1.</span> <span class="nav-text">131. 分割回文串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#132-分割回文串II"><span class="nav-number">2.</span> <span class="nav-text">132. 分割回文串II</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#131-分割回文串"><span class="nav-number">1.</span> <span class="nav-text">131. 分割回文串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#132-分割回文串II"><span class="nav-number">2.</span> <span class="nav-text">132. 分割回文串II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#133-克隆图"><span class="nav-number">3.</span> <span class="nav-text">133. 克隆图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#134-加油站"><span class="nav-number">4.</span> <span class="nav-text">134. 加油站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#135-分发糖果"><span class="nav-number">5.</span> <span class="nav-text">135. 分发糖果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#136-只出现一次的数字"><span class="nav-number">6.</span> <span class="nav-text">136. 只出现一次的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#137-只出现一次的数字II"><span class="nav-number">7.</span> <span class="nav-text">137. 只出现一次的数字II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#138-复制待随机指针的链表"><span class="nav-number">8.</span> <span class="nav-text">138. 复制待随机指针的链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#139-单词拆分"><span class="nav-number">9.</span> <span class="nav-text">139. 单词拆分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#140-单词拆分II"><span class="nav-number">10.</span> <span class="nav-text">140. 单词拆分II</span></a></li></ol></div>
             
 
           </div>
