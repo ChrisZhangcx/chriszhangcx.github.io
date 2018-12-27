@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Leetcode,算法,only_found_by_manual,">
+  <meta name="keywords" content="NLP,">
 
 
 
@@ -77,18 +77,21 @@
 
 
 
-<meta name="description" content="121. 买卖股票的最佳时机给一个数组，其中第i个元素是一只股票在第i天的价格，然后 只允许买卖一次 ，要求获得最大利润。解题时找一个数组minPrice来更新第i天之前出现过的股票的最小价格，然后使用找到最大的prices[i]-minPrice[i]就可以了。 122. 买卖股票的最佳时机II题目同上，但是 可以多次买卖 ，那就是一个贪心思想：只要第二天的价格比前一天要高，我就前一天买入第二天">
-<meta name="keywords" content="Leetcode,算法,only_found_by_manual">
+<meta name="description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
+<meta name="keywords" content="NLP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode: 121-130解题笔记">
-<meta property="og:url" content="/Leetcode-121-130解题笔记/index.html">
+<meta property="og:title" content="Crash Paper: Attention Is All You Need">
+<meta property="og:url" content="/Crash-Paper-Attention-Is-All-You-Need/index.html">
 <meta property="og:site_name" content="我永远喜欢结城明日奈">
-<meta property="og:description" content="121. 买卖股票的最佳时机给一个数组，其中第i个元素是一只股票在第i天的价格，然后 只允许买卖一次 ，要求获得最大利润。解题时找一个数组minPrice来更新第i天之前出现过的股票的最小价格，然后使用找到最大的prices[i]-minPrice[i]就可以了。 122. 买卖股票的最佳时机II题目同上，但是 可以多次买卖 ，那就是一个贪心思想：只要第二天的价格比前一天要高，我就前一天买入第二天">
+<meta property="og:description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-27T13:18:27.342Z">
+<meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/001.png">
+<meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/002.png">
+<meta property="og:updated_time" content="2018-12-27T13:24:10.282Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode: 121-130解题笔记">
-<meta name="twitter:description" content="121. 买卖股票的最佳时机给一个数组，其中第i个元素是一只股票在第i天的价格，然后 只允许买卖一次 ，要求获得最大利润。解题时找一个数组minPrice来更新第i天之前出现过的股票的最小价格，然后使用找到最大的prices[i]-minPrice[i]就可以了。 122. 买卖股票的最佳时机II题目同上，但是 可以多次买卖 ，那就是一个贪心思想：只要第二天的价格比前一天要高，我就前一天买入第二天">
+<meta name="twitter:title" content="Crash Paper: Attention Is All You Need">
+<meta name="twitter:description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
+<meta name="twitter:image" content="/Crash-Paper-Attention-Is-All-You-Need/001.png">
 
 
 
@@ -118,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="/Leetcode-121-130解题笔记/">
+  <link rel="canonical" href="/Crash-Paper-Attention-Is-All-You-Need/">
 
 
 
 
 
-  <title>Leetcode: 121-130解题笔记 | 我永远喜欢结城明日奈</title>
+  <title>Crash Paper: Attention Is All You Need | 我永远喜欢结城明日奈</title>
   
 
 
@@ -251,7 +254,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/Leetcode-121-130解题笔记/">
+    <link itemprop="mainEntityOfPage" href="/Crash-Paper-Attention-Is-All-You-Need/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +271,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode: 121-130解题笔记</h1>
+          <h1 class="post-title" itemprop="name headline">Crash Paper: Attention Is All You Need</h1>
         
 
         <div class="post-meta">
@@ -281,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-15T12:13:36+08:00">
-                2018-12-15
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-26T19:56:09+08:00">
+                2018-12-26
               </time>
             
 
@@ -294,7 +297,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-27T21:18:27+08:00" content="2018-12-27">
+              <time itemprop="dateUpdated" datetime="2018-12-27T21:24:10+08:00" content="2018-12-27">
                 2018-12-27
               </time>
             </span>
@@ -317,8 +320,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
                   </a>
                 </span>
 
@@ -354,27 +357,37 @@
       
 
       
-        <h2 id="121-买卖股票的最佳时机"><a href="#121-买卖股票的最佳时机" class="headerlink" title="121. 买卖股票的最佳时机"></a>121. 买卖股票的最佳时机</h2><p>给一个数组，其中第i个元素是一只股票在第i天的价格，然后 <code>只允许买卖一次</code> ，要求获得最大利润。解题时找一个数组minPrice来更新第i天之前出现过的股票的最小价格，然后使用找到最大的prices[i]-minPrice[i]就可以了。</p>
-<h2 id="122-买卖股票的最佳时机II"><a href="#122-买卖股票的最佳时机II" class="headerlink" title="122. 买卖股票的最佳时机II"></a>122. 买卖股票的最佳时机II</h2><p>题目同上，但是 <code>可以多次买卖</code> ，那就是一个贪心思想：只要第二天的价格比前一天要高，我就前一天买入第二天卖出，这样保证整个数组中的利润我都能赚到。</p>
+        <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="1-预备知识"><a href="#1-预备知识" class="headerlink" title="1. 预备知识"></a>1. 预备知识</h2><h3 id="1-1-Encoder-Decoder"><a href="#1-1-Encoder-Decoder" class="headerlink" title="1.1 Encoder/Decoder"></a>1.1 Encoder/Decoder</h3><p>序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：</p>
+<p><img src="/Crash-Paper-Attention-Is-All-You-Need/001.png" alt=""></p>
+<p>Encoder的每一个单元会根据前一个hidden state以及当前的input来计算当前的hidden state，并将其传到下一个单元中去。而Decoder对于传入的单元进行解码，来找到最合适的一个输出。注意每个Decoder单元只会输出一个output symbol。</p>
 <a id="more"></a>
-<h2 id="123-买卖股票的最佳时机III"><a href="#123-买卖股票的最佳时机III" class="headerlink" title="123. 买卖股票的最佳时机III"></a>123. 买卖股票的最佳时机III</h2><p><code>难题暂时搁置</code></p>
-<h2 id="124-二叉树中的最大路径和"><a href="#124-二叉树中的最大路径和" class="headerlink" title="124. 二叉树中的最大路径和"></a>124. 二叉树中的最大路径和</h2><p><code>难题暂时搁置</code></p>
-<h2 id="125-验证回文串"><a href="#125-验证回文串" class="headerlink" title="125. 验证回文串"></a>125. 验证回文串</h2><p>给定一个字符串，验证它是否是回文串。注意字符串中可能会出现各种的字符，但是我们只考虑其中的字母，并且所有的字母都视为小写。</p>
-<p>使用数组下标从尾到头遍历即可。可以使用isalpha方法来判断是否属于字母，用isupper/islower方法来判断大小写情况。</p>
-<h2 id="126-amp-127-单词接龙I-amp-II"><a href="#126-amp-127-单词接龙I-amp-II" class="headerlink" title="126&amp;127. 单词接龙I &amp; II"></a>126&amp;127. 单词接龙I &amp; II</h2><p>给定两个单词作为起始字符串S与结束字符串E，以及给定的字符串向量wordList，要判断是否存在一条从S到E的转换路径，其中除了S以外的所有中间单词都要在wordList中，并且每次转换时 <code>只能更换单词中的一个字符</code> 。对于126题，要求给出所有符合条件的路径；对于127题，只要求给出最短的路径长度。</p>
-<p>这道题稍微有点意思，但是解题思路仍然比较简单： <code>使用广搜</code> 就可以了。要注意广搜时候对中间状态的存储，以及已经遍历过的字符不要再搜索了，因为重新遍历到这个字符肯定不会对找到最短路径有所帮助。</p>
-<p>另外在实际测试的时候，从S搜索E的时间常数稍微有点高（虽然也能通过测试），可以考虑使用 <code>双向广搜</code> ，然后设置两个map来分别存储前向和后向搜索时从S/E出发到达每个单词的最短路径，以避免重复搜索单词的情况出现。当两个map中出现重复的单词时，只需要两个map中这两个单词的最短路径相加，就是最短转换序列的长度了。</p>
-<h2 id="128-最长连续序列"><a href="#128-最长连续序列" class="headerlink" title="128. 最长连续序列"></a>128. 最长连续序列</h2><p>给定一个没有排过序的数组，找出其中最长的连续序列的长度。比如$[100,4,200,1,3,2]$，最长连续序列就是$[1,2,3,4]$，长度就是4。反正就是看里面某一个最长连续的序列有多长。解决思路如下：</p>
+<p>以machine translation问题为例给出具体说明。machine translation问题其实是在寻找一个条件概率，在给定输入x（待翻译句子）的前提下寻找结果概率最大，作为输出的翻译结果，具体步骤可以描述如下：</p>
 <ol>
-<li>扫描一遍数组，把数字映射到哈希字典中，使能在 <code>常数时间判断某个数字是否存在于原数组中</code> ，并且判断 <code>当前数字是否已经被扫描过</code> 。</li>
-<li>重新扫描一遍数组，对于每个数字n，使用哈希表判断n-1以及n+1是否存在于数组中，总之向两边扩展直到无法扩展为止。在扩展过程中扫描到的在数组中的数字，我们要置它的 <code>已扫描标志位</code> 为1，这是为了避免在往后扫的过程中，同一个连续序列被多次扫描（<strong>因为要求时间复杂度是O(n)嘛！</strong>）。</li>
-<li>在扫描每个数字后，更新最长序列的长度即可。</li>
+<li>Decoder的第一个单元对于Encoder部分输出的最后一个hidden state(我们把它记为$h^0$)，在候选词表中找一个词A，使得$P(A|x)$在整个词汇表中最大。</li>
+<li>在第二个单元中，使用$h^1$以及第一单元的输出A作为输入，我们继续找一个单词使$P(A, B|x)$最大，由于$P(A, B|x)=P(B|A, X)P(A|X)$，我们又在第一单元中记录了$P(A|X)$大小，实际上就是对每个单词B，计算$P(B|A, X)$，然后使得$P(B|A, X)P(A|X)$最大即可。</li>
+<li>同理，一直向下逐个搜索单词，直到出现所有的词输出Prob都不如当前的Prob，就加入EOS并输出。</li>
 </ol>
-<h2 id="129-求根到叶子节点的数字之和"><a href="#129-求根到叶子节点的数字之和" class="headerlink" title="129. 求根到叶子节点的数字之和"></a>129. 求根到叶子节点的数字之和</h2><p>要求所有从树根到叶子节点的路径之和，注意 <code>父子节点之间的数值差为十倍</code> 比如说树$[1,2,3]$，实际的和应该是$(1\times10+2)+(1\times10+3)=25$ 。</p>
-<p>解题的思路倒是很普通，使用一个递归求和就可以了。这道题我因为粗心，在叶子节点累加和之后 <code>没有直接return</code> ，导致在大数的时候溢出了，总之是很蠢的错误，写出来以为警告。</p>
-<h2 id="130-被围绕的区域"><a href="#130-被围绕的区域" class="headerlink" title="130. 被围绕的区域"></a>130. 被围绕的区域</h2><p>一个二维向量元素由’X’与’O’构成，要把所有被’X’包含的’O’都改成’X’，在边界的’O’不算做被包围。</p>
-<p>这道题其实是一个基础的广搜，但是测试用例中有一个特别大的向量，导致我的一个空间复杂度为O(n)的实现思路内存爆了。当然我的思考中是对所有中间的’O’进行广搜，网上所发表的可行思路是 <code>对所有边界上的O进行广搜</code> ，然后做标记。然后再遍历一遍整个二维向量，把没有做标记的’O’给更新成’X’就可以了。</p>
-
+<h3 id="1-2-Beam-Search"><a href="#1-2-Beam-Search" class="headerlink" title="1.2 Beam Search"></a>1.2 Beam Search</h3><p>有了序列模型的基础，<code>Beam Search实际上就是序列模型选择输出哪一个symbol的方式</code>。</p>
+<p>正常来说，我们只需要按照上面的算法不停的算最大概率，每次选择最好的输出就可以了，但是实际上，如果待翻译的语法表中有1000个单词，待翻译的句子长度是10，那么可能的句子构成数量就是$1000^{10}$个。所以直接的全局搜索是不可取的，我们需要找一个能获得近似最优解的词序列，但是又要有能够接受的时间复杂度，<code>Beam Search</code>（集束搜索）应运而生。</p>
+<p>集束搜索和贪心其实有一定的相似之处：如果我们选择贪心算法来解这个问题，在搜索最优词时只考虑概率最大的一个候选单词，我们很有可能错过最优解以及很多很好的解。而Beam Search有一个参数 <code>beam width</code> ，也就是每次选择的概率最大的候选单词数，每次使用前面选定的单词组继续向后扩展一个单词，再从其中所有的概率里挑出最有可能的top n。</p>
+<p>由于每次算得的Prob都很小，当输出序列比较长的时候，就会出现数值下溢的问题（这也会导致了beam search倾向于寻找更短的答案）。为了解决这个问题，我们要使用 <code>Length Normalization</code> ：将目标函数改为Prob的对数和，而不是取Prob的乘积；另外，我们要添加一个正则项，也就是算得对数和之后，我们可以求它的平均值，也就是除以输出的单词数量（<em>在实践中我们通常会使用数量的0.7次方来进行正则</em>）。</p>
+<p>我们已经知道，Beam Search的参数有：束宽，单词数的惩罚系数$\alpha$。直观上来说，我们可以知道束宽越大，结果会越好，但是占用的计算时间会更长，内存也会更高。 <code>现在，还有这样一个值得考虑的问题</code> ：如果我们的输出结果不是我们人工所预期的，我们如何知道是RNN——encoder/decoder模型导致了这个结果，还是集束搜索的beam width设置的不够大，没有搜到真正的结果呢？</p>
+<p>一个最简单的判断办法是：我们把人工所预期的结果放到RNN模型的decoder中，计算$P(y^*|x)$，如果这个Prob大于模型本身所预测的结果，说明是集束搜索错过了这个更好的结果，而如果Prob要比原来错误结果的Prob更小，那么很显然就是RNN模型出了问题。</p>
+<h3 id="1-3-Attention"><a href="#1-3-Attention" class="headerlink" title="1.3 Attention"></a>1.3 Attention</h3><p>Attention-中文称注意力机制，这个概念的提出是为了解决：<strong>神经网络对记忆长句子的能力较弱，随着待翻译的句子长度增加，其BLEU值将会逐渐下滑</strong>这个问题。</p>
+<p>我们可以这样来直观的理解Attention机制到底是什么：Attention将决定模型在输出第$t$个output symbol时，<code>how much attention should be paid to t&#39;th input symbol</code>。Attention的具体计算思路如下：</p>
+<p>对于每个input symbol，使用一个双向RNN（GRU/LSTM, usually LSTM）来提取每个symbol的特征。因为RNN是双向的，所以第$t$个input symbol的特征$a^t$将由前面传来的$\overrightarrow{a}^t$与后面传来的$\overleftarrow{a}^t$共同决定（Andrew Ng的课件中没有说怎么通过后两者来计算$a^t$，个人觉得就是简单的sum或者concatenate吧）。为了方便表述，我们记$a^t=&lt;\overrightarrow{a}^t,\overleftarrow{a}^t&gt;$</p>
+<p>这样，每个input symbol都会有一个描述它自身的特征向量$a^t$。类比于一个全连接层，我们同样将特征向量映射到所有的Decoder单元中，其中第$t^*$个待翻译单词到第$t$个翻译后的输出单词的连接对应的权重为$\alpha^{&lt; t^*, t&gt;}$，而所有连接到第$t$个单词的待翻译单词加权和共同构成了上下文$C$对于这个输出单词的权重，在此记作$C^t$。同样使用Andrew Ng的课件截图来对这个过程进行总结 <del>我似乎已经暴露了这些东西都是在Andrew Ng教授的课件中学的了？</del></p>
+<p><img src="/Crash-Paper-Attention-Is-All-You-Need/002.png" alt=""></p>
+<p>现在的问题转变成了：我们如何确定第$t^*$个待翻译单词到第$t$个翻译后的输出单词的连接对应的权重值$\alpha^{&lt; t^*, t&gt;}$呢？</p>
+<p>以第一个output symbol为例，需要计算所有input symbol到它的attention加权之和，我们依次把n个input对于第一个output的权值标记为$\alpha^{&lt; 1, 1&gt;}, \alpha^{&lt; 1, 2&gt;}, …, \alpha^{&lt; 1, n&gt;}$，我们有以下两个要求：</p>
+<ol>
+<li>所有的权值和为1，也就是要有归一化。</li>
+<li>因为计算第i个input权值时，我们只知道第i-1个hidden state: $h^{i-1}$与$\alpha^{<1,i-1>}$，所以直观地，应该有$\alpha^{<1,i>}=f(h^{i-1}, \alpha^{<1,i-1>})$。</1,i-1></1,i></1,i-1></li>
+</ol>
+<p>第一个条件很好满足，假设我们已经计算出了每个input对应的权重，对它使用softmax就可以使所有的权值和为1。</p>
+<p>要满足第二个条件其实也比较简单：我们训练一个单层的简单网络，这个网络的输入是$a^t=&lt;\overrightarrow{a}^t,\overleftarrow{a}^t&gt;$与input symbol$_t$，输出是$e<1,t>$，也就是第t个input symbol对于待翻译词的权重 <del>没错，权重就这么被训练出来了</del> 。但是Andrew课件中并没有说这个监督学习的训练对怎么出来，难道是要人工标注？还是涉及到了什么<del>我没有学过所以显得</del>深不可测的知识？</1,t></p>
+<p>总之，这样我们就可以计算整个上下文对于某个输出的影响了，从概念上来理解，就相当于每个输出在学习前一个hidden state与前一个输出的前提下，又学习了整个上下文与它的关系，因为上下文中每个symbol和它的权值都不同，所以某些和它关系比较大的symbol权重就会大，也就是我们常理解的output symbol pay attention to input symbol了。OVER。</p>
+<h2 id="2-Attention-Is-All-You-Need"><a href="#2-Attention-Is-All-You-Need" class="headerlink" title="2. Attention Is All You Need"></a>2. Attention Is All You Need</h2><h3 id="2-1-困了，先睡觉去了😴"><a href="#2-1-困了，先睡觉去了😴" class="headerlink" title="2.1 困了，先睡觉去了😴"></a>2.1 困了，先睡觉去了😴</h3>
       
     </div>
     
@@ -391,11 +404,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
-          
-            <a href="/tags/算法/" rel="tag"># 算法</a>
-          
-            <a href="/tags/only-found-by-manual/" rel="tag"># only_found_by_manual</a>
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
           
         </div>
       
@@ -408,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Leetcode-111-120解题笔记/" rel="next" title="Leetcode: 111-120解题笔记">
-                <i class="fa fa-chevron-left"></i> Leetcode: 111-120解题笔记
+              <a href="/Leetcode-131-140解题笔记/" rel="next" title="Leetcode: 131-140解题笔记">
+                <i class="fa fa-chevron-left"></i> Leetcode: 131-140解题笔记
               </a>
             
           </div>
@@ -418,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/Leetcode-131-140解题笔记/" rel="prev" title="Leetcode: 131-140解题笔记">
-                Leetcode: 131-140解题笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/Leetcode-解题笔记索引/" rel="prev" title="Leetcode 解题笔记索引">
+                Leetcode 解题笔记索引 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -571,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#121-买卖股票的最佳时机"><span class="nav-number">1.</span> <span class="nav-text">121. 买卖股票的最佳时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#122-买卖股票的最佳时机II"><span class="nav-number">2.</span> <span class="nav-text">122. 买卖股票的最佳时机II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#123-买卖股票的最佳时机III"><span class="nav-number">3.</span> <span class="nav-text">123. 买卖股票的最佳时机III</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#124-二叉树中的最大路径和"><span class="nav-number">4.</span> <span class="nav-text">124. 二叉树中的最大路径和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#125-验证回文串"><span class="nav-number">5.</span> <span class="nav-text">125. 验证回文串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#126-amp-127-单词接龙I-amp-II"><span class="nav-number">6.</span> <span class="nav-text">126&amp;127. 单词接龙I &amp; II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#128-最长连续序列"><span class="nav-number">7.</span> <span class="nav-text">128. 最长连续序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#129-求根到叶子节点的数字之和"><span class="nav-number">8.</span> <span class="nav-text">129. 求根到叶子节点的数字之和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#130-被围绕的区域"><span class="nav-number">9.</span> <span class="nav-text">130. 被围绕的区域</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">1.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-预备知识"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Encoder-Decoder"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Encoder/Decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Beam-Search"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Beam Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Attention"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Attention</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Attention-Is-All-You-Need"><span class="nav-number">1.2.</span> <span class="nav-text">2. Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-困了，先睡觉去了😴"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 困了，先睡觉去了😴</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
