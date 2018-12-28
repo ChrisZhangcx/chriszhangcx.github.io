@@ -87,7 +87,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/001.png">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/002.png">
-<meta property="og:updated_time" content="2018-12-28T11:47:55.596Z">
+<meta property="og:updated_time" content="2018-12-28T11:49:07.977Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crash Paper: Attention Is All You Need">
 <meta name="twitter:description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
@@ -297,7 +297,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-28T19:47:55+08:00" content="2018-12-28">
+              <time itemprop="dateUpdated" datetime="2018-12-28T19:49:07+08:00" content="2018-12-28">
                 2018-12-28
               </time>
             </span>
@@ -387,7 +387,7 @@
 <p>第一个条件很好满足，假设我们已经计算出了每个input对应的权重，对它使用softmax就可以使所有的权值和为1。</p>
 <p>要满足第二个条件其实也比较简单：我们训练一个单层的简单网络，这个网络的输入是$a^t=&lt;\overrightarrow{a}^t,\overleftarrow{a}^t&gt;$与input symbol$_t$，输出是$e<1,t>$，也就是第t个input symbol对于待翻译词的权重 <del>没错，权重就这么被训练出来了</del> 。但是Andrew课件中并没有说这个监督学习的训练对怎么出来，难道是要人工标注？还是涉及到了什么<del>我没有学过所以显得</del>深不可测的知识？</1,t></p>
 <p>总之，这样我们就可以计算整个上下文对于某个输出的影响了，从概念上来理解，就相当于每个输出在学习前一个hidden state与前一个输出的前提下，又学习了整个上下文与它的关系，因为上下文中每个symbol和它的权值都不同，所以某些和它关系比较大的symbol权重就会大，也就是我们常理解的output symbol pay attention to input symbol了。OVER。</p>
-<h2 id="2-Attention-Is-All-You-Need"><a href="#2-Attention-Is-All-You-Need" class="headerlink" title="2. Attention Is All You Need"></a>2. Attention Is All You Need</h2><h3 id="2-1-困了，先睡觉去了😴"><a href="#2-1-困了，先睡觉去了😴" class="headerlink" title="2.1 困了，先睡觉去了😴"></a>2.1 困了，先睡觉去了😴</h3><p>先推荐一个理解论文时候发现的很有意思的博客：<a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">jalammar大神对transformer的图形化解释</a>。这个博客会用很生动的例子与大量动图来解释一些模型，讲的很透彻也很浅显易懂<del>就是更新慢了点</del>。</p>
+<h2 id="2-Attention-Is-All-You-Need"><a href="#2-Attention-Is-All-You-Need" class="headerlink" title="2. Attention Is All You Need"></a>2. Attention Is All You Need</h2><h3 id="2-1-困了，先睡觉去了😴"><a href="#2-1-困了，先睡觉去了😴" class="headerlink" title="2.1 困了，先睡觉去了😴"></a>2.1 困了，先睡觉去了😴</h3><p>先推荐一个理解论文时候发现的很有意思的博客：<a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">jalammar大神对transformer的图形化解释</a>。这个博客会用很生动的例子与大量动图来解释一些模型，讲的很透彻也很浅显易懂，<del>就是更新慢了点</del>。</p>
 
       
     </div>
