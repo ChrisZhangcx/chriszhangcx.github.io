@@ -87,7 +87,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/001.png">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/002.png">
-<meta property="og:updated_time" content="2018-12-29T12:08:20.342Z">
+<meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/101.png">
+<meta property="og:updated_time" content="2018-12-29T13:41:44.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crash Paper: Attention Is All You Need">
 <meta name="twitter:description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
@@ -297,7 +298,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-29T20:08:20+08:00" content="2018-12-29">
+              <time itemprop="dateUpdated" datetime="2018-12-29T21:41:44+08:00" content="2018-12-29">
                 2018-12-29
               </time>
             </span>
@@ -387,7 +388,7 @@
 <p>第一个条件很好满足，假设我们已经计算出了每个input对应的权重，对它使用softmax就可以使所有的权值和为1。</p>
 <p>要满足第二个条件其实也比较简单：我们训练一个单层的简单网络，这个网络的输入是$a^t=&lt;\overrightarrow{a}^t,\overleftarrow{a}^t&gt;$与input symbol$_t$，输出是$e<1,t>$，也就是第t个input symbol对于待翻译词的权重 <del>没错，权重就这么被训练出来了</del> 。但是Andrew课件中并没有说这个监督学习的训练对怎么出来，难道是要人工标注？还是涉及到了什么<del>我没有学过所以显得</del>深不可测的知识？</1,t></p>
 <p>总之，这样我们就可以计算整个上下文对于某个输出的影响了，从概念上来理解，就相当于每个输出在学习前一个hidden state与前一个输出的前提下，又学习了整个上下文与它的关系，因为上下文中每个symbol和它的权值都不同，所以某些和它关系比较大的symbol权重就会大，也就是我们常理解的output symbol pay attention to input symbol了。OVER。</p>
-<h2 id="2-Attention-Is-All-You-Need"><a href="#2-Attention-Is-All-You-Need" class="headerlink" title="2. Attention Is All You Need"></a>2. Attention Is All You Need</h2><h3 id="2-1-学习博客"><a href="#2-1-学习博客" class="headerlink" title="2.1 学习博客"></a>2.1 学习博客</h3><p>先推荐一个理解论文时候发现的很有意思的博客：<a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">jalammar大神对transformer的图形化解释</a>。这个博客会用很生动的例子与大量动图来解释一些模型，讲的很透彻也很浅显易懂，<del>就是更新慢了点</del>。</p>
+<h2 id="2-Attention-Is-All-You-Need"><a href="#2-Attention-Is-All-You-Need" class="headerlink" title="2. Attention Is All You Need"></a>2. Attention Is All You Need</h2><h3 id="2-1-软广"><a href="#2-1-软广" class="headerlink" title="2.1 软广"></a>2.1 软广</h3><p>先推荐一个理解论文时候发现的很有意思的博客：<a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">jalammar大神对transformer的图形化解释</a>。这个博客会用很生动的例子与大量动图来解释一些模型，讲的很透彻也很浅显易懂，<del>就是更新慢了点</del>。</p>
 <p><code>下面关于模型讲解的内容中，有相当的一部分来自于这个博客。</code></p>
 <h3 id="2-2-Transformer"><a href="#2-2-Transformer" class="headerlink" title="2.2 Transformer"></a>2.2 Transformer</h3><p>我们先来从宏观角度来看，Google Brain的大牛们提出了什么样的一个模型。在我看来，其主要特性是这样的：</p>
 <ol>
@@ -400,7 +401,34 @@
 <p><del>希望你也觉得上面的东西很有意思😄</del> 接下来对模型结构进行详细说明。</p>
 <h4 id="2-2-1-Encoding-Decoding模块"><a href="#2-2-1-Encoding-Decoding模块" class="headerlink" title="2.2.1 Encoding/Decoding模块"></a>2.2.1 Encoding/Decoding模块</h4><p>整个Transformer模型 <code>就是一个Encoder与一个Decoder</code> ，还是以machine translation为例：首先把句子输入到Encoder中，这个Encoder会使用self-attention（简单起见，可以把论文里的scaled dot-product attention/multi-head attention都先看成self-attention）来计算每个input symbol的输出，然后弄成一个vector（因为一个input symbol会产生多个输出——当然不是对所有的vector进行concatenate这么简单，后面 <del>可能</del> 会进行说明）。然后把它们喂给一个前向传播网络，如是反复。Encoder的最终输出结果被转换成两个矩阵<strong>K与V</strong>，分别对应Key与Value。</p>
 <p>Decoder从零向量开始逐个产生output symbol的输出，首先对output sequence同样进行self-attention，不过这次有一个改变的地方，论文中称此为 <code>Masked Multi-Head Attention</code> ，在前面的attention过程中，每个query是知道所有的key的信息做加权的，然而在输出的过程中，对应位置的query只能知道它及之前的位置信息，确保对位置i的预测只能依赖小于i的位置处的已知输出。</p>
-<h4 id="2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention"><a href="#2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention" class="headerlink" title="2.2.2. Scaled Dot-Product Attention/Multi-Head Attention"></a>2.2.2. Scaled Dot-Product Attention/Multi-Head Attention</h4><p>困了，先睡觉去了😴</p>
+<h4 id="2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention"><a href="#2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention" class="headerlink" title="2.2.2 Scaled Dot-Product Attention/Multi-Head Attention"></a>2.2.2 Scaled Dot-Product Attention/Multi-Head Attention</h4><p>在上面，我们知道了什么是attention，实际上是对input symbol的特征进行加权，然后输入到Decoder单元中。在Transformer中进行的处理是类似的，其中使用了一个叫 <code>self-attention</code> 的attention方法，顾名思义，就是自己对自己进行attention，比如有个句子：</p>
+<blockquote>
+<p>The animal didn’t cross the street because it was too tired</p>
+</blockquote>
+<p>在Encoder模块中，这个句子中的每个word，都会与其它所有词进行attention，这个attention连接的权重，或者说Query与Key的模糊匹配程度，揭示了两个词之间的相关程度。比如，可能对词 <code>it</code> 进行self-attention时，发现 <code>animal</code> 与它的连接权重很大，就能一定程度上揭示这个代词指代的是animal啦 <del>因为作为一个没用的模型，我一开始是不知道这个it是指代animal还是street的呀</del> 。</p>
+<p>具体来看怎么进行self-attention。如下图所示，比如现在有一个词 <code>Thinking</code> ，已经对它做了embedding，它是一个$d=512$维的向量$X_1$。我们首先把它变成一个 <code>查询-Query</code> 。虽然说是query，其实它还是一个vector，那么怎么把它变成query呢，我们把它乘以一个转换矩阵$W^Q$，这样它就由$X_1$变成了$q_1$。</p>
+<p><img src="/Crash-Paper-Attention-Is-All-You-Need/101.png" alt=""></p>
+<p>同样的道理，我们把它乘以转换$W^K$，把它变成一个 <code>Key</code> ，把它乘以转换矩阵$W^V$，把它变成一个 <code>Value</code>。这么一看，$X_1$的作用其实很大，所有的一切都是由它自己延伸出来的——这么说对$W^Q,W^K,W^V$矩阵三兄弟就太不公平了，它们仨承担了转换$X_1$的主要责任，它们是怎么来的呢？ <code>它们是在训练过程中训练出来的</code> 。<strong>我其实很好奇它们是怎么训练出来的，毕竟论文里面没有详细说</strong>。</p>
+<p>现在我们有了 <code>queries, keys, values</code> ，剩下的就很简单了，我们求$q_1$与所有的$k$的点积，然后用softmax归一，这就是self-attention中其它词对thinking这个词的权重。对应的value乘以对应的weight，然后加权就是 <code>X1所获得的上下文信息C</code> 。</p>
+<p>知道了什么是self-attention，现在可以很简单的解释标题中的两个attention到底是什么了：</p>
+<ol>
+<li>Scaled Dot-Product Attention：实际就是上面所说的加权的整个过程，Dot-Product意为点积，就是指Queries与Keys做点积；Scaled是指在工程实践中，发现在较大的维度情况下，点积会大幅度增大，由此softmax容易陷入局部极小，所以要除以维度的开方，即$\sqrt{d_k}$，这就是scaled词的由来了。这个attention与self-attention的差别仅在于 <code>在softmax之前使用key的维度进行了scale</code> 。</li>
+<li>Multi-Head Attention：1中的Attention我们做一次是不够的，可能挖不出来词与词之间的关联关系（或者说挖不完全？），所以上面的$W^Q,W^K,W^V$，我们要生成多个（论文中使用的是8个），这样一个word就会输出多个vector了——可是我们最终是要一个word只有一个vector呀，没关系，我们先把所有的输出concatenate起来，最后再使用一个转换矩阵$W^O$把它转换到正常的维度，这样我们就在多个层次度量了词与词之间的语义关系，并且最终变成了我们想要的输出，这就是命名为Multi-Head的原因。那么你可能又要问了，这个$W^O$又是怎么来的呢，没错，<code>它又是训练出来的</code>，而且我又不知道它具体是怎么训练的，可以说是非常伤心了。</li>
+</ol>
+<h4 id="2-2-3-Position-Encoding"><a href="#2-2-3-Position-Encoding" class="headerlink" title="2.2.3 Position Encoding"></a>2.2.3 Position Encoding</h4><p>如果对RNN稍有了解你可能会发现，上面的所有Attention过程都是对词与词之间进行关联的计算，我们如果直接把上面的结果放进去跑，似乎错过了一个很重要的信息：序列的顺序。</p>
+<p>所以呢， <code>在进行attention之前，也就是刚做完Word Embedding的时候，我们要在Embedding中加入每个词的位置信息</code> 。</p>
+<script type="math/tex; mode=display">
+PE(pos,2i)=sin(pos/10000^{2i/d_model})</script><script type="math/tex; mode=display">
+PE(pos,2i+1)=cos(pos/10000^{2i/d_model})</script><p>👆上面就是论文中给出的获得Position Embedding的方法。我们把这个Embedding加上最开始获得的词向量，就是最开始的input embedding了。</p>
+<h3 id="2-3-模型结构概括"><a href="#2-3-模型结构概括" class="headerlink" title="2.3 模型结构概括"></a>2.3 模型结构概括</h3><p>简单总结一下Transformer的工作流程：</p>
+<ol>
+<li>首先计算每个词的embedding，这是一切的基础。</li>
+<li>在输入一句话时，每个词都有自己存在的顺序下标，使用2.2.3中描述的公式进行这句话每个词的Position Encoding，并加到1中算得的embedding中去。这一步要在输入数据的时候执行，因为只有一句话给出的时候，我们才能知道每个词在这句话的什么位置。<br><code>接下来进入Encode步骤</code></li>
+<li>使用Multi-Head Attention计算每个词关于其他词的关联关系，并合成一个最终向量（使用2.2.2中说的$W^O$），最终输出的一句话中，每个词都会是一个vector。<code>因为这个过程中，对每一个word的处理都是独立的，所以可以并行化执行。这是Transformer极其重要的优势之一。</code></li>
+<li>把3中输出的一句话中的所有vector送到一个前馈全连接网络，网络的参数在训练中确定，继续输出所有变换后的vector。</li>
+<li>Encoder中重复了3、4两个步骤一共6次，最顶层的Encoder单元将输出的vectors转换成 <del>这里没有说怎么转换的</del> 矩阵<strong>K与V</strong>。<br><code>接下来进入Decode步骤</code></li>
+<li>困了，先睡一觉起来再写。</li>
+</ol>
 
       
     </div>
@@ -594,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">1.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-预备知识"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Encoder-Decoder"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Encoder/Decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Beam-Search"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Beam Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Attention"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Attention</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Attention-Is-All-You-Need"><span class="nav-number">1.2.</span> <span class="nav-text">2. Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-学习博客"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 学习博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Transformer"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-Encoding-Decoding模块"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 Encoding/Decoding模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2. Scaled Dot-Product Attention/Multi-Head Attention</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">1.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-预备知识"><span class="nav-number">1.1.</span> <span class="nav-text">1. 预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Encoder-Decoder"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Encoder/Decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Beam-Search"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Beam Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Attention"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Attention</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Attention-Is-All-You-Need"><span class="nav-number">1.2.</span> <span class="nav-text">2. Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-软广"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 软广</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Transformer"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-Encoding-Decoding模块"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 Encoding/Decoding模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Scaled-Dot-Product-Attention-Multi-Head-Attention"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 Scaled Dot-Product Attention/Multi-Head Attention</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-Position-Encoding"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">2.2.3 Position Encoding</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-模型结构概括"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 模型结构概括</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
