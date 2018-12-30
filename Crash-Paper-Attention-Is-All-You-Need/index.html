@@ -88,7 +88,7 @@
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/001.png">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/002.png">
 <meta property="og:image" content="/Crash-Paper-Attention-Is-All-You-Need/101.png">
-<meta property="og:updated_time" content="2018-12-29T13:41:44.331Z">
+<meta property="og:updated_time" content="2018-12-30T05:25:37.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Crash Paper: Attention Is All You Need">
 <meta name="twitter:description" content="Attention Is All You Need1. 预备知识1.1 Encoder/Decoder序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：  Encoder的每一个单元会根据前一个hidden state以及当前的inpu">
@@ -298,8 +298,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-29T21:41:44+08:00" content="2018-12-29">
-                2018-12-29
+              <time itemprop="dateUpdated" datetime="2018-12-30T13:25:37+08:00" content="2018-12-30">
+                2018-12-30
               </time>
             </span>
             
@@ -426,8 +426,13 @@ PE(pos,2i+1)=cos(pos/10000^{2i/d_model})</script><p>👆上面就是论文中给
 <li>在输入一句话时，每个词都有自己存在的顺序下标，使用2.2.3中描述的公式进行这句话每个词的Position Encoding，并加到1中算得的embedding中去。这一步要在输入数据的时候执行，因为只有一句话给出的时候，我们才能知道每个词在这句话的什么位置。<br><code>接下来进入Encode步骤</code></li>
 <li>使用Multi-Head Attention计算每个词关于其他词的关联关系，并合成一个最终向量（使用2.2.2中说的$W^O$），最终输出的一句话中，每个词都会是一个vector。<code>因为这个过程中，对每一个word的处理都是独立的，所以可以并行化执行。这是Transformer极其重要的优势之一。</code></li>
 <li>把3中输出的一句话中的所有vector送到一个前馈全连接网络，网络的参数在训练中确定，继续输出所有变换后的vector。</li>
-<li>Encoder中重复了3、4两个步骤一共6次，最顶层的Encoder单元将输出的vectors转换成 <del>这里没有说怎么转换的</del> 矩阵<strong>K与V</strong>。<br><code>接下来进入Decode步骤</code></li>
-<li>困了，先睡一觉起来再写。</li>
+<li>Encoder中重复了3、4两个步骤一共6次，最顶层的Encoder单元将输出的vectors转换成 <del>这里没有说怎么转换的</del> 矩阵<strong>K与V</strong>。这两个矩阵是用来计算Encoder-Decoder Attention的。<br><code>接下来进入Decode步骤</code></li>
+<li>在Decoder的第一个sublayer中，对输入的output向量做Multi-Head Attention，原理同2.2.2。</li>
+<li>第一个sublayer的输出对K/V矩阵再做一次Encoder-Decoder Attenion：使用输出vector用K/V矩阵计算加权。这是第二个sublayer。</li>
+<li>第三个sublayer中，使用前馈全连接网络对vector进行变换。</li>
+<li>Decoder中重复了6、7、8三个步骤一共6次，最顶层的Decoder单元每次会输出一个vector，使用一个简单的全连接网络把这个向量映射到整个输出空间vocabulary表中，来获得每个vocabulary的概率，并使用Softmax进行归一。</li>
+<li>选择9中概率最大的word作为本次Decoder的输出单词。</li>
+<li>重复9、10两步直到最后一个输出的word是特殊字符：EOS，表示一个字符串的结束。</li>
 </ol>
 
       
