@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="取名字好难啊">
 <meta property="og:description" content="重修系列的 第二篇文章 说的好像我系统学过决策树一样 最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 数据仓库 ，把这一系列的内容再串联一遍。 我是决策树决策树本质上是一个 贪心方法 ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 Hunt&amp;#39;s 算法来执行贪心的选择过程。简单来说">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-06T03:34:13.384Z">
+<meta property="og:updated_time" content="2019-01-06T03:35:39.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重修决策树：信息增益与Gini系数">
 <meta name="twitter:description" content="重修系列的 第二篇文章 说的好像我系统学过决策树一样 最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 数据仓库 ，把这一系列的内容再串联一遍。 我是决策树决策树本质上是一个 贪心方法 ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 Hunt&amp;#39;s 算法来执行贪心的选择过程。简单来说">
@@ -294,7 +294,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-01-06T11:34:13+08:00" content="2019-01-06">
+              <time itemprop="dateUpdated" datetime="2019-01-06T11:35:39+08:00" content="2019-01-06">
                 2019-01-06
               </time>
             </span>
@@ -377,7 +377,7 @@
 <h3 id="Gini系数"><a href="#Gini系数" class="headerlink" title="Gini系数"></a>Gini系数</h3><p>Gini系数的思想要更好理解一点。它考察了 <code>数据的纯度</code> ，即分裂后的每一个子类的数据越纯，这个分类属性就越好。同理，我们要 <code>计算分裂前的Gini系数，与分裂后的Gini系数的加权和，并将两者相减</code> ，相减之差越大，说明这个分类属性越好。</p>
 <p>Gini系数的计算公式为：</p>
 <script type="math/tex; mode=display">
-\mathrm{Gini(D)}=1-\sum_{i=1}^kp_i</script><p>同样，也就是当前数据集合中每一类的概率之和的补。</p>
+\mathrm{Gini(D)}=1-\sum_{i=1}^kp_i^2</script><p>同样，也就是当前数据集合中每一类的概率平方和的补。</p>
 <p>假设我们使用了属性$A$对数据$D$进行分裂为$n$类，求这些分裂后的子类的Gini系数的加权和，权重就是上面提到的$|D_i|/|D|$，再将结果相减即可。</p>
 <p>最终的Gini系数增益公式为：</p>
 <script type="math/tex; mode=display">
