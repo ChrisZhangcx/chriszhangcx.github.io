@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Leetcode,算法,">
+  <meta name="keywords" content="数据结构,">
 
 
 
@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="Coding is fun 🎉🎉🎉Leetcode: 89-100解题笔记Leetcode: 101-110解题笔记Leetcode: 111-120解题笔记Leetcode: 121-130解题笔记Leetcode: 131-140解题笔记">
-<meta name="keywords" content="Leetcode,算法">
+<meta name="description" content="重修系列的 第二篇文章 说的好像我系统学过决策树一样 最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 数据仓库 ，把这一系列的内容再串联一遍。 我是决策树决策树本质上是一个 贪心方法 ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 Hunt&amp;#39;s 算法来执行贪心的选择过程。简单来说">
+<meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode 解题笔记索引">
-<meta property="og:url" content="/Leetcode-解题笔记索引/index.html">
+<meta property="og:title" content="重修决策树：信息增益与Gini系数">
+<meta property="og:url" content="/重修决策树：信息增益与Gini系数/index.html">
 <meta property="og:site_name" content="取名字好难啊">
-<meta property="og:description" content="Coding is fun 🎉🎉🎉Leetcode: 89-100解题笔记Leetcode: 101-110解题笔记Leetcode: 111-120解题笔记Leetcode: 121-130解题笔记Leetcode: 131-140解题笔记">
+<meta property="og:description" content="重修系列的 第二篇文章 说的好像我系统学过决策树一样 最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 数据仓库 ，把这一系列的内容再串联一遍。 我是决策树决策树本质上是一个 贪心方法 ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 Hunt&amp;#39;s 算法来执行贪心的选择过程。简单来说">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-28T11:49:14.804Z">
+<meta property="og:updated_time" content="2019-01-06T03:34:13.384Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode 解题笔记索引">
-<meta name="twitter:description" content="Coding is fun 🎉🎉🎉Leetcode: 89-100解题笔记Leetcode: 101-110解题笔记Leetcode: 111-120解题笔记Leetcode: 121-130解题笔记Leetcode: 131-140解题笔记">
+<meta name="twitter:title" content="重修决策树：信息增益与Gini系数">
+<meta name="twitter:description" content="重修系列的 第二篇文章 说的好像我系统学过决策树一样 最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 数据仓库 ，把这一系列的内容再串联一遍。 我是决策树决策树本质上是一个 贪心方法 ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 Hunt&amp;#39;s 算法来执行贪心的选择过程。简单来说">
 
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/Leetcode-解题笔记索引/">
+  <link rel="canonical" href="/重修决策树：信息增益与Gini系数/">
 
 
 
 
 
-  <title>Leetcode 解题笔记索引 | 取名字好难啊</title>
+  <title>重修决策树：信息增益与Gini系数 | 取名字好难啊</title>
   
 
 
@@ -251,7 +251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/Leetcode-解题笔记索引/">
+    <link itemprop="mainEntityOfPage" href="/重修决策树：信息增益与Gini系数/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +268,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode 解题笔记索引</h1>
+          <h1 class="post-title" itemprop="name headline">重修决策树：信息增益与Gini系数</h1>
         
 
         <div class="post-meta">
@@ -281,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-27T19:28:57+08:00">
-                2018-12-27
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-06T09:50:19+08:00">
+                2019-01-06
               </time>
             
 
@@ -294,8 +294,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2018-12-28T19:49:14+08:00" content="2018-12-28">
-                2018-12-28
+              <time itemprop="dateUpdated" datetime="2019-01-06T11:34:13+08:00" content="2019-01-06">
+                2019-01-06
               </time>
             </span>
             
@@ -317,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
                   </a>
                 </span>
 
@@ -354,8 +354,34 @@
       
 
       
-        <h3 id="Coding-is-fun-🎉🎉🎉"><a href="#Coding-is-fun-🎉🎉🎉" class="headerlink" title="Coding is fun 🎉🎉🎉"></a>Coding is fun 🎉🎉🎉</h3><p><strong><a href="/Leetcode-89-100解题笔记/" title="Leetcode: 89-100解题笔记">Leetcode: 89-100解题笔记</a></strong><br><strong><a href="/Leetcode-101-110解题笔记/" title="Leetcode: 101-110解题笔记">Leetcode: 101-110解题笔记</a></strong><br><strong><a href="/Leetcode-111-120解题笔记/" title="Leetcode: 111-120解题笔记">Leetcode: 111-120解题笔记</a></strong><br><strong><a href="/Leetcode-121-130解题笔记/" title="Leetcode: 121-130解题笔记">Leetcode: 121-130解题笔记</a></strong><br><strong><a href="/Leetcode-131-140解题笔记/" title="Leetcode: 131-140解题笔记">Leetcode: 131-140解题笔记</a></strong></p>
-
+        <p>重修系列的 <code>第二篇文章</code> <del>说的好像我系统学过决策树一样</del></p>
+<p>最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 <code>数据仓库</code> ，把这一系列的内容再串联一遍。</p>
+<h2 id="我是决策树"><a href="#我是决策树" class="headerlink" title="我是决策树"></a>我是决策树</h2><p>决策树本质上是一个 <code>贪心方法</code> ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 <code>Hunt&#39;s</code> 算法来执行贪心的选择过程。简单来说就是：假设我手上有一个评估分裂后的节点集好坏的一个 <code>标准</code> （这个标准就是下面要说的信息增益与Gini系数），我每次只考察使当前节点达到最优分裂的属性，而不从全局角度来考虑。</p>
+<p>根据标准的不同，决策树又分为 <code>ID3, C4.5, CART</code> 三大类，分别使用的考察标准是 <code>信息增益、信息增益率、Gini系数</code>。</p>
+<a id="more"></a>
+<p><del>嗯网上查Gini系数只能查到中国的基尼系数很低和美国差距很大，我爱百度。</del></p>
+<h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><p>信息增益建立在 <code>信息熵</code> 这个概念之上，我只从我粗浅的理解来阐述这些概念。</p>
+<p>信息熵提出的目的是为了 <code>量化信息</code> ，而量化的目的是 <code>便于比较</code> 。比如小明知道小红很开心，而小张知道小红开心的原因是因为小明裤子的拉链没拉，在这个情境下，小张知道的信息是比小明要多的，因为小张不仅知道小红开心，还知道小红开心的原因，我们有理由认为在小红开心这件事情上，小张知道的信息比小明要多。但是这与主题关系不大，根据我看博客多年的经验，怼上太多公式反而会给人造成混淆，所以我不放信息熵的公式了。总得来说只有一点：信息熵存在的目的是为了便于进行信息量的比较，考虑到熵表征的是物质的混乱程度，所以 <code>信息量越大，信息熵的值越趋于0</code> 。</p>
+<p>现在给定一个数据集合$D$，我们要做的是一个$k$分类问题，即把里面的数据分成$y_1,…,y_k$共$k$类。<strong>这里提出一个很简单但是对于计算后面的信息增益与Gini系数都很重要的概念：$p_i,i\in[1,k]$。$p_i$表征 <code>从数据集合D中随机取一个元素出来，这个元素类别是y_i的概率</code> ，所以很好理解的是，$p_i=\frac{|y_i|}{|D|}$，也就是类别为$y_i$元素在$D$中所占的比例。</strong></p>
+<p>现在来讲 <code>信息增益</code> ，ID3算法的本质就是使用划分前后的信息增益来考察划分属性的好坏。我们可以从以下几个步骤考虑：</p>
+<ol>
+<li>我们计算当前数据集合的经验熵：$H(D)=-\sum_{i=1}^kp_i\mathrm{log}_2p_i$。<br>简单理解就是，当前数据集合$D$的经验熵就是当前 <code>每一类出现概率的对数在D中的加权和</code> 。</li>
+<li>假设我们使用属性$A$来划分当前的数据集合$D$，而$A$有$n$个取值，也就是说我们使用$A$将数据集$D$划分成为了$n$类，分别是$D_1,…,D_n$。我们可以用同样的方式算出$D_1,…,D_n$的经验熵$H(D_1),H(D_2),…,H(D_n)$。</li>
+<li>信息增益就是分裂前后的经验熵之差，也就是$g(D,A)=H(D)-\sum_{i=1}^n\frac{|D_i|}{|D|}H(D_i)$。<br>前面那个变量就是 <code>分裂前数据的经验熵</code> ，而减号后面的变量就是 <code>分裂后每一个子节点的经验熵的加权和</code> 。权重就是这个子节点中的数据数量占原数据集合$D$的比例。</li>
+</ol>
+<p>在执行ID3算法时，我们遍历每一个能考察的节点， <code>选择让g达到最大的节点</code> 。因为减号前面的数值是不会变化的，而后面的数值表征了分裂后节点提供的信息量。如果后面的数值贼拉小，说明提供的信息量很大，那整个$g(D,A)$就会很大。而我们要选择最大的那个属性来进行分裂。</p>
+<h3 id="信息增益率"><a href="#信息增益率" class="headerlink" title="信息增益率"></a>信息增益率</h3><p><code>信息增益率</code> 在搞懂信息增益以后很好理解，几句话就能说完：</p>
+<p>从上面计算条件经验熵的公式可以看出， <code>信息增益更倾向于选择属性取值n数量更多，每个取值的数据量越均匀的那个属性</code> 。</p>
+<p>所以我们需要在信息增益中增加一个 <code>惩罚系数</code> ，也就是说，这个惩罚系数的值应该 <code>随着属性取值的增加而增大</code> 。惩罚系数的具体计算公式是：$-\sum_{i=1}^n\frac{|D_i|}{|D|}$（其实也就是分类的经验熵$H(A)$）。</p>
+<p>最后的信息增益率就是原信息增益与这个惩罚系数之比，即$g’=g(D|A)\div H(A)$。</p>
+<h3 id="Gini系数"><a href="#Gini系数" class="headerlink" title="Gini系数"></a>Gini系数</h3><p>Gini系数的思想要更好理解一点。它考察了 <code>数据的纯度</code> ，即分裂后的每一个子类的数据越纯，这个分类属性就越好。同理，我们要 <code>计算分裂前的Gini系数，与分裂后的Gini系数的加权和，并将两者相减</code> ，相减之差越大，说明这个分类属性越好。</p>
+<p>Gini系数的计算公式为：</p>
+<script type="math/tex; mode=display">
+\mathrm{Gini(D)}=1-\sum_{i=1}^kp_i</script><p>同样，也就是当前数据集合中每一类的概率之和的补。</p>
+<p>假设我们使用了属性$A$对数据$D$进行分裂为$n$类，求这些分裂后的子类的Gini系数的加权和，权重就是上面提到的$|D_i|/|D|$，再将结果相减即可。</p>
+<p>最终的Gini系数增益公式为：</p>
+<script type="math/tex; mode=display">
+\mathrm{Gini}_ {\mathrm{index}}=\mathrm{Gini}(D)-\sum_{i=1}^n\mathrm{Gni}(D_i)</script>
       
     </div>
     
@@ -372,9 +398,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
-          
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
           
         </div>
       
@@ -387,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Crash-Paper-Attention-Is-All-You-Need/" rel="next" title="Crash Paper: Attention Is All You Need">
-                <i class="fa fa-chevron-left"></i> Crash Paper: Attention Is All You Need
+              <a href="/Leetcode-解题笔记索引/" rel="next" title="Leetcode 解题笔记索引">
+                <i class="fa fa-chevron-left"></i> Leetcode 解题笔记索引
               </a>
             
           </div>
@@ -396,10 +420,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/重修决策树：信息增益与Gini系数/" rel="prev" title="重修决策树：信息增益与Gini系数">
-                重修决策树：信息增益与Gini系数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -550,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Coding-is-fun-🎉🎉🎉"><span class="nav-number">1.</span> <span class="nav-text">Coding is fun 🎉🎉🎉</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#我是决策树"><span class="nav-number">1.</span> <span class="nav-text">我是决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益"><span class="nav-number">1.1.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益率"><span class="nav-number">1.2.</span> <span class="nav-text">信息增益率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gini系数"><span class="nav-number">1.3.</span> <span class="nav-text">Gini系数</span></a></li></ol></li></ol></div>
             
 
           </div>
