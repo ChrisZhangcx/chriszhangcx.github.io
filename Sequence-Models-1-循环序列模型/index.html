@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是 Andrew Ng深度学习相关视频：Sequence Models 中的笔记 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。 因为内容不深，以 Tips 或 Q&amp;amp;A 的形式给出整个课程的内容。 让我们从 第一周：循环序列模型 开始。">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequence Models(1): 循环序列模型">
+<meta property="og:url" content="/Sequence-Models-1-循环序列模型/index.html">
+<meta property="og:site_name" content="取名字好难啊">
+<meta property="og:description" content="本文是 Andrew Ng深度学习相关视频：Sequence Models 中的笔记 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。 因为内容不深，以 Tips 或 Q&amp;amp;A 的形式给出整个课程的内容。 让我们从 第一周：循环序列模型 开始。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T07:40:26.376Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sequence Models(1): 循环序列模型">
+<meta name="twitter:description" content="本文是 Andrew Ng深度学习相关视频：Sequence Models 中的笔记 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。 因为内容不深，以 Tips 或 Q&amp;amp;A 的形式给出整个课程的内容。 让我们从 第一周：循环序列模型 开始。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/Sequence-Models-1-循环序列模型/">
+
+
+
+
+
+  <title>Sequence Models(1): 循环序列模型 | 取名字好难啊</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">取名字好难啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Sequence-Models-1-循环序列模型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="取名字好难啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sequence Models(1): 循环序列模型</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-07T20:59:02+08:00">
+                2019-01-07
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-01-11T15:40:26+08:00" content="2019-01-11">
+                2019-01-11
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是 <a href="https://mooc.study.163.com/learn/2001280005" target="_blank" rel="noopener">Andrew Ng深度学习相关视频：Sequence Models 中的笔记</a> 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。</p>
+<p>因为内容不深，以 <code>Tips</code> 或 <code>Q&amp;A</code> 的形式给出整个课程的内容。</p>
+<p>让我们从 <code>第一周：循环序列模型</code> 开始。</p>
+<a id="more"></a>
+<hr>
+<p><strong><code>1. Motivation: Why Sequence Model?</code></strong></p>
+<p>在以Machine Translation为例的语言处理中，为什么要使用序列模型，而不使用标准的全连接NN模型呢？</p>
+<ol>
+<li>在语言处理中，输入输出的symbols总长是不固定的，所以定长NN的input、output不符合我们的需求。（即使我们可以设置input/output层的单元数为一个句子的maxLength，在实际使用中把多余的神经元简单pad一下，但是这不nice）</li>
+<li>NN模型无法共享在句子的不同位置学习到的参数。举例来说，一个单词 Harry 在input神经元的第i个位置输入，与第j个位置输入，网络的输出是不一样的，但是遗憾的是，我们更希望它自始至终都被认为是一个人名。</li>
+</ol>
+<p><strong><code>2. Introduction: Recurrent Neural Networks</code></strong></p>
+<p>循环神经网络在输入第i个单词$x^i$时，不仅仅使用$x^i$本身来进行语义理解，而是把$x^{i-1}$的 <code>activation value</code> 也作为当前单元的一个输入。这一步比较直观的理解是，探索单词$x^i$的语义时，要结合前面单词的意思来共同进行解释 <del>只考察当前单词的意思，那不是和查字典一样了吗🤔</del> 。</p>
+<p>然而，又容易想到的是，为什么只使用前面的单词进行理解呢， <code>理解一个word的含义不应该共同参照整个上下文吗</code> ？事实上也确实应该参照整个上下文。所以现在正在讨论的RNN unit是很简单的，之后也会说到关于双向语义处理的BRNN模型。</p>
+<p>总的来说，在整个RNN模型中，使用了上一个时间步的信息与当前的输入共同来训练当前的输出（目前暂不考虑输入与输出长度不同的情况）。那么在第一个时间步中，我们同样需要一个初始的输入（目的应该是为了保证每个单元结构一致），在实践中通常使用零向量作为初始输入。</p>
+<p><em>RNN隐层的激活函数通常选用tanh，偶尔也会选用ReLU；输出的激活函数视问题性质选择sigmoid或softmax。</em></p>
+<p><strong><code>3. Input &amp; Output</code></strong></p>
+<p>我们已经知道，神经元输入上一个时间步的参数 $a^{i-1}$ 与当前输入的symbol $x^i$，最终输出一个$a^i$与$y^i$，其中$a^i$将传递到下一个时间步中。用公式表达一个正统的单向RNN unit就是：</p>
+<script type="math/tex; mode=display">
+a^{< i>}=g(W_a[ a^{< i-1>},x^i]+b_a)</script><p>其中$g$表示激活函数，一般选用tanh，$W_a,b_a$都是训练得到的参数。</p>
+<p>当然，这样输出的结果$a^{&lt; i&gt;}$实际是当前RNN单元的隐层参数，如果RNN单元需要执行一个输出，那么还需要：</p>
+<script type="math/tex; mode=display">
+\hat{y}^{< i>}=g(W_y[ a^{< i-1>},x^i]+b_y)</script><p>也就是把计算隐层向量的参数换了一下。不过计算$y^{&lt; i&gt;}$这一步并不是在所有的RNN模型中都被需要（5中会提到哪些任务会需要使用到$y^{&lt; i&gt;}$）。</p>
+<p><em>在GRU/LSTM单元中，输入与输出会有些不同，下文中会进行叙述。</em></p>
+<p><strong><code>4. Loss Function &amp; Back Propogation</code></strong></p>
+<p>3中已经对前向传播的更新逻辑有清晰的描述，现在对RNN模型的 <code>损失函数</code> 进行说明。</p>
+<p>假设模型的词汇表单词数为1000个，在使用softmax之后，能够将当前RNN单元的输出映射到 <code>词汇表中每个单词是当前输出的概率</code> 。如果当前的模型是拿来应用的，那么应该选择概率最大的那个单词来作为当前的输出结果，然而在训练中，只考虑应该输出的正确单词所对应的概率$y^{&lt; i&gt;}$。</p>
+<p>Andrew Ng的课件中以 <code>交叉熵(Cross Entropy)</code> 来作为网络模型的损失函数。以Machine Translation任务为例，假设对于当前输入$x^{&lt; i&gt;}$，应有的翻译结果为$y^{&lt; i&gt;}$（注意，这里并没有考虑输入与输出结果不等长的情况），而模型对单词$y^{&lt; i&gt;}$预测的概率值为$\hat{y}^{&lt; i&gt;}$。那么，当前RNN单元的交叉熵值定义为：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}^{< i>}(y^{< i>}, \hat{y}^{< i>})=-y^{< i>}\mathrm{log}\hat{y}^{< i>}-(1-y^{< i>})\mathrm{log}(1-\hat{y}^{< i>})</script><p>模型的损失函数定义为 <code>每个时间步的损失之和</code> ，即：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}=\sum_{i=1}^{T_y}\mathcal{L}^{< i>}(y^{< i>}, \hat{y}^{< i>})</script><p>有一点值得注意：基于计算交叉熵$\mathcal{L}$的逻辑，意味着整个模型需要从头到尾计算一遍每个单词的$\mathcal{L}^{&lt; i&gt;}(y^{&lt; i&gt;}, \hat{y}^{&lt; i&gt;})$值并累加，并且每个单元的计算还要依赖于前一个单元的隐层输出（有时候是前一个单元的所有输出）。所以从这个角度看， <code>RNN模型很难做到并行处理</code> <del>好气啊，隔壁CNN就可以</del>。</p>
+<p><strong><code>5. 多种RNN结构</code></strong></p>
+<p>根据问题的不同类型，可以定义多种不同的RNN结构。常用的问题类型有下面四种（实际上是三种🙂）：</p>
+<ul>
+<li><code>many-to-one</code>: 也就是输入一个包含多个symbol的序列，输出一个symbol。常见的问题有：根据用户对一部电影的描述，对这部电影进行评分。</li>
+<li><code>one-to-many</code>: 即输入是一个symbol（有时候也可以输入$\emptyset$），输出是多个symbol的序列。比如说用户输入想要生成的音乐类型（或者给出音乐的第一个音符），由RNN模型生成一串音符。</li>
+<li><code>many-to-many</code>: 机器翻译。</li>
+<li><code>one-to-one</code>: 输入symbol与输出symbol都只有一个，这就是一个普通的神经网络结构，对输入symbol做了个仿射变换而已。</li>
+</ul>
+<p>对于上面比较典型的三种问题，要修正RNN Model结构如下：</p>
+<ul>
+<li><code>many-to-one</code>: 既然只需要输出一个y，那就前面的$n-1$个RNN unit都只用来传输$a^{&lt; i&gt;}$给下一个单元，最后一个RNN unit执行输出。</li>
+<li><code>one-to-many</code>: 只在第一个RNN unit有输入$x^{&lt; 0&gt;}$，结合初始化的$a^{&lt; 0&gt;}$共同产生一个输出$y^{<0>}$，之后每个RNN unit只有前一个隐层的输入$a^{&lt; i-1&gt;}$，而没有$x$。不过，在实际应用中，会将前一个RNN unit的输出$y^{&lt; i-1&gt;}$当做$x$来输入到下一个单元中去。</0></li>
+<li><code>many-to-many</code>: 对于定长的机器翻译问题，这就是上面所描述的最经典的RNN unit结构。</li>
+</ul>
+<p>我希望 上面的描述 能让明白的人知道我确实明白了 让不明白的人看明白了 虽然不一定能起到这个效果 但我还是只想用文字描述懒得上图 <del>毕竟我可是高中作文常拿💯的人</del> 。</p>
+<p><strong><code>6. 不定长输出？</code></strong></p>
+<p>机器翻译中输入与输出的长度必须相等，这个约束条件看起来蠢蠢的 <del>事实上确实很蠢</del> 。为了允许输入和输出的长度不等，实际应用中将Machine Translation这种many-to-many问题的RNN Model结构表现成 <code>Encoder-Decoder</code> 结构。其中：Encoder负责依次读入所有的input symbol以及前面单元的隐层$a^{&lt; i-1&gt;}$，计算并传递$a^{&lt; i&gt;}$到下一个单元中去。Decoder读入Encoder中最后一个unit输出的隐层向量，计算并继续向下传递，<code>Decoder中的每个单元都会产生一个输出</code>：因为Encoder与Decoder分离了，也就不需要必须保证输入与输出的长度必须相等了。</p>
+<p>不定长的问题是解决了，但是又出现一个新问题：Decoder就这样一直生成symbol怎么办，怎么判断什么时候该结束呢。</p>
+<p>事实上，在构造的单词表中，除了所有的语言单词外，还有两个特殊的单词： <code>&lt;UNK&gt; 与 &lt;EOS&gt;</code> 其中 <code>&lt;EOS&gt;表示一个字符串的结束符(End of String)</code> ，而 <code>&lt;UNK&gt;用于指代所有在序列中出现、又不在字典中的词(Unknown)</code> 。对于判断结束的问题，在Decoder某一个unit中发现EOS符号的概率最大，就认为到达了结束点。</p>
+<p><strong><code>7. Language Model &amp; Sampling</code></strong></p>
+<p>Language Model的任务是给一个句子， <code>将句子转换为一个概率</code> 。它通常被用在两个地方：语音识别与机器翻译。即在每一个RNN单元，Language Model都会根据前一个单元的隐层$a$与当前的输入$x$，转换为词汇表中每一个单词可能出现的概率。</p>
+<p>因此，一个预训练后的Language Model能够用于对句子的随机采样。具体的采样步骤如下：</p>
+<ol>
+<li>Language Model对于初始输入$a^{&lt; 0&gt;}=<0,...,0>$与$x^{1}$，将词汇表中所有word都输出到一个概率（这一步是用softmax来完成的）。</0,...,0></li>
+<li>使用numpy等库中的choice对单词进行抽样，每个单词被抽中的概率就是该单词的出现概率。假设这一步抽样获得了单词$\hat{y}^{<1>}$。</1></li>
+<li>将$a^{<1>}$与$y^{<1>}$喂给第二个RNN单元，同样能够通过抽样获得当前单元的输出词$\hat{y}^{<2>}$。</2></1></1></li>
+<li>重复直到某一个单元中EOS的概率最大，认为到达了一个句子的末尾。之前获得的所有word sequence就是一个抽样获得的句子。</li>
+</ol>
+<p>值得注意的是，在上面介绍到了特殊字符UNK，而生成的句子中有未知单词这件事情是比较荒谬的，所以实际应用时，要拒绝所有采样为UNK的情况。</p>
+<p><strong><code>8. Vanishing Gradient &amp; GRU/LSTM</code></strong></p>
+<p>作为一个好多层的神经网络结构，RNN Model也会遇到梯度消失的问题 <code>有趣的是DNN的梯度消失是因为层数太多，而RNN的梯度消失是因为单词太长</code> ，差别在于一个是纵向一个是横向的（也就是前向传播的方向）。梯度消失会造成前面的参数很难被更新，体现在应用中就是：最开始输出的单词一直都是那么几个，很难被改变。</p>
+<p>对于梯度消失的问题，普通的RNN unit很难起到效果，而GRU与LSTM通过门控机制的引入来很大程度上缓解了这个问题。</p>
+<p>从思想上来说，GRU通过引入一个参数（可以称为update gate），来控制当前的隐层$a^{&lt; i&gt;}$中有多少是被当前的输入所更新的，有多少是直接使用之前的隐层向量$a^{&lt; i-1&gt;}$的。可以把它看作当前隐层与前隐层的一个加权（系数的总和为1）。直观上来说，如果通过控制参数值，使得当前输出的隐层完全沿用之前的隐层数据，说明当前的输入完全没有对当前单元产生作用。</p>
+<p>LSTM的思想比较类似（事实上，LSTM是比较早被提出来的结构）<del>明明是我先来的</del>。LSTM一口气引入了三个新的参数，其中一个是与GRU相同的update gate，另外两个称为forget gate与output gate。参数的名称已经说明了这三个参数分别是起什么作用的：update gate决定了当前隐层$a^{&lt; i&gt;}$占最后输出的隐层向量中的比例；forget gate决定了前一单元的隐层$a^{&lt; i-1&gt;}$在最后输出的隐层向量中的比例；而output gate决定了最后输出的隐层向量占前面算出来的所有加权和的比例 <del>这一段把我自己都说懵了嘻嘻</del>。</p>
+<p><strong><code>9. RNN/GRU/LSTM unit</code></strong></p>
+<p>单开一节系统的定义一个正常的RNN unit，GRU unit与LSTM unit分别是怎么对参数进行更新的，希望能把说懵的人给整明白。<strong>下面的论述都以一个单元为单位</strong>。</p>
+<p><code>RNN Unit</code> 传入$a^{&lt; i-1&gt;}$与$x^{&lt; i&gt;}$，输出$\hat{y}^{&lt; i&gt;}$与$a^{&lt; i&gt;}$</p>
+<p>$a^{&lt; i&gt;}=g(W_a[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_a)$</p>
+<p>$\hat{y}^{&lt; i&gt;}=g(W_y[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_y)$</p>
+<p><code>GRU Unit</code> 传入$a^{&lt; i-1&gt;}$与$x^{&lt; i&gt;}$，计算中间参数$\tilde{a}^{&lt; i&gt;}$与$\mathcal{T}_u$，输出$\hat{y}^{&lt; i&gt;}$与$a^{&lt; i&gt;}$</p>
+<p>$\tilde{a}^{&lt; i&gt;}=\mathrm{tanh}(W_c[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_c)$</p>
+<p>$\mathcal{T}_u=\sigma(W_u[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_u)$</p>
+<p>$a^{&lt; i&gt;}=\mathcal{T}_u\tilde{a}^{&lt; i&gt;}+(1-\mathcal{T}_u)a^{&lt; i-1&gt;}$</p>
+<p>$\hat{y}^{&lt; i&gt;}=g(W_y[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_y)$   <strong>注意：$\hat{y}$的计算方式没有改变</strong></p>
+<p><code>LSTM Unit</code> 传入$c^{&lt; i-1&gt;}$、$a^{&lt; i-1&gt;}$与$x^{&lt; i&gt;}$，计算中间参数$\tilde{c}^{&lt; i&gt;}$、$\mathcal{T}_u$、$\mathcal{T}_f$与$\mathcal{T}_o$，输出$\hat{y}^{&lt; i&gt;}$、$c^{&lt; i&gt;}$与$a^{&lt; i&gt;}$</p>
+<p>$\tilde{c}^{&lt; i&gt;}=\mathrm{tanh}(W_c[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_c)$</p>
+<p>$\mathcal{T}_u=\sigma(W_u[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_u)$</p>
+<p>$\mathcal{T}_f=\sigma(W_f[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_f)$</p>
+<p>$\mathcal{T}_o=\sigma(W_o[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_o)$</p>
+<p>$c^{&lt; i&gt;}=\mathcal{T}_u\tilde{c}^{&lt; i&gt;}+\mathcal{T}_fc^{&lt; i-1&gt;}$</p>
+<p>$a^{&lt; i&gt;}=\mathcal{T}_o\cdot\mathrm{tanh}(c^{&lt; i&gt;})$</p>
+<p>$\hat{y}^{&lt; i&gt;}=g(W_y[ a^{&lt; i-1&gt;},x^{&lt; i&gt;}]+b_y)$   <strong>注意：$\hat{y}$的计算方式没有改变</strong></p>
+<p><del>看到这里还没有走的，请受我一拜🙇</del></p>
+<p><strong><code>10. Bidirectional RNN &amp; Deep RNN</code></strong></p>
+<p>为了 凑到序号10，简单说一下双向RNN与深层RNN吧。</p>
+<p>上面提到过，如果一个单向的Encoder一路下来，当前单元只能学习到前一个单元的隐层与当前的输入，这样就只结合了上文的信息，而没有结合下文信息。为了解决这个问题，提出了Bidirectional RNN(BRNN)，即双向RNN。解决思路就是除了从左向右的Forward传参，再加一个并列的从右向左的Forward传参，两个过程独立存储隐层向量，在输出单元的$\hat{y}^{&lt; t&gt;}$时使用两边各自传过来的$a$与当前的输入$x$。</p>
+<p>另外，RNN除了能够横向扩展（即增加 unit 的数量以外），也能增加纵向的深度，纵向上每一层都是一个从左向右的RNN Model（如果是BRNN，每一层可以同时从左到右与从右到左），这样的结构被称为DRNN，但是考虑到RNN Model本身计算的复杂度，增加深度会非常大量的增加模型训练时间。实际应用时，在纵向上不会增加太多的RNN结构，而是在最后增加一部分非RNN的类似全连接的结构，来增大unit-wise的深度。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/重修决策树：信息增益与Gini系数/" rel="next" title="重修决策树：信息增益与Gini系数">
+                <i class="fa fa-chevron-left"></i> 重修决策树：信息增益与Gini系数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
