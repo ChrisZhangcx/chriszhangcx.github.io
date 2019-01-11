@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="取名字好难啊">
 <meta property="og:description" content="本文是 Andrew Ng深度学习相关视频：Sequence Models 中的笔记 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。 因为内容不深，以 Tips 或 Q&amp;amp;A 的形式给出整个课程的内容。 让我们从 第一周：循环序列模型 开始。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-11T07:40:26.376Z">
+<meta property="og:updated_time" content="2019-01-11T12:42:08.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequence Models(1): 循环序列模型">
 <meta name="twitter:description" content="本文是 Andrew Ng深度学习相关视频：Sequence Models 中的笔记 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。 因为内容不深，以 Tips 或 Q&amp;amp;A 的形式给出整个课程的内容。 让我们从 第一周：循环序列模型 开始。">
@@ -294,7 +294,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-01-11T15:40:26+08:00" content="2019-01-11">
+              <time itemprop="dateUpdated" datetime="2019-01-11T20:42:08+08:00" content="2019-01-11">
                 2019-01-11
               </time>
             </span>
@@ -365,8 +365,9 @@
 <li>在语言处理中，输入输出的symbols总长是不固定的，所以定长NN的input、output不符合我们的需求。（即使我们可以设置input/output层的单元数为一个句子的maxLength，在实际使用中把多余的神经元简单pad一下，但是这不nice）</li>
 <li>NN模型无法共享在句子的不同位置学习到的参数。举例来说，一个单词 Harry 在input神经元的第i个位置输入，与第j个位置输入，网络的输出是不一样的，但是遗憾的是，我们更希望它自始至终都被认为是一个人名。</li>
 </ol>
+<p>所以在下面讨论适用于序列数据的 <code>循环神经网络模型</code>。</p>
 <p><strong><code>2. Introduction: Recurrent Neural Networks</code></strong></p>
-<p>循环神经网络在输入第i个单词$x^i$时，不仅仅使用$x^i$本身来进行语义理解，而是把$x^{i-1}$的 <code>activation value</code> 也作为当前单元的一个输入。这一步比较直观的理解是，探索单词$x^i$的语义时，要结合前面单词的意思来共同进行解释 <del>只考察当前单词的意思，那不是和查字典一样了吗🤔</del> 。</p>
+<p>与普通的全连接网络不同，循环神经网络在输入第i个单词$x^i$时，不仅仅使用$x^i$本身来进行语义理解，而是把$x^{i-1}$的 <code>activation value</code> 也作为当前单元的一个输入。这一步比较直观的理解是，探索单词$x^i$的语义时，要结合前面单词的意思来共同进行解释 <del>只考察当前单词的意思，那不是和查字典一样了吗🤔</del> 。</p>
 <p>然而，又容易想到的是，为什么只使用前面的单词进行理解呢， <code>理解一个word的含义不应该共同参照整个上下文吗</code> ？事实上也确实应该参照整个上下文。所以现在正在讨论的RNN unit是很简单的，之后也会说到关于双向语义处理的BRNN模型。</p>
 <p>总的来说，在整个RNN模型中，使用了上一个时间步的信息与当前的输入共同来训练当前的输出（目前暂不考虑输入与输出长度不同的情况）。那么在第一个时间步中，我们同样需要一个初始的输入（目的应该是为了保证每个单元结构一致），在实践中通常使用零向量作为初始输入。</p>
 <p><em>RNN隐层的激活函数通常选用tanh，偶尔也会选用ReLU；输出的激活函数视问题性质选择sigmoid或softmax。</em></p>
