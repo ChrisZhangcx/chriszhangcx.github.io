@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="NLP,">
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="Is life always this hard, or is it just when you&apos;re a kid?">
-<meta property="og:type" content="website">
-<meta property="og:title" content="取名字好难啊">
-<meta property="og:url" content="/categories/Internship/index.html">
+<meta name="description" content="Sequence Models的第二部分，主要讲了 自然语言处理 与 词嵌入 (Word Embedding) 的内容（其实只讲了Word Embedding）。 因为 最近有个面试 我在忙着进行 虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的 面试前的准备，所以先写一下所学到的内容概要，等结束面试以后再来更新。 1. Word Representation 编码方式：On">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequence Models(2): NLP &amp; Word Embedding">
+<meta property="og:url" content="/Sequence-Models-2-NLP-Word-Embedding/index.html">
 <meta property="og:site_name" content="取名字好难啊">
-<meta property="og:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta property="og:description" content="Sequence Models的第二部分，主要讲了 自然语言处理 与 词嵌入 (Word Embedding) 的内容（其实只讲了Word Embedding）。 因为 最近有个面试 我在忙着进行 虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的 面试前的准备，所以先写一下所学到的内容概要，等结束面试以后再来更新。 1. Word Representation 编码方式：On">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-14T08:13:02.528Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="取名字好难啊">
-<meta name="twitter:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta name="twitter:title" content="Sequence Models(2): NLP &amp; Word Embedding">
+<meta name="twitter:description" content="Sequence Models的第二部分，主要讲了 自然语言处理 与 词嵌入 (Word Embedding) 的内容（其实只讲了Word Embedding）。 因为 最近有个面试 我在忙着进行 虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的 面试前的准备，所以先写一下所学到的内容概要，等结束面试以后再来更新。 1. Word Representation 编码方式：On">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/categories/Internship/">
+  <link rel="canonical" href="/Sequence-Models-2-NLP-Word-Embedding/">
 
 
 
 
 
-  <title>分类: Internship | 取名字好难啊</title>
+  <title>Sequence Models(2): NLP & Word Embedding | 取名字好难啊</title>
   
 
 
@@ -141,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -235,53 +237,216 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Internship<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Sequence-Models-2-NLP-Word-Embedding/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="取名字好难啊">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/Internship-关于Software-Engineering-Prep-Doc/" itemprop="url">
-              
-                <span itemprop="name">Internship: 关于Software Engineering Prep Doc</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Sequence Models(2): NLP & Word Embedding</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-10T15:27:45+08:00" content="2018-12-10">
-          12-10
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-14T15:53:38+08:00">
+                2019-01-14
+              </time>
+            
 
-    </header>
-  </article>
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
 
+              <time itemprop="dateUpdated" datetime="2019-01-14T16:13:02+08:00" content="2019-01-14">
+                2019-01-14
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Sequence Models的第二部分，主要讲了 <code>自然语言处理</code> 与 <code>词嵌入 (Word Embedding)</code> 的内容（其实只讲了Word Embedding）。</p>
+<p>因为 最近有个面试 我在忙着进行 <del>虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的</del> 面试前的准备，所以先写一下所学到的内容概要，等结束面试以后再来更新。</p>
+<p><strong><code>1. Word Representation</code></strong></p>
+<p>编码方式：One-Hot与Featurized Representation。</p>
+<p>Word Representation - Face Encoding.</p>
+<p>词嵌入的特征：进行归纳推理。 man$\rightarrow$woman $=$ king$\rightarrow$queen</p>
+<a id="more"></a>
+<p>词嵌入矩阵$E$，以及$e_{\mathrm{word}}=E\cdot o_{\mathrm{word}}$，其中$o_{\mathrm{word}}$是word的one-hot编码形式，而E是所有词的嵌入矩阵，每一列是一个词dimension维度的所有值。</p>
+<p><strong><code>2. Learning Word Embedding</code></strong></p>
+<p>Word2vec. 核心：使用滑动窗口+softmax</p>
+<ul>
+<li>skip-gram：窗口内随机选择单词作为(context, target)对，使用交叉熵作为损失函数进行softmax训练</li>
+<li>CBOW：没讲</li>
+<li>GloVe：单开一节课程讲的</li>
+</ul>
+<p><strong><code>3. Softmax 训练开销很大</code></strong></p>
+<ol>
+<li>分层softmax，类似于一个决策树</li>
+<li>负采样及其细节</li>
+</ol>
+<p><strong><code>4. Sentiment Classification</code></strong></p>
+<p>情感分析。给定评论（文字），映射到一个五分类输出，表示对某个餐厅/服务的评价星级。</p>
+<p>使用预训练的大语料上的embedding matrix $E$。</p>
+<ol>
+<li>对所有word的embedding结果进行sum(+avg)，使用softmax映射到五分类。问题：没有考虑order与语义依赖。（lacking in good taste, good service, good…。好多good！）</li>
+<li>放入RNN单元，转换成 <a href="/Sequence-Models-1-循环序列模型/" title="第一讲">第一讲</a> 中的 <code>many-to-one</code>问题。</li>
+</ol>
+<p><strong><code>5. Debiasing</code></strong></p>
+<p>消除偏见，如：man$\rightarrow$woman $=$ Computer Programmer$\rightarrow$Homemaker。</p>
+<ol>
+<li>Identify Bias Direction</li>
+<li>Neutralize</li>
+<li>Equalize</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Sequence-Models-1-循环序列模型/" rel="next" title="Sequence Models(1): 循环序列模型">
+                <i class="fa fa-chevron-left"></i> Sequence Models(1): 循环序列模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -289,6 +454,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -520,6 +692,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
