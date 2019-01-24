@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写完以后发现这个 注释的形式 还有待改进，希望大家暂时理解一下。 1.1 Event Extraction after 2015Overview在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于模式匹配或者统计机器学习方法博客。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)">
+<meta property="og:url" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/index.html">
+<meta property="og:site_name" content="取名字好难啊">
+<meta property="og:description" content="写完以后发现这个 注释的形式 还有待改进，希望大家暂时理解一下。 1.1 Event Extraction after 2015Overview在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于模式匹配或者统计机器学习方法博客。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1104.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1108.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1106.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1107.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1100.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1101.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1102.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1103.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1200.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1201.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1202.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1203.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1204.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1205.png">
+<meta property="og:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1206.png">
+<meta property="og:updated_time" content="2019-01-24T08:23:01.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)">
+<meta name="twitter:description" content="写完以后发现这个 注释的形式 还有待改进，希望大家暂时理解一下。 1.1 Event Extraction after 2015Overview在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于模式匹配或者统计机器学习方法博客。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数">
+<meta name="twitter:image" content="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1104.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/">
+
+
+
+
+
+  <title>如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction) | 取名字好难啊</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">取名字好难啊</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="取名字好难啊">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-24T16:19:41+08:00">
+                2019-01-24
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-01-24T16:23:01+08:00" content="2019-01-24">
+                2019-01-24
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>写完以后发现这个 <strong>注释的形式</strong> 还有待改进，希望大家暂时理解一下。</p>
+<h2 id="1-1-Event-Extraction-after-2015"><a href="#1-1-Event-Extraction-after-2015" class="headerlink" title="1.1 Event Extraction after 2015"></a>1.1 Event Extraction after 2015</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于<strong>模式匹配</strong>或者<strong>统计机器学习</strong>方法<sup><a href="#fn_博客" id="reffn_博客">博客</a></sup>。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数据。从2015年开始，有研究者尝试使用CNN/RNN来提取Event Mention中的语义，比较典型的有DMCNN<sup><a href="#fn_2015.1" id="reffn_2015.1">2015.1</a></sup>与JRNN<sup><a href="#fn_2016.2" id="reffn_2016.2">2016.2</a></sup>等模型，其评估结果比早期的一些Structure-Based Method有显著提升，加之Deep Learning的逐渐升温，可以看出大家在这段时间开始普遍转向使用Representation-Based Method来看待EE问题。使用DNN来捕捉语义的另一个好处是使用了蕴含特征更加丰富的词向量，因此事件抽取的结果不再很大程度上依赖于人工定义的局部/全局特征。</p>
+<a id="more"></a>
+<p>另外，Attention Mechanism对于结构信息的建模也逐渐引起学者的注意。随着研究方法的不断提出，也逐渐开始有加入Attention机制的模型出现。注意力机制的特性决定了它能够在不考虑位置信息的条件下使用全局对局部进行建模，在更新单词语义表示时有很好的应用效果<sup><a href="#fn_2017.2" id="reffn_2017.2">2017.2</a></sup>，另外也有学者使用分层的注意力机制来进行信息的全局聚合<sup><a href="#fn_2018.7" id="reffn_2018.7">2018.7</a></sup>。</p>
+<p>除了研究方法的演进外，事件抽取问题的切入角度也被大家所广泛考虑。常用的事件抽取模型可能把目光聚焦在一个句子中抽取一个Trigger以及多个Arguments。如果尝试增加该任务的广度，可以考虑从文档级别的数据中尝试抽取一个事件<sup><a href="#fn_2018.3" id="reffn_2018.3">2018.3</a></sup>（因为一个事件的所有元素可能不仅仅只存在于一个句子中）；或者尝试增加任务的深度，即从句子级别的数据中抽取多个Trigger，以进一步提升事件类型预测的准度<sup><a href="#fn_2018.4" id="reffn_2018.4">2018.4</a></sup>（适用于单个Trigger进行事件类型分类时有歧义的情况）。</p>
+<h3 id="Different-Task-Definitions"><a href="#Different-Task-Definitions" class="headerlink" title="Different Task Definitions"></a>Different Task Definitions</h3><p>在解决EE问题时，一种比较显式的处理模式是把事件抽取任务划分为多个子任务（根据具体情况有不同的划分方式，下面是其中的一种）：</p>
+<ul>
+<li>Trigger Identification</li>
+<li>Trigger Type Classification</li>
+<li>Argument Identification</li>
+<li>Argument Role Classification</li>
+</ul>
+<p>有时研究者也会将EE划分为Event Detection(ED)与Argument Extraction(AE)两个方向，其中ED包含了Trigger Identification与Trigger Type Classification两个任务，而AE覆盖了对Arguments的识别与角色分配。</p>
+<p>将所有子任务独立地视为分类问题的思想被称为 <code>Pipelined Approach</code> ，基于此类思想的方法会建立多个不同的模型（或者用同一个稍作修改的模型按顺序应用到每个子问题）来<strong>依次求解</strong>。这种方法的最大缺陷是<strong>Error Propagation</strong>：从直观上考虑，如果在第一步Triggers识别中就出现了错误，之后对Arguments的识别准确度会更低。尽管如此，使用Pipelined Approach划分问题的方式能够简化整个事件抽取任务，因此被广泛使用。Pipeline方法中比较经典的有15年提出的动态多池化卷积模型(DMCNN)<sup><a href="#fn_2015.1" id="reffn_2015.1">2015.1</a></sup>。</p>
+<p>另一种相对应的研究模式是尝试建立一个同时提取以上所有信息的模型，也即 <code>Joint Approach</code> 。这类方法目标是只建立一个模型，同时用于Triggers与Arguments的提取，此类方法的一大好处在于能够产生Triggers与Arguments之间的双向信息流交互（Pipeline中信息只能从Triggers流向Arguments），在DNN方法应用之前，表现最好的是[Li et. al.]提出的结构化感知机模型<sup><a href="#fn_2013" id="reffn_2013">2013</a></sup>，16年由[Nguyen et. al]提出了JRNN模型<sup><a href="#fn_2016.2" id="reffn_2016.2">2016.2</a></sup>，将RNN应用到了事件抽取任务中。</p>
+<h3 id="Lacking-of-Labeled-Data"><a href="#Lacking-of-Labeled-Data" class="headerlink" title="Lacking of Labeled Data"></a>Lacking of Labeled Data</h3><p>尽管研究者在模型设计上花费了很大的心思，然而横亘在事件抽取任务之上的还有一个不可忽视的问题：即 <code>数据集的缺失</code> 。</p>
+<p>目前事件抽取最为广泛使用的数据集是[ACE, 2006]，此外还有[TAC-KBP, 2015]。以ACE数据集为例，其整体数据仅来源于599个英文文档，定义的33个事件类型中有超过60%的类型样本数不超过100个，甚至有3个事件类型的样本没有超过10个，数据稀疏的根本原因在于使用人力手动标注文本的时间与花费成本很高。因此，逐渐有学者开始研究对数据集的增强，如使用外部的语义知识框架进行数据的自动标注<sup><a href="#fn_2016.4" id="reffn_2016.4">2016.4</a></sup> <sup><a href="#fn_2017.1" id="reffn_2017.1">2017.1</a></sup>，使用半监督学习来对信息进行聚类标注<sup><a href="#fn_2018.1" id="reffn_2018.1">2018.1</a></sup>，这些方法着眼于对数据的自动标注，以提高模型的泛化性能。</p>
+<p>更为直接地，另外一部分学者尝试直接从建模角度克服数据稀疏的问题，例如使用Zero-Shot Transfer Learning方式来提升模型对于未知事件类型的预测效果<sup><a href="#fn_2018.2" id="reffn_2018.2">2018.2</a></sup>。</p>
+<h2 id="1-2-Model-Traceback"><a href="#1-2-Model-Traceback" class="headerlink" title="1.2 Model Traceback"></a>1.2 Model Traceback</h2><h3 id="Pipeline-ED"><a href="#Pipeline-ED" class="headerlink" title="Pipeline / ED"></a>Pipeline / ED</h3><h4 id="1-Event-Extraction-via-Dynamic-Multi-Pooling-Convolutional-Neural-Networks"><a href="#1-Event-Extraction-via-Dynamic-Multi-Pooling-Convolutional-Neural-Networks" class="headerlink" title="1. Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks"></a>1. Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks</h4><p><sup><a href="#fn_2015.1" id="reffn_2015.1">2015.1</a></sup>这篇文章应当是开了使用DNN解决EE任务的先河(as far as I know)。文章首先指出传统的，基于ACE数据的EE模型依赖于人为设计的特征，所以会有非常典型的缺陷：缺乏泛化能力（例如从一个领域到另一个领域、从一种语言到另一种语言等），需要消耗大量的人力，以及数据稀疏、误差传播等。</p>
+<p>作者提出了可以自动提取词汇级与句子级特征的CNN模型，其中词汇级别的数据来源于词向量的表示，而句子级别的特征使用CNN模型来提取，由于CNN中的max-pooling层只能保留一个最重要的信息，而一个句子中可能有多个重要信息，因此作者还使用dynamic multi-pooling层，对句子中的每个部分都保留一个最大值。模型整体结构如下所示：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1104.png" alt="There should be a model structure"></p>
+<p>模型由Embedding Learning, Lexical Level Feature Representation, Sentence Level Feature Extraction以及Classifier Output四个部分构成：</p>
+<ul>
+<li>Embedding Learning: 使用表示学习的方式进行词向量的学习；</li>
+<li>Lexical Level Feature Representation: 单词层面的特征表示，单纯的按句子中的顺序把所有单词向量拼接起来；</li>
+<li>Sentence Level Feature Extraction: 句子层级的特征表示，主要由以下三部分构成：<ol>
+<li>输入句子的特征：word embedding, positional embedding, event-type embedding的拼接；</li>
+<li>设置卷积核宽度$h$，长度为输入特征的长度，对整个句子进行扫描，其直观理解是使用一个window在sentence上进行滑动来捕捉局部语义特征。模型中使用了多个卷积核以捕获不同的特征。</li>
+<li>对捕获的特征进行动态多池化(Dynamic Multi-pooling)，所谓多池化就是把一个卷积核扫描后的结果向量分为三部分：trigger candidate之前的部分，trigger candidate(含)到argument candidate(不含)之前的部分，以及argument candidate(含)之后的部分。分别获得这三个部分的最大特征值。</li>
+<li>对所有卷积核的动态多池化结果进行拼接，得到最后的Sentence Level特征向量。</li>
+</ol>
+</li>
+<li>Classifier Output: 把前面学到的单词级别与句子级别的信息拼接，输入到分类器中进行一次仿射变换，通过softmax映射到argument role不同类别的概率。</li>
+</ul>
+<p>上面描述了Argument Classification阶段的具体步骤，在Trigger Classification阶段，作者使用了简化的DMCNN模型，具体有：只使用trigger candidate及其左右的单词进行单词级别的特征抽取；DMCNN执行时只由trigger candidate将整个句子划分成为两个部分等。</p>
+<p>DMCNN模型与[Li et. al., 2013]模型比较，在$F_1$ score上有了非常显著的提升，在Trigger与Argument的识别上提升了近3个点。</p>
+<h4 id="2-RBPB-Regularization-based-Pattern-Balancing-Method-for-Event-Extraction"><a href="#2-RBPB-Regularization-based-Pattern-Balancing-Method-for-Event-Extraction" class="headerlink" title="2. RBPB: Regularization-based Pattern Balancing Method for Event Extraction"></a>2. RBPB: Regularization-based Pattern Balancing Method for Event Extraction</h4><p><sup><a href="#fn_2016.3" id="reffn_2016.3">2016.3</a></sup>与完全使用表示学习/模式匹配的方法不同，RBPB模型使用了trigger、句子的表示以及模式特征(pattern features)来共同作为trigger classification任务的输入特征，并使用了正则化方法来利用arguments之间的联系。</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1108.png" alt="There should be a model structure"></p>
+<p>上图的左侧为基于模式匹配思想构建的JET模型，以上图中的句子为例，对于一个候选的trigger，找到它最合适的匹配模式，然后再获取对应的arguments（被定义在模式中）。右侧是作者提出的RBPB模型，黑色加粗框线部分是作者的改进部分。其中：</p>
+<ol>
+<li>SVM for Event type 是一个支持向量机分类器，该分类器输入向量（因为作者希望同时用到word/sentence/pattern的表示向量）来进行trigger的分类，向量中包含了单词的表示、句子的表示以及模式的特征，这样在Trigger Classification任务中不仅使用了基于模式的信息，还能用到基于表示的信息。</li>
+<li>Regularization 部分要求一个最大化的argument分配结果$X=\mathrm{argmax}_XE(X)$，其中：<script type="math/tex; mode=display">
+E(X)=\lambda_1X^TCX+\lambda_2P^{\mathrm{arg}}_{\mathrm{sum}}+(1-\lambda_1-\lambda_2)P^{\mathrm{role}}_{\mathrm{sum}}</script>矩阵$C$是一个$n\times n$的关联矩阵，$n$是候选argument的个数，即：如果两个argument之间具有积极关系（如果其中一个argument被选中，另一个被选中的概率应当提升），元素值取为1，反之取为-1。<br>$P^{\mathrm{arg}}_ {\mathrm{sum}}$ 是所有选择的arguments概率之和，$P^{\mathrm{role}}_{\mathrm{sum}}$是给选中的argument分配角色的概率之和，$\lambda_i$是正则化参数。在论文中使用了集束搜索方式来找到最好的分配方案$X$。</li>
+</ol>
+<p>模型训练完成后，作者与JET、DMCNN等模型进行了比较，发现模型在Argument识别与分类任务中的$F_1$有显著的提升。</p>
+<h4 id="3-DCFEE-A-Document-level-Chinese-Financial-Event-Extraction-System-based-on-Automatically-Labeled-Training-Data"><a href="#3-DCFEE-A-Document-level-Chinese-Financial-Event-Extraction-System-based-on-Automatically-Labeled-Training-Data" class="headerlink" title="3. DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled Training Data"></a>3. DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled Training Data</h4><p><sup><a href="#fn_2018.3" id="reffn_2018.3">2018.3</a></sup>DCFEE着眼于特定语言（中文）特定领域（金融）的数据生成与事件抽取。数据生成工作的动因在于形如ACE等数据是open domain的，在金融、医学、司法等专门领域还没有专用的数据集；在构建事件抽取模型时，作者认为一个事件的元素并非都会集中在一个句子里，而可能会分布在整个文档的不同句子中，所以希望能从整个文档级别进行事件的抽取工作。</p>
+<p>论文中使用了结构化的公告性质的数据，与非结构化的文本类型的数据，下图是一个<em>股权质押</em>事件的数据示例：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1106.png" alt="DCFEE Framework"></p>
+<p>左边是论文中使用的金融事件知识库，其中金融事件以表格的形式存储，可以将每个表格元素都视为一个argument，而右侧是从门户网站中搜索获得的以新闻形式呈现的非结构化文本。作者在右侧的文档中找出包含左侧关键词最多的句子作为Event Mention，并给予左侧关键词与事件类型标注该句子的Trigger与Arguments，将这个句子标记为正例，并将文档中所有的其它句子标记为负例，从而获得文档级别的信息。</p>
+<p>DCFEE的事件抽取模型如下所示：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1107.png" alt="DCFEE Framework"></p>
+<p>模型分为SEE与DEE两个部分。Sentence-level Event Extraction(SEE)部分使用了基于LSTM单元的BRNN学习了句子的特征，并使用了CRF来解决标签偏移问题；Document-level Event Extraction(DEE)部分是首先使用CNN判断一个句子是否是key event（即相较于文档中其它句子而言包含了最多的arguments），随后将其它句子中得到的参数补全到当前句子中（在上图中是时间argument-12 months）。</p>
+<hr>
+<p>Pipeline的思维方式是通过不同的模型（或者按次序使用同一个模型）来分别解决事件抽取的所有子任务，而作为EE的一个子类，<strong>Event Detection</strong>仅仅涉及对Trigger的识别与分类，如果考虑将 <em>Not a Trigger</em> 作为Trigger Type中的一个子类，就可以将整个任务完全转化为一个分类问题，因此ED任务相较于需要系统设计信息流、考虑误差传播的EE问题要更纯粹，也能容易尝试一些新方法，下面介绍一些较新的ED方面的文章，作者们分别尝试了：将RNN与CNN混合，加入Attention机制，生成对抗网络等方式来提升ED的准确度。</p>
+<p><strong>A Language-Independent Neural Network for Event Detection</strong><sup><a href="#fn_2016.5" id="reffn_2016.5">2016.5</a></sup> 针对很多模型只能用于某种特定的语言的ED任务，而提出了一种混合神经网络模型，其思想应该是神经网络能够自动对特征进行提取，而不再显式依赖于人工标注，所以是Language-Independent的（感觉这个立意稍微有点基础，可能是模型比较新颖）。模型结构如下：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1100.png" alt="There should be a Model structure"></p>
+<p>大致步骤为：首先查表把单词转换为词向量，然后使用基于LSTM单元的双向RNN来进行编码，再加上卷积核宽度分别为2/3的两个CNN模型扫描得到的结果，共四个向量拼接后进行Trigger Classification。值得注意的是在CNN扫描之前，对每个词向量加入了它相对于trigger的相对位置信息编码。</p>
+<p><strong>Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms</strong><sup><a href="#fn_2017.2" id="reffn_2017.2">2017.2</a></sup> 旨在通过Arguments的信息来进一步提升ED任务的准确度，作者发现大家在构建ED模型是没有显式地利用Arguments的信息，所以提出可以通过supervised attention mechanisms来对这些信息加以利用。下面为模型结构：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1101.png" alt="There should be a Model structure"></p>
+<p>模型使用了当前输入单词，及其定长的前后共$n$个单词，以及这些单词的命名实体类型共同组成模型的输入。图中绿色部分$w$为单词的词向量表示，紫色部分$e$为单词对应的命名实体表示，蓝色部分$\overline{w}$是将$w$经过一次变换后的隐层表示。</p>
+<p>随后，基于 <em>argument words应该比其它words获得更多的权重</em> 这个目的来训练一个Attention Mechanism，把这个注意力模型乘上一个惩罚系数后加入到普通的ED模型中。</p>
+<p><strong>Document Embedding Enhanced Event Detection with Hierarchical and Supervised Attention</strong><sup><a href="#fn_2018.7" id="reffn_2018.7">2018.7</a></sup> 认为即使在Sentence-Level的ED任务中，使用Document-Level的信息也是十分重要的。</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1102.png" alt="There should be a Model structure"></p>
+<p>模型总体架构由左右两部分构成：左侧用Attention Mechanism抽取整篇文档的语义向量$d$，随后把得到的文档表示拼接到单词的词向量中，再加上该单词的命名实体表示，得到单词的最终向量表示，放到基于GRU单元的BRNN中训练，将输出用softmax映射到每个事件类别的概率。</p>
+<p>文章比较novel的部分是左侧的文档学习模型，论文题目中的<em>分层(Hierarchical)</em> 结构在其中得以体现。具体而言，首先获得每个单词的(word embedding, entity type embedding)结果，输入到基于GRU单元的BRNN中进行encode，并训练attention的权重，加权得到每个单词Sentence-Level的表示。如法炮制得到这些表示的encode结果，使用Attention机制加权后得到最终的文档表示结果。</p>
+<p><strong>Self-regulation: Employing a Generative Adversarial Network to Improve Event Detection</strong><sup><a href="#fn_2018.5" id="reffn_2018.5">2018.5</a></sup> 把目光着眼于ED的泛化性问题。作者注意到<em>一个事件可以有多种不同的表述方式</em>，而<em>同一个单词在不同的事件中会表示不同的含义</em>，因此提出了具有自我调节(slef-regulated)能力的ED模型。模型由一个尽可能产生spurious特征的GAN，与一个具有记忆控制功能，以期尽可能消除噪声的神经网络构成。</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1103.png" alt="There should be a Model structure"></p>
+<p>上面是模型的整体架构。模型分为两层，上层是一个合作结构，其中多层感知机$G$被训练以期尽可能好地表述整个句子的潜在特征，而单层感知机$D$获得$G$的输入，进行一次仿射变换后输出Trigger Classification的结果。与之相对，下层是一个竞争结构，多层感知机$\overline{G}$被训练以期在输出中掺杂尽可能多的虚假特征，而单层感知机$\overline{D}$努力不被$\overline{G}$的虚假特征给欺骗。</p>
+<p>上下层的结构使用一个调节器$S$进行连接，具体地，$S$获得$\overline{G}$的输出并与$G$的输出结果进行比较，对于差异不大或者相似的特征，$S$使用$\overline{G}$的输出对$G$的输出进行更新，而对于差异很大的特征，$S$将进行拦截，即仅仅使用$G$中输出的特征。四个模型被共同训练，最终整个模型的ED任务由$D$完成。</p>
+<h3 id="Joint-Model"><a href="#Joint-Model" class="headerlink" title="Joint Model"></a>Joint Model</h3><p>Joint Model建立的关键在于如何对单词进行合理的建模并利用上下文信息，[1]在学习到的单词表示中加入表征依赖关系的记忆矩阵；[2]中尝试同时进行命名实体识别与事件的抽取，以减弱误差的传播，并使用了文档级别的信息；[3]对BRNN模型中的单元结构进行了修改，加入了句法间的联系；[4]将一个句子的句法关系树视为一个图结构，使用带有捷径的GCN与self-attention来进行事件的抽取。</p>
+<h4 id="1-JRNN-Joint-Event-Extraction-via-Recurrent-Neural-Networks"><a href="#1-JRNN-Joint-Event-Extraction-via-Recurrent-Neural-Networks" class="headerlink" title="1. JRNN: Joint Event Extraction via Recurrent Neural Networks"></a>1. JRNN: Joint Event Extraction via Recurrent Neural Networks</h4><p><sup><a href="#fn_2016.2" id="reffn_2016.2">2016.2</a></sup>JRNN是非常具有影响力的一篇文章，它首次把神经网络模型应用到了Joint EE上（后面的许多paper都将该模型作为baseline）。之前已经提到，[Li et. al. 2013]的最大问题是对于unseen word/feature的泛化能力较差，其原因在于只使用了手动制作的离散特征集；而 2015.1 中的DMCNN尽管自动提取了能表达更多语义的特征，解决了泛化能力，但是pipeline架构又无法很好减轻误差传播的问题，其原因是没有像[Li et. al. 2013]一样沿用离散特征集。 2016.2 提出了将这些优势融合的<strong>BRNN with discrete features</strong>模型。该模型用两个RNN分别正/反向学习一个句子的表示，这样完成了 <em>automatically generate features</em> 的工作；另一方面，使用了一个记忆向量(for triggers)与两个记忆矩阵(for arguments)来分别存储triggers/arguments以及两者之间的依赖关系。模型结构如下：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1200.png" alt="There should be a Model structure"></p>
+<p>具体来说，首先把每个词编码为由以下三类vector连接而成的向量：</p>
+<ol>
+<li>查预训练的词向量表，获得当前单词的<strong>词向量</strong>；</li>
+<li>当前单词的<strong>Entity Type Vector</strong>，通过查找entity type embedding table获得（当然，完成这一步的前提是要在之前给每个句子中的单词分配一个entity type，论文里说是沿用了之前论文中的工作）；</li>
+<li><strong>Dependency Vector</strong>。一个0-1值向量，其长度与词在dependency tree中可能的关系数相同。这个向量中的第$i$个元素的值表示了当前单词与第$i$个单词是否在dependency tree中存在依赖关系。</li>
+</ol>
+<p>Embedding步骤完成后，把这些词向量按顺序喂给双向的RNN，考虑到梯度消失的问题，RNN中使用了GRU units。</p>
+<p>Encoding步骤完成后，开始使用获得的Embedding结果与Sentence Embedding进行Joint Prediction。具体地，第$i$个预测步会执行以下操作：</p>
+<ol>
+<li>预测第$i$个单词$w_i$是否是trigger以及它的trigger type，输出预测的结果$t_i, t_i\in T$。其中$T$是一个预先给定的trigger type集合，并加入了一个特殊type=others，即如果当前单词$w_i$不被认为是一个trigger，则把这个特殊的type赋给$w_i$；</li>
+<li>对于当前句子中所有的命名实体$e_1,…,e_j$，预测该实体对于单词$w_i$的Argument Role: $a_{ij}$。如果该实体不是单词$w_i$的argument，则同样使用一个特殊的Role Type: $a_{ij}=$others。</li>
+<li>更新当前步的三个记忆矩阵。</li>
+</ol>
+<p>在模型评估阶段，论文还比较了使用不同的Word Embedding方法下模型效果。</p>
+<h4 id="2-Joint-Extraction-of-Events-and-Entities-within-a-Document-Context"><a href="#2-Joint-Extraction-of-Events-and-Entities-within-a-Document-Context" class="headerlink" title="2. Joint Extraction of Events and Entities within a Document Context"></a>2. Joint Extraction of Events and Entities within a Document Context</h4><p><sup><a href="#fn_2016.1" id="reffn_2016.1">2016.1</a></sup>比较少见的从Document-Level来进行Event Extraction的文章，并且jointly进行了事件与实体的抽取。其Motivation主要有两方面：第一，现有的大多数方法把Entities Extraction与Event Extraction分开了，即首先使用某个方法给句子中的每个单词打上实体标签，然后再进行事件抽取，这会造成误差的传播（这个观点与Joint党看待Pipeline党的视角有异曲同工之妙）——事实上，上面的JRNN就是先对实体进行标签后再进行Trigger与Arguments的预测的；第二，当前的大多数模型都从句子中进行事件抽取，几乎没有从文档角度进行的，作者认为文档级的信息能为EE起到一定的帮助。</p>
+<p>具体地，作者把抽取事件与实体的过程分为了三个子问题，并使用统计模型分别予以解决，随后使用一个框架把它们组合起来以起到Joint Extraction的效果。</p>
+<ol>
+<li>第一步是要对<strong>单一事件可能的结构</strong>进行建模。从文档中筛选出trigger候选集与argument候选集，并分别进行type与role的标记，随后对于每个trigger及其对应的arguments都能构造出如下所示的结构树：<br><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1201.png" alt="There should be a structured tree"><br>其中$t_i$表示第$i$个trigger对应的type，$r_{ij}$表示第$j$个argument在第$i$个trigger下的role，而$a_j$表示第$j$个argument对应的entity type。训练一个最大化$l_2-\mathrm{norm}$似然估计的统计模型，模型由<em>type与document的关系、role与document的关系、type+role与document的关系</em>等五个特征方程组成。</li>
+<li>第二步对<strong>整个文档事件之间的联系</strong>进行建模，直观上来说，如果一个文档中出现了<em>ATTACK</em>事件，那么文档中其它句子中出现<em>INJURE</em>事件的可能性会大于<em>MARRY</em>事件。对每两个trigger都使用一个概率模型计算它们之间的概率$(i, i’)$，考虑是否依赖/是否共享一个主题/是否在FrameNet中共享同一个框架等等。</li>
+<li>第三步是<strong>命名实体的抽取</strong>，使用了基于BIO模式的条件随机场模型。</li>
+</ol>
+<p>最后，作者建立了一个联合推理模型，将三个概率模型组合起来，并允许局部之间的信息流通，以找到所有参数的全局最优解。</p>
+<h4 id="3-DBRNN-Jointly-Extracting-Event-Triggers-and-Arguments-by-Dependency-Bridge-RNN-and-Tensor-Based-Argument-Interaction"><a href="#3-DBRNN-Jointly-Extracting-Event-Triggers-and-Arguments-by-Dependency-Bridge-RNN-and-Tensor-Based-Argument-Interaction" class="headerlink" title="3. DBRNN: Jointly Extracting Event Triggers and Arguments by Dependency-Bridge RNN and Tensor-Based Argument Interaction"></a>3. DBRNN: Jointly Extracting Event Triggers and Arguments by Dependency-Bridge RNN and Tensor-Based Argument Interaction</h4><p><sup><a href="#fn_2018.6" id="reffn_2018.6">2018.6</a></sup>这篇文章可以看作是对JRNN模型的改进，作者认为：JRNN等一系列基于神经网络的事件抽取模型，在设计模型结构的时候没有使用好句法的特征（尽管JRNN模型中有使用一个0-1向量来对单词间的依赖关系进行建模，但是效果并不好）。另外，作者对所有argument candidates之间的关系进行全局视角下的建模，以期能够对argument的识别与分类提供帮助。考虑下面的句子：</p>
+<blockquote>
+<p>In <em>Baghdad</em>, a <em>cameramam</em> <strong>died</strong> when an <em>American tank</em> <strong>fired</strong> on the <em>Palestine Hotel</em></p>
+</blockquote>
+<p>在句法结构中，两个argument candidates: American tank &amp; Palestine Hotel在句法上拥有同一个dependency parent: fired，而fired是一个trigger。从直观上来说，如果我们已经确定了American tank是一个argument，那么Palestine Hotel同样是一个argument的概率就会增加。</p>
+<p>在这种考虑下，作者提出在LSTM units构成的BRNN中加入一个<strong>依赖桥(dependency bridge)</strong>，以对句法上相关的单词进行连接。另外，对于所有的argument candidates，两两构建一个tensor layer，使得argument-level的信息能够交互。</p>
+<h5 id="More-about-Dependency-Bridge"><a href="#More-about-Dependency-Bridge" class="headerlink" title="More about Dependency Bridge"></a>More about Dependency Bridge</h5><p>建立依赖桥，实际上就是对部分LSTM单元间进行手动的连接，原来一个LSTM单元的输入只有前一个单元的隐层与当前单词，现在如果当前LSTM单元和其它的单元有句法间的联系，可以直接使用其单元的隐层输出，如下图所示：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1202.png" alt="There should be a RNN structure"></p>
+<p>加入依赖桥后的单元计算公式为：</p>
+<script type="math/tex; mode=display">
+h_t=o_t\odot \mathrm{tanh}(c_t)+d_t\odot(\frac{1}{|S_{in}|\sum_{(i,p)\in S_{in}}a_ph_i})</script><p>其中，$S_{in}$表示所有流向当前单元的其它单元集合，$(i,p)$使用下标$i$与语法关系类型$p$确定$S_{in}$中的某一单元，$a_p$是这个语法关系类型对应的权重，而$h_i$就是单元$i$的隐层输出，前面的系数$d_t$可以看做训练得到的一个惩罚项，目的是不让后面的句法信息影响当前输出太多($d_t=\sigma(W_d[ h_{t-1},x_t]+b_d)$)。整个式子的含义为：当前隐层的输出，是当前LSTM单元正常的输出，加上与所有与当前单元有句法关系的隐层输出的加权和。值得注意的是，因为模型中使用的是双向RNN，作者设定不同方向下同一种句法关系的权重是不一样的，前后向会分别使用$a_{+\mathrm{nsubj}}$与$a_{-\mathrm{nsubj}}$区分。</p>
+<h5 id="Trigger-Classification"><a href="#Trigger-Classification" class="headerlink" title="Trigger Classification"></a>Trigger Classification</h5><p>以对第$i$个单词进行Trigger分类为例，使用BRNN对一个句子进行训练后，能够分别获得前后传播的最后一个输出，将它们拼接得到$h_s$，同时取出训练时第$i$个LSTM单元的输出$h_{\mathrm{tri}}$，再拼接获得向量$h_{i}$。把所有单词的$h_i$向量构成的矩阵喂到一个单隐层感知机中进行训练，以获得分类结果。</p>
+<h5 id="Argument-Classification"><a href="#Argument-Classification" class="headerlink" title="Argument Classification"></a>Argument Classification</h5><p>正如上面所说，作者希望对所有arguments之间的关系进行全局建模，来为argument分类与识别问题提供更多的信息。具体地：</p>
+<ol>
+<li>对于所有单词的隐层输出，两两一组喂到一个单隐层感知机里面进行训练，获得这两个argument的关系向量$T_{ij}\in \mathbb{R}^{n_T}$；</li>
+<li>用max-pooling方式从三维的关系向量总矩阵中捕捉最有用的相关特征，以压缩关系矩阵的维度，输出二维矩阵$F_{\mathrm{maxp}}$。</li>
+</ol>
+<p>另外，作者使用了<em>RBPB</em>模型中的Self-matching attention(SMA)矩阵$A$并计算$F_A=AH^T$来衡量两两单词间的积极与消极关系。在Output layer最终输出所有向量的拼接：$[ F_A,F_{\mathrm{maxp}},H^T,H_C\otimes e_{n_A}]$，其中$H^T$是整个句子的embedding matrix，$H_C$是Trigger分类的感知机的隐层向量，将它复制了$e_{n_A}$次以匹配矩阵的维度。</p>
+<p>这样，每个单词的最终向量$L_i$表示就是上面四个部分的拼接，把它输入到一个分类器后通过softmax映射到每一个argument类别的概率$O_R(i)=\mathrm{softmax}(W_RL_i+b_R)$。</p>
+<h5 id="Overall-Structure"><a href="#Overall-Structure" class="headerlink" title="Overall Structure"></a>Overall Structure</h5><p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1203.png" alt="There should be a Model structure"></p>
+<p>上图就是DBRNN的整个结构。DBRNN layer完成了对整个句子及每个单词的表示学习，得到了表示矩阵$H^T$，上面部分通过对单词表示的拼接经过单隐层感知机完成了Trigger的分类。下面部分通过对句法与语义联系的建模最终输出每个单词的Argument分类结果。</p>
+<p>为了同时抽取triggers与arguments，作者通过Max-Margin标准把上下两部分联合起来，定义了一个结构化的margin loss，最后将模型结果与DMCNN、RBPB、JRNN等模型进行了比较，DBRNN在Triggers与Arguments的识别与分类任务中的$F_1$ Score都要好于其他模型。</p>
+<h4 id="4-Jointly-Multiple-Events-Extraction-via-Attention-based-Graph-Information-Aggregation"><a href="#4-Jointly-Multiple-Events-Extraction-via-Attention-based-Graph-Information-Aggregation" class="headerlink" title="4. Jointly Multiple Events Extraction via Attention-based Graph Information Aggregation"></a>4. Jointly Multiple Events Extraction via Attention-based Graph Information Aggregation</h4><p><sup><a href="#fn_2018.4" id="reffn_2018.4">2018.4</a></sup>以上大多数模型的EE结果是从一个句子中抽取出一个Trigger及其多个Arguments，即使是从Document-Level看待问题的模型（如Joint Model章节中的第2篇论文），也是从整篇文档的每个句子中抽取一个Trigger。本文的作者提出了从一个句子中抽取多个Triggers的JMEE模型，以此来提升对事件类型判别的准确度。另外，相比较DBRNN的Dependency Bridge，JMEE从另一个角度对句子中的长距离依赖给出了解决方案：使用句法上的捷径弧(shotcut arcs)。为了有效使用shotcut arcs，JMEE使用了图卷积网络(GCN)模型来生成每个单词（图中的节点）的向量表示，最后使用self-attention来同时对多个triggers及其arguments进行提取。</p>
+<p>作者首先说明了许多句子中都存在不止一个trigger（特别地，ACE数据集中有大约26%的句子都存在不止一个trigger），而如果能获得句子中所有的triggers，能更有效地判断事件类型，例如下面的句子：</p>
+<blockquote>
+<p>He <strong>left</strong> the company, and planned to <strong>go</strong> home directly</p>
+</blockquote>
+<p>如果只观察到了事件的触发词left，事件可能的类型有<em>Transport</em>或<em>End-Position</em>，但是如果识别出了第二个触发词go，就能确定这是一个<em>Tansport</em>类型的事件。</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1204.png" alt="There should be a Model structure"></p>
+<p>JMEE模型框架由以下四个部分构成：</p>
+<ol>
+<li>词向量表示的学习；</li>
+<li>句法GCN的生成，在有shotcut arcs的网络结构中进行卷积操作；</li>
+<li>使用self-attention捕捉多个triggers之间的联系并进行Trigger Classification；</li>
+<li>Argument Role Classification。</li>
+</ol>
+<h5 id="Word-Representation"><a href="#Word-Representation" class="headerlink" title="Word Representation"></a>Word Representation</h5><p>每个单词的词向量由以下部分拼接而成：</p>
+<ol>
+<li>使用GloVe预训练的词向量查找表，找到当前词对应的向量表示；</li>
+<li>一个随机初始化的位置标签（表征当前单词所在的位置）；</li>
+<li>当前单词之前的一部分单词的位置标签所构成的向量；</li>
+<li>当前词的命名实体类型所对应的向量。</li>
+</ol>
+<p>这样，每个单词的词向量表示中能够同时反映出当前词的语义特征、位置特征、相对位置特征以及类型特征。</p>
+<h5 id="Syntactic-Graph-Convolution-Network"><a href="#Syntactic-Graph-Convolution-Network" class="headerlink" title="Syntactic Graph Convolution Network"></a>Syntactic Graph Convolution Network</h5><p>首先生成一个有向图来表示一个句子的语法解析树：图中的每个节点表征每个单词，节点之间的边$(i,j)$表示$w_i$与$w_j$之间有直接的语法弧，每个节点到自身也有一个弧。为了允许信息的反向流动，也要生成一个镜像的反向语法解析树，其结构不变，边的方向相反。</p>
+<p>由此定义一个句法卷积网络图的第$k$层的第$v$个节点的计算公式如下：</p>
+<script type="math/tex; mode=display">
+h_V^{(k+1)}=f(\sum_{u\in\mathcal{N}(v)}(W^{(k)}_{K(u,v)}h_u^{(k)}+b^{(k)}_{K(u,v)})</script><p>其中$K(u,v)$表示边$(u,v)$的类型，取值为 <em>正向(along)，反向(reverse)与循环(loop)</em> 三种，而$\mathcal{N}$是节点$v$所有相邻点（包括自己）的集合，$f$是预先定义的激活函数。该更新公式的直观解释为：使用某节点邻居与自身的状态的加权结果来作为当前节点的下一个状态。</p>
+<p>此外，对于每条边$(u,v)$使用gate来约束该边的权重，以避免句法结构中的噪声。另外文中还对最初输入GCN的向量做了一些预处理。</p>
+<h5 id="Self-Attention-Trigger-Classification"><a href="#Self-Attention-Trigger-Classification" class="headerlink" title="Self-Attention Trigger Classification"></a>Self-Attention Trigger Classification</h5><p>传统的事件抽取模型在该步一般使用max-pooling或一些变种来进行信息的聚合，但是作者发现在GCN模块中max-pooling效果并不好，所以选择了self-attention机制。</p>
+<p>首先计算一个句子中每个单词的$\mathrm{score}=\mathrm{norm}(\mathrm{exp}(W_2f(W_1D+b_1)+b_2))$，然后使用获得的得分矩阵来更新的向量表示，最后进行一层全连接后使用softmax映射到所有trigger type的概率。</p>
+<h5 id="Argument-Classification-1"><a href="#Argument-Classification-1" class="headerlink" title="Argument Classification"></a>Argument Classification</h5><p>每当获得一个符合条件的trigger之后，都要执行一次Argument Classification过程。对于某个trigger的向量表示$T_i$与某个argument candidate及其向量表示$E_j$，在序列长度维度中执行average pooling，并通过一层全连接，最后由softmax函数映射到所有role type的概率。</p>
+<p>作者将JMEE模型与DMCNN、JRNN、DBRNN等模型进行了比较，可以看出JMEE在Trigger的识别与分类任务中的$F_1$值相较其他模型有了显著的提升，对Argument的识别与分类上有一定的效果，但提升幅度不大。</p>
+<h2 id="1-3-Expansion-of-Labeled-Data"><a href="#1-3-Expansion-of-Labeled-Data" class="headerlink" title="1.3 Expansion of Labeled Data"></a>1.3 Expansion of Labeled Data</h2><p>为了解决数据稀少导致训练效果不佳的问题，研究者们有的尝试从已有的知识库中提取更多带标签的信息用于模型的训练[1,2]，有的视图从模型角度来提升对未知分类的泛化能力[3]，也有尝试使用聚类方法对多个重复语料进行自动标注[4]。</p>
+<h4 id="1-Leveraging-FrameNet-to-Improve-Automatic-Event-Detection"><a href="#1-Leveraging-FrameNet-to-Improve-Automatic-Event-Detection" class="headerlink" title="1. Leveraging FrameNet to Improve Automatic Event Detection"></a>1. Leveraging FrameNet to Improve Automatic Event Detection</h4><p><sup><a href="#fn_2016.4" id="reffn_2016.4">2016.4</a></sup>作者发现FrameNet中定义的框架与用于事件抽取模型效果评估的ACE数据集中的事件结构具有很高的相似度，由此提出使用FrameNet中的知识来自动产生带有标注的数据，对原数据进行扩展，发现应用相同模型时，使用加入新数据后训练的模型效果有了显著的提升。</p>
+<p>FrameNet是一个语言资源库，一个Frame由一个词法单元(Lexical Unit)和多个框架元素(Frame Elements)构成，这与一个句子中要抽取一个trigger与多个arguments的思路十分相似。</p>
+<p>作者首先使用ACE的语料训练了一个3层的神经网络模型用以Event Detection，然后使用该模型对FrameNet中的15000多个句子进行类型识别，得到初始分类结果。</p>
+<p>随后，通过以下假设对初始分类结果进行修正：</p>
+<ol>
+<li>属于同一个词法单元的句子倾向于表达相同类型的事件；</li>
+<li>属于相关Frame的句子倾向于表达相同类型的事件；</li>
+<li>在同一个Frame下的句子倾向于表达相同类型的事件。</li>
+</ol>
+<p>使用修正后的分类结果来扩展原有的ACE库，并将自己的模型在使用扩展数据前后与DMCNN等模型进行了比较。</p>
+<h4 id="2-Automatically-Labeled-Data-Generation-for-Large-Scale-Event-Extraction"><a href="#2-Automatically-Labeled-Data-Generation-for-Large-Scale-Event-Extraction" class="headerlink" title="2. Automatically Labeled Data Generation for Large Scale Event Extraction"></a>2. Automatically Labeled Data Generation for Large Scale Event Extraction</h4><p><sup><a href="#fn_2017.1" id="reffn_2017.1">2017.1</a></sup>基于相同的Motivation，本文的作者提出了可以通过world knowledge与linguistic knowledge两部分来自动生成用于事件抽取的框架，从Wikipedia数据中自动抽取Event Mentions。其中world knowledge来自于Freebase，而linguistic knowledge来自于与上文相同的FrameNet资源。</p>
+<p>Freebase是一个语义知识库，如下图所示：</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1205.png" alt="There should be Freebase structures"></p>
+<p>左图的结构被称为一个CVT，该结构与EE任务的结构十分相似。具体地，将整个CVT视为一个Event，则Marriage被看作Event Type，所有相连的节点视为Arguments，相连边上的描述可以看做对应的Argument Role。</p>
+<p>作者首先提出了一种确定argument candidates优先级（即与对应的trigger的相关程度）的方法，使用该方法在Freebase中找到每种Event Type的最关键的Arguments，随后使用选择的Arguments在Wikipedia语料中对事件进行标注，并找出triggers，最后用FrameNet框架来消除所选的triggers中的噪声，并对triggers进行进一步扩展。</p>
+<h4 id="3-Zero-Shot-Transfer-Learning-for-Event-Extraction"><a href="#3-Zero-Shot-Transfer-Learning-for-Event-Extraction" class="headerlink" title="3. Zero-Shot Transfer Learning for Event Extraction"></a>3. Zero-Shot Transfer Learning for Event Extraction</h4><p><sup><a href="#fn_2018.2" id="reffn_2018.2">2018.2</a></sup>大多数的事件抽取模型在训练时依赖人工标注（或自动标注）的特征，因此其效果严重依赖于数据的标注结果与特征，这样的模型几乎无法应用到预测新的(unseen)的事件类型中。另外，ACE数据集中的类别也不完全均衡，大约60%的事件类型对应只有不到100个的标注样本，甚至有3个事件类型样本数不到10个，总的33个事件类型对于大规模机器学习应用而言，事件类型的覆盖程度也很低。因此，本文作者提出使用Zero-Shot Transfer Learning的思想来训练模型，使模型拥有了预测训练集中没有的event type的能力。</p>
+<p>作者首先使用 <em>Abstract Meaning Representations(AMR)</em> 来构建一个event mention的结构，随后和ACE数据集中对event type的结构进行了比较。上面两张图来自于AMR，下面两张图来自于ACE，可以看出Event Mention结构与Event Type是十分相似的。</p>
+<p><img src="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/1206.png" alt="There should be AMR &amp; ACE"></p>
+<p>因为Mention与Type的相似性，即对应于一个句子与其要分类的事件类型结构上所具有的相似性，作者首先给出句子的语义向量表示，再与预先计算好的所有的事件类型的向量表示进行相似度比较，选择最相似的事件类型分配给当前的句子。这种方法的好处是，即使在训练集中没有某一个类别的样本（或样本数量很少），只要该类别的语义表示向量被很好地表示，那么在分类时会将对应于该类的句子分配到这个类型。文章的目标是学习一个独立于事件类型的映射函数，从有限的已知样本中训练，最终用于整体的事件类型分类。</p>
+<p>在效果评估时，作者预先训练了1194个事件类型的表示，随后使用自己的Zero-Shot Transfer模型在10个已知的event type样本上进行了训练，从ACE中抽样出150个句子用来测试，用剩下的ACE中所有数据进行了LSTM以及Joint模型的训练，发现在trigger与argument的识别与分类任务中前者与后者的能力相当（其实个人觉得还是差了一点），因此给出了自己的结论：所提出的Zero-Shot Transfer Learning模型只需要在少量seen的事件类型中进行训练，就能在unseen事件类型的分类中展现出与其它模型相当的效果。</p>
+<h4 id="4-Semi-Supervised-Event-Extraction-with-Paraphrase-Clusters"><a href="#4-Semi-Supervised-Event-Extraction-with-Paraphrase-Clusters" class="headerlink" title="4. Semi-Supervised Event Extraction with Paraphrase Clusters"></a>4. Semi-Supervised Event Extraction with Paraphrase Clusters</h4><p><sup><a href="#fn_2018.1" id="reffn_2018.1">2018.1</a></sup>对于一篇新闻，不同的网站会有不同的报道模式，作者提出可以对这些描述相同内容的新闻进行聚类，使用聚类后的数据来扩展指定事件类型的已标注数据。</p>
+<p>首先作者对获得的Event Mentions进行了聚类，使用CRF与JRNN两个模型在原ACE数据集中进行训练，然后使用模型扫描所有的Event Mentions，判断是否是一个事件。如果某一个句子被识别为一个事件，以它作为基准，扫描当前句子所在簇的所有句子，来自动标注它们的Triggers（trigger的选择条件是：句子中单词的词向量与基准句子中的trigger词向量越相似越好）。</p>
+<p>最后，使用自动标注的数据来扩展原有数据集，并重新进行CRF与JRNN模型的训练，与原模型的效果进行了比较，发现加入了新标注数据的模型在Trigger Classification任务中拥有更好的结果，但并不是加的越多效果越好，加入的数据占原数据的20%时的结果是相对最好的。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote id="fn_博客">
+<sup>博客</sup>. <a href="http://www.shuang0420.com/2018/10/15/知识抽取-事件抽取/" target="_blank" rel="noopener">知识抽取-事件抽取 | 徐阿衡</a> <code>参考的博客</code><a href="#reffn_博客" title="Jump back to footnote [博客] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2015.1">
+<sup>2015.1</sup>. <a href="http://aclweb.org/anthology/P15-1017" target="_blank" rel="noopener">Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks, ACL 2015</a><a href="#reffn_2015.1" title="Jump back to footnote [2015.1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2016.2">
+<sup>2016.2</sup>. <a href="http://aclweb.org/anthology/N16-1034" target="_blank" rel="noopener">Joint Event Extraction via Recurrent Neural Networks, NAACL 2016</a><a href="#reffn_2016.2" title="Jump back to footnote [2016.2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2017.2">
+<sup>2017.2</sup>. <a href="http://aclweb.org/anthology/P17-1164" target="_blank" rel="noopener">Exploiting Argument Information to Improve Event Detection via Supervised Attention Mechanisms, ACL 2016</a><a href="#reffn_2017.2" title="Jump back to footnote [2017.2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.7">
+<sup>2018.7</sup>. <a href="http://aclweb.org/anthology/P18-2066" target="_blank" rel="noopener">Document Embedding Enhanced Event Detection with Hierarchical and Supervised Attention, ACL 2018</a><a href="#reffn_2018.7" title="Jump back to footnote [2018.7] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.3">
+<sup>2018.3</sup>. <a href="http://aclweb.org/anthology/P18-4009" target="_blank" rel="noopener">DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled Training Data, ACL 2018</a><a href="#reffn_2018.3" title="Jump back to footnote [2018.3] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.4">
+<sup>2018.4</sup>. <a href="http://aclweb.org/anthology/D18-1156" target="_blank" rel="noopener">Jointly Multiple Events Extraction via Attention-based Graph Information Aggregation, EMNLP 2018</a><a href="#reffn_2018.4" title="Jump back to footnote [2018.4] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2013">
+<sup>2013</sup>. <a href="http://aclweb.org/anthology/P13-1008" target="_blank" rel="noopener">Joint event extraction via structured prediction with global features, ACL 2013</a><a href="#reffn_2013" title="Jump back to footnote [2013] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2016.4">
+<sup>2016.4</sup>. <a href="http://aclweb.org/anthology/P16-1201" target="_blank" rel="noopener">Leveraging FrameNet to Improve Automatic Event Detection, ACL 2016</a><a href="#reffn_2016.4" title="Jump back to footnote [2016.4] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2017.1">
+<sup>2017.1</sup>. <a href="http://aclweb.org/anthology/P17-1038" target="_blank" rel="noopener">Automatically Labeled Data Generation for Large Scale Event Extraction, ACL 2017</a><a href="#reffn_2017.1" title="Jump back to footnote [2017.1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.1">
+<sup>2018.1</sup>. <a href="http://aclweb.org/anthology/N18-2058" target="_blank" rel="noopener">Semi-Supervised Event Extraction with Paraphrase Clusters, NAACL 2018</a><a href="#reffn_2018.1" title="Jump back to footnote [2018.1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.2">
+<sup>2018.2</sup>. <a href="http://aclweb.org/anthology/P18-1201" target="_blank" rel="noopener">Zero-Shot Transfer Learning for Event Extraction, ACL 2018</a><a href="#reffn_2018.2" title="Jump back to footnote [2018.2] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2016.3">
+<sup>2016.3</sup>. <a href="http://aclweb.org/anthology/P16-1116" target="_blank" rel="noopener">RBPB: Regularization-based Pattern Balancing Method for Event Extraction, ACL 2016</a><a href="#reffn_2016.3" title="Jump back to footnote [2016.3] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2016.5">
+<sup>2016.5</sup>. <a href="http://aclweb.org/anthology/P16-2011" target="_blank" rel="noopener">A Language-Independent Neural Network for Event Detection, ACL 2016</a><a href="#reffn_2016.5" title="Jump back to footnote [2016.5] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.5">
+<sup>2018.5</sup>. <a href="http://aclweb.org/anthology/P18-1048" target="_blank" rel="noopener">Self-regulation: Employing a Generative Adversarial Network to Improve Event Detection, ACL 2018</a><a href="#reffn_2018.5" title="Jump back to footnote [2018.5] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2016.1">
+<sup>2016.1</sup>. <a href="http://aclweb.org/anthology/N16-1033" target="_blank" rel="noopener">Joint Extraction of Events and Entities within a Document Context, NAACL 2016</a><a href="#reffn_2016.1" title="Jump back to footnote [2016.1] in the text."> &#8617;</a>
+</blockquote>
+<blockquote id="fn_2018.6">
+<sup>2018.6</sup>. <a href="http://shalei120.github.io/docs/sha2018Joint.pdf" target="_blank" rel="noopener">Jointly Extracting Event Triggers and Arguments by Dependency-Bridge RNN and Tensor-Based Argument Interaction, AAAI 2018</a><a href="#reffn_2018.6" title="Jump back to footnote [2018.6] in the text."> &#8617;</a>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Sequence-Models-2-NLP-Word-Embedding/" rel="next" title="Sequence Models(2): NLP & Word Embedding">
+                <i class="fa fa-chevron-left"></i> Sequence Models(2): NLP & Word Embedding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Event-Extraction-after-2015"><span class="nav-number">1.</span> <span class="nav-text">1.1 Event Extraction after 2015</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview"><span class="nav-number">1.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Different-Task-Definitions"><span class="nav-number">1.2.</span> <span class="nav-text">Different Task Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lacking-of-Labeled-Data"><span class="nav-number">1.3.</span> <span class="nav-text">Lacking of Labeled Data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Model-Traceback"><span class="nav-number">2.</span> <span class="nav-text">1.2 Model Traceback</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipeline-ED"><span class="nav-number">2.1.</span> <span class="nav-text">Pipeline / ED</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Event-Extraction-via-Dynamic-Multi-Pooling-Convolutional-Neural-Networks"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. Event Extraction via Dynamic Multi-Pooling Convolutional Neural Networks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-RBPB-Regularization-based-Pattern-Balancing-Method-for-Event-Extraction"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. RBPB: Regularization-based Pattern Balancing Method for Event Extraction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-DCFEE-A-Document-level-Chinese-Financial-Event-Extraction-System-based-on-Automatically-Labeled-Training-Data"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. DCFEE: A Document-level Chinese Financial Event Extraction System based on Automatically Labeled Training Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Joint-Model"><span class="nav-number">2.2.</span> <span class="nav-text">Joint Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JRNN-Joint-Event-Extraction-via-Recurrent-Neural-Networks"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. JRNN: Joint Event Extraction via Recurrent Neural Networks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Joint-Extraction-of-Events-and-Entities-within-a-Document-Context"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. Joint Extraction of Events and Entities within a Document Context</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-DBRNN-Jointly-Extracting-Event-Triggers-and-Arguments-by-Dependency-Bridge-RNN-and-Tensor-Based-Argument-Interaction"><span class="nav-number">2.2.3.</span> <span class="nav-text">3. DBRNN: Jointly Extracting Event Triggers and Arguments by Dependency-Bridge RNN and Tensor-Based Argument Interaction</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#More-about-Dependency-Bridge"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">More about Dependency Bridge</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Trigger-Classification"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">Trigger Classification</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Argument-Classification"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">Argument Classification</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Overall-Structure"><span class="nav-number">2.2.3.4.</span> <span class="nav-text">Overall Structure</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Jointly-Multiple-Events-Extraction-via-Attention-based-Graph-Information-Aggregation"><span class="nav-number">2.2.4.</span> <span class="nav-text">4. Jointly Multiple Events Extraction via Attention-based Graph Information Aggregation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Word-Representation"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">Word Representation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Syntactic-Graph-Convolution-Network"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">Syntactic Graph Convolution Network</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Self-Attention-Trigger-Classification"><span class="nav-number">2.2.4.3.</span> <span class="nav-text">Self-Attention Trigger Classification</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Argument-Classification-1"><span class="nav-number">2.2.4.4.</span> <span class="nav-text">Argument Classification</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Expansion-of-Labeled-Data"><span class="nav-number">3.</span> <span class="nav-text">1.3 Expansion of Labeled Data</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Leveraging-FrameNet-to-Improve-Automatic-Event-Detection"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. Leveraging FrameNet to Improve Automatic Event Detection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Automatically-Labeled-Data-Generation-for-Large-Scale-Event-Extraction"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. Automatically Labeled Data Generation for Large Scale Event Extraction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Zero-Shot-Transfer-Learning-for-Event-Extraction"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. Zero-Shot Transfer Learning for Event Extraction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Semi-Supervised-Event-Extraction-with-Paraphrase-Clusters"><span class="nav-number">3.0.4.</span> <span class="nav-text">4. Semi-Supervised Event Extraction with Paraphrase Clusters</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
