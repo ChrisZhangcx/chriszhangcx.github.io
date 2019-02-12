@@ -295,8 +295,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-01-24T16:23:01+08:00" content="2019-01-24">
-                2019-01-24
+              <time itemprop="dateUpdated" datetime="2019-02-12T16:44:23+08:00" content="2019-02-12">
+                2019-02-12
               </time>
             </span>
             
@@ -356,7 +356,7 @@
 
       
         
-          <p>写完以后发现这个 <strong>注释的形式</strong> 还有待改进，希望大家暂时理解一下。</p>
+          <p>写完以后发现 <code>注释的形式</code> 还有待改进，希望大家暂时理解一下。</p>
 <h2 id="1-1-Event-Extraction-after-2015"><a href="#1-1-Event-Extraction-after-2015" class="headerlink" title="1.1 Event Extraction after 2015"></a>1.1 Event Extraction after 2015</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于<strong>模式匹配</strong>或者<strong>统计机器学习</strong>方法<sup><a href="#fn_博客" id="reffn_博客">博客</a></sup>。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数据。从2015年开始，有研究者尝试使用CNN/RNN来提取Event Mention中的语义，比较典型的有DMCNN<sup><a href="#fn_2015.1" id="reffn_2015.1">2015.1</a></sup>与JRNN<sup><a href="#fn_2016.2" id="reffn_2016.2">2016.2</a></sup>等模型，其评估结果比早期的一些Structure-Based Method有显著提升，加之Deep Learning的逐渐升温，可以看出大家在这段时间开始普遍转向使用Representation-Based Method来看待EE问题。使用DNN来捕捉语义的另一个好处是使用了蕴含特征更加丰富的词向量，因此事件抽取的结果不再很大程度上依赖于人工定义的局部/全局特征。</p>
           <!--noindex-->
           <div class="post-button text-center">
