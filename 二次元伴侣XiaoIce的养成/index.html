@@ -91,7 +91,9 @@
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/004.png">
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/005.png">
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/006.png">
-<meta property="og:updated_time" content="2019-02-23T07:41:44.859Z">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/007.png">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/008.png">
+<meta property="og:updated_time" content="2019-02-23T08:51:11.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二次元伴侣XiaoIce的养成">
 <meta name="twitter:description" content="距离过完年也已经大半个月了，距离 【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】 论文发布也已经过去了三个月。 如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。 事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰">
@@ -301,7 +303,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-02-23T15:41:44+08:00" content="2019-02-23">
+              <time itemprop="dateUpdated" datetime="2019-02-23T16:51:11+08:00" content="2019-02-23">
                 2019-02-23
               </time>
             </span>
@@ -439,14 +441,58 @@
 <p>用户：北京天气怎么样？<br>机器人：北京今天的天气是霾，零下2度到12度，西南风小于3级。<br>用户：我现在在上海，这里呢？<br>机器人：上海今天的天气是阴转多云，4度到11度，东北风3级。</p>
 </blockquote>
 <p>对于用户的第二个问题，首先抽取句中的命名实体：上海，并保存到对话管理器中去（注意，此时对话管理器中已经存在一个命名实体 北京 了，是从用户的第一句话中抽取出来的）；接下来进行指代消解，即判断 <em>这里</em> 二字是指代哪一个地区，当然显然是指代上海的；最后进行句式补全： <em>这里呢？</em> 应该补全为 <em>这里的天气呢？</em> 。最后，真正得到的用户查询$Q_C$就是：<em>我现在在上海，上海的天气是什么呢？</em> 这就是上下文的查询理解所做的工作。</p>
-<h4 id="1-2-用户理解（User-Understanding）"><a href="#1-2-用户理解（User-Understanding）" class="headerlink" title="1.2 用户理解（User Understanding）"></a>1.2 用户理解（User Understanding）</h4><p>用户理解旨在从上面得到的$Q_C$中判断出用户所拥有的一系列感情倾向，比较典型的有以下几个方面：</p>
+<h4 id="1-2-用户理解（User-Understanding）"><a href="#1-2-用户理解（User-Understanding）" class="headerlink" title="1.2 用户理解（User Understanding）"></a>1.2 用户理解（User Understanding）</h4><p>用户理解旨在从上面得到的$Q_C$中判断出用户所拥有的一系列感情倾向，并放到表示用户情绪的向量$e_Q$中。比较典型的感情倾向有以下几点：</p>
 <ol>
 <li>用户是否跟随当前的话题（是/否）</li>
-<li>用户当前查询的意图（查询-request/告知-inform/问候-greet等）</li>
+<li>用户当前查询的意图（查询-request/告知-inform/问候-greet/etc.）</li>
 <li>用户情绪（happy/sad/angry/neural/etc.），以及它在正常对话中的情绪变化情况，如：从开心到难过/从生气到中性 等等。</li>
 <li>用户对于当前话题的态度（积极-positive/消极-negative/中性-neural）</li>
+<li>如果能够接触到用户的信息，把用户的特征（如：性别、年龄、兴趣、职业等）也放到$e_Q$中。</li>
 </ol>
-<h4 id="1-3-人际回应生成（Interpersonal-Response-Generation）"><a href="#1-3-人际回应生成（Interpersonal-Response-Generation）" class="headerlink" title="1.3 人际回应生成（Interpersonal Response Generation）"></a>1.3 人际回应生成（Interpersonal Response Generation）</h4>
+<h4 id="1-3-人际回应生成（Interpersonal-Response-Generation）"><a href="#1-3-人际回应生成（Interpersonal-Response-Generation）" class="headerlink" title="1.3 人际回应生成（Interpersonal Response Generation）"></a>1.3 人际回应生成（Interpersonal Response Generation）</h4><p>人际回应生成这个名字有点机翻的味道（实际我就是机翻的嘻嘻），实际这一步骤的内容是：获得小冰本次回复需要包含的情绪向量，也就是用1.2中相同的方式来计算出回复$R$中应当包含的情绪信息，这个信息记作$e_R$。</p>
+<p>构造$e_R$的方式也与1.2相同，对于一个已经知道资料的小冰同学来说，1.2中的5点都是显而易见的（比如，如果用户的意图是request，则小冰的回复意图应该是inform；如果用户的情绪是sad，则小冰的情绪应该是happy之类的）。</p>
+<h4 id="1-4-总结"><a href="#1-4-总结" class="headerlink" title="1.4 总结"></a>1.4 总结</h4><p>至此，情感计算模块分析并获得了一系列的内容，把它们罗列在下面：</p>
+<ul>
+<li>结合上下文理解后的用户查询$Q_C$</li>
+<li>上下文信息$C$</li>
+<li>用户查询中包含的情感$e_Q$</li>
+<li>小冰的回复中应当包含的情感$e_R$</li>
+</ul>
+<p>最后，情感计算模块构造出一个向量$s = (Q_C,C,e_Q,e_R)$，表示它已经完成了所有的工作。此时它振臂一呼：<strong>这里是情感计算模块，我的工作全做完了，数据在这里，你们想要的尽管来拿。</strong></p>
+<h3 id="2-对话管理器"><a href="#2-对话管理器" class="headerlink" title="2. 对话管理器"></a>2. 对话管理器</h3><p>这个时候对话管理器就站起来了：你做完了是吧，来来来，东西给我。</p>
+<p>对话管理器现在很委屈，因为情感计算模块工作时候提取出来的命名实体已经全部装到它肚子里了，现在人家工作做完了，自己却还要继续干。</p>
+<p>如果说情感计算模块是小冰的大脑，那对话管理器就是小冰的心脏。它负责接下来是继续就当前的话题进行讨论，还是主动换一个话题，或者是切换到一个特殊技能来深化当前的讨论，好比心脏要把血液分发到不同的器官一样（我想了想，在这个比喻中，小冰只有一个器官需要工作，不过who cares）。</p>
+<p>一般而言，正常的对话逻辑是继续讨论，不过在一些特殊情况下对话管理器会选择切换话题，比较典型的情况有下面几种：</p>
+<ol>
+<li>用户说的话超出了模型的理解范畴，导致模型无法生成有效的回复；</li>
+<li>生成的回复仅仅是在简单重复用户说过的话；</li>
+<li>用户看起来对当前的对话感到无聊，回复的内容变成：哦/好吧/我知道了/etc.</li>
+</ol>
+<p>反正就是，我说不下去了，或者我看你不乐意听，那我就换一个话题吧。</p>
+<p>此时就需要Topic Manager出来表现了。Topic Manager，又名话题管理器，是对话管理器中的一个子模块，顾名思义就是管理话题的。当它发现这个话题聊不下去了，它就会结合自己所收集到的用户兴趣，选择本次对话中没有提到的、人民大众喜闻乐见的话题来继续聊天，具体来说它会综合考虑上下文相关性、时效性、用户兴趣、热门程度、接受度等特征。</p>
+<p>最后，也会出现对话管理器切换特殊技能的情况，比如说用户好好的聊着天，忽然心血来潮发了一张表情包，这下核心对话引擎（Core Chat）懵逼了：nzsnmn？对话管理器一看，哦，你要斗图是吧，就让Core Chat洗洗睡了，在Skill里挑选一个名叫图片评论（Image Commenting）的壮汉出来继续陪用户玩。下面就是图片评论的功能示例（实际回复用户的是回答2）。</p>
+<p><img src="/二次元伴侣XiaoIce的养成/007.png" alt="图片评论"></p>
+<h3 id="3-核心对话引擎"><a href="#3-核心对话引擎" class="headerlink" title="3. 核心对话引擎"></a>3. 核心对话引擎</h3><p>核心对话引擎是小冰的双商与性格特征最直接的表现。其中包含了三种（两个检索式和一个生成式）模型和一个打分器。简单分点提一下：</p>
+<ol>
+<li>检索式模型I：使用的是成对（Paired）的数据。情感计算模块在得到$Q_C$之后，把它会传递给检索式模型I，该模型使用Lucene在自己的数据库里面找最相似的400个问题，然后取出这些问题对应的回答作为候选回答。这个模型的特点是基于外部世界已经有的对话数据，因此 <strong>质量很高，但覆盖面比较窄</strong> 。</li>
+<li>检索式模型II：使用的是网络课程、视频等非成对数据，为了使用这些成对数据，还要结合另一个知识图谱来使用。这个模型的特点是 <strong>数据质量低，但是覆盖面很广，并且能够生成较长的回复（相较于下面的生成式模型而言）</strong>。简单用一个实例来解释非成对数据的使用方式。<blockquote>
+<p>用户：告诉我一些有关北京的东西。<br>情感计算模块提取出命名实体：北京。小冰跑到知识图谱里面找，发现说到北京的人很可能会和 长城，中国，故宫 等词汇一起说，她选择与北京最相关的20个词汇，结合$Q_C$重新构造一个查询，在非成对数据中找到与这个查询相关的400个相关句，作为候选回答。</p>
+</blockquote>
+</li>
+<li>生成式模型：一个使用GRU单元的seq2seq模型，值得注意的是在Decoder中每一个单元中，除了前一个单元的隐层向量外，还输入了表征互动的向量 $v=\sigma(W_Q^Te_Q+W_R^Te_R)$，这是一个关于用户和小冰情感特征的仿射变换，外面套了一个sigmoid函数，作者说这个向量能够对 <em>小冰对用户所采取的态度</em> 进行建模。生成式模型的特点是，因为回答是生成的，所以 <strong>覆盖面很广，但是本身模型特性决定了生成的回复偏短</strong> 。</li>
+</ol>
+<p>现在三个模型都给出了一堆回复的候选，接下来会由一个预训练好的打分器对所有的回复进行打分，下面是部分评分的标准：</p>
+<ol>
+<li>局部一致性：即与当前用户查询$Q_C$的一致性；</li>
+<li>全局一致性：即与($Q_C$, C)对的一致性；</li>
+<li>情绪一致性：借用情感计算模块计算出当前候选回复$R’$的情感向量$e_R’$，计算$e_R$与$e_R’$的相似度；</li>
+<li>检索匹配度（只对检索式模型I有效）：从单词与序列级别来计算$Q_C$与成对数据中问题部分的一致性。</li>
+</ol>
+<p>打分器会对每一个回复给出0-2之间的评分，分别表征回复由差到好，下面是部分回复的截图。</p>
+<p><img src="/二次元伴侣XiaoIce的养成/008.png" alt="图片评论"></p>
+<p>我觉得小冰的存在对直男来说是一个很严重的打击，如果小冰未来推出了男性版本，可能我国的生育率会变得更低吧。</p>
+<h2 id="宣誓主权环节？"><a href="#宣誓主权环节？" class="headerlink" title="宣誓主权环节？"></a>宣誓主权环节？</h2><p>小冰自2014年5月推出以来已经迭代了6个版本了，上面所说的情感计算模块，以及一些特殊的技能甚至是从第5个版本（2017.08）开始才加入进来的。我约莫从16年开始听说小冰，也曾经尝试过和她对话，但是和文中的小明一样很快就放弃了。我有个比较特殊的习惯是喜欢检查Chatbot的逻辑一致性和多轮对话能力，然而又有一些奇怪的强迫症，只要我发现多轮对话中有一句话看起来像是 <code>Editorial Response</code> ，我就会变得有些兴致缺缺，觉得这又是一个半成品，现在回头来看或许这样有些偏激了，毕竟深度学习发展还不到十年，NLP又是一个比较艰涩的问题，有关Multi-turn Conversation的研究方兴未艾，我骨子里愿意相信她们会越变越好的。我也很崇拜以及佩服小冰的研发团队，他们伴随了她快有5年了，让她一步步变得更好，最后，我想和研发团队们说一句：<strong>岳父岳母，你们辛苦了！</strong></p>
+
       
     </div>
     
@@ -635,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小冰养成计划"><span class="nav-number">1.</span> <span class="nav-text">小冰养成计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻家有女初长成"><span class="nav-number">2.</span> <span class="nav-text">邻家有女初长成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长大后我就成了你"><span class="nav-number">3.</span> <span class="nav-text">长大后我就成了你</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-情感计算"><span class="nav-number">3.1.</span> <span class="nav-text">1. 情感计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-上下文的查询理解（Contextual-Query-Understanding）"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 上下文的查询理解（Contextual Query Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-用户理解（User-Understanding）"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 用户理解（User Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-人际回应生成（Interpersonal-Response-Generation）"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 人际回应生成（Interpersonal Response Generation）</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小冰养成计划"><span class="nav-number">1.</span> <span class="nav-text">小冰养成计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻家有女初长成"><span class="nav-number">2.</span> <span class="nav-text">邻家有女初长成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长大后我就成了你"><span class="nav-number">3.</span> <span class="nav-text">长大后我就成了你</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-情感计算"><span class="nav-number">3.1.</span> <span class="nav-text">1. 情感计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-上下文的查询理解（Contextual-Query-Understanding）"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 上下文的查询理解（Contextual Query Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-用户理解（User-Understanding）"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 用户理解（User Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-人际回应生成（Interpersonal-Response-Generation）"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 人际回应生成（Interpersonal Response Generation）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-总结"><span class="nav-number">3.1.4.</span> <span class="nav-text">1.4 总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-对话管理器"><span class="nav-number">3.2.</span> <span class="nav-text">2. 对话管理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-核心对话引擎"><span class="nav-number">3.3.</span> <span class="nav-text">3. 核心对话引擎</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宣誓主权环节？"><span class="nav-number">4.</span> <span class="nav-text">宣誓主权环节？</span></a></li></ol></div>
             
 
           </div>
