@@ -420,173 +420,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/也来谈谈多头怪：Transformer/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/也来谈谈多头怪：Transformer/" itemprop="url">也来谈谈多头怪：Transformer</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-02-12T16:57:50+08:00">
-                2019-02-12
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2019-02-17T15:57:52+08:00" content="2019-02-17">
-                2019-02-17
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>想写一写Transformer，是因为在知乎上看到了一个很有意思的问题：<a href="https://www.zhihu.com/question/302392659" target="_blank" rel="noopener">有了Transformer框架后是不是RNN完全可以废弃了？</a>，其中获赞超过100的答案都显式或隐式地持了肯定的态度。</p>
-<p>有相当数量的研究者都认为一个框架碾压另一个框架，这种情况并不多见，我认真看了看回答，总结下来原因有以下几点：</p>
-<ol>
-<li><p>Transformer在<strong>大数据</strong>情况下效果已经显著超过了RNN，如WMT数据集的机器翻译，BERT，以及最近的TTS；在中等数据集（一百万）或小数据集（几万或几千）时，可能要靠调参（<code>by 吴俣</code>）；</p>
-</li>
-<li><p>RNN在长序列时对词顺序不敏感，对于相距100个词的序列甚至就完全忘了（<code>by 吴俣</code>）。这也是大家所诟病的 <em>RNN在处理较长序列时效果不佳</em> 的问题，为此大家常使用LSTM/GRU单元来替换基础的RNN单元，来选择性保留或遗忘长序列中的部分信息，这样能避免反向更新前面参数时候的梯度消失问题。Transformer本身并不能保留序列间的位置信息，但是通过position encoding给每个单词赋了一个表示它所在位置的向量。</p>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/也来谈谈多头怪：Transformer/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1868,6 +1701,173 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Kick-Start-2018-Practice-Round/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Kick-Start-2018-Practice-Round/" itemprop="url">Kick Start 2018-Practice Round</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-07T09:08:35+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2018-12-19T22:35:32+08:00" content="2018-12-19">
+                2018-12-19
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kick-Start/" itemprop="url" rel="index">
+                    <span itemprop="name">Kick Start</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Google的<a href="https://codingcompetitions.withgoogle.com/" target="_blank" rel="noopener">Competitions with Google</a>上有三个类型的练习：</p>
+<ul>
+<li><strong>Hash Code</strong>: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? <del>Of course I am not.</del></li>
+<li><strong>Code Jam</strong>: <del>编程果酱？？</del> 反正就是用多轮的算法问题来进行比赛，最后获胜者还有奖金，又问了一句Do u have what it takes? <del>emmmm..</del></li>
+<li><strong>Kick Start</strong>: 今天的重头戏，介绍中说主要是磨炼自己的coding水平，受众是学生 <del>我</del> 和新接触编程的人 <del>我</del> ，也是按轮次进行的，可以只参加一轮也可以全部参加，最后的问题是What are u waiting for? 这看起来就正常多了，不像是向一个算法渣挑衅的言论，给好评。</li>
+</ul>
+<p>Kick Start的轮次是一个Practice Round和A~H八轮，其中除了Practice Round给了24h解题外，其它的八个轮次都是只给3h解题时间，所以介绍中所说的’可以只参加一轮’，实则是指哪一轮呢？</p>
+<p>别问，问就是自闭。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Kick-Start-2018-Practice-Round/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1918,7 +1918,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
