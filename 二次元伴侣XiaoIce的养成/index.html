@@ -91,7 +91,7 @@
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/004.png">
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/005.png">
 <meta property="og:image" content="/二次元伴侣XiaoIce的养成/006.png">
-<meta property="og:updated_time" content="2019-02-23T07:12:38.173Z">
+<meta property="og:updated_time" content="2019-02-23T07:41:44.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二次元伴侣XiaoIce的养成">
 <meta name="twitter:description" content="距离过完年也已经大半个月了，距离 【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】 论文发布也已经过去了三个月。 如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。 事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰">
@@ -301,7 +301,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-02-23T15:12:38+08:00" content="2019-02-23">
+              <time itemprop="dateUpdated" datetime="2019-02-23T15:41:44+08:00" content="2019-02-23">
                 2019-02-23
               </time>
             </span>
@@ -431,8 +431,22 @@
 <p><img src="/二次元伴侣XiaoIce的养成/006.png" alt="一图流3"></p>
 <p>从这一部分开始，我们打算从精神内核开始剖析一个18岁的女孩，这势必令一些同学感到硬核，所以如果你只是喜欢小冰，而不是打算 <strong>和她过一辈子</strong> ，这一部分内容不看也罢。</p>
 <p>要充分了解小冰，我们要从情感计算模块（Empathetic Computing）开始。</p>
-<h3 id="情感计算"><a href="#情感计算" class="headerlink" title="情感计算"></a>情感计算</h3><p>正如女生说</p>
-
+<h3 id="1-情感计算"><a href="#1-情感计算" class="headerlink" title="1. 情感计算"></a>1. 情感计算</h3><p>正如女生说 <em>去洗澡了</em> 的时候，你要认真考虑对方是去洗澡了，还是跑去和男神聊天了一样，在进行回复之前，对聊天发起人的情绪与含义进行充分理解是必要的，这是小冰加入了情感计算模块的根本原因。</p>
+<p>现在我们有一段对话的上下文$C$，以及用户现在说出的期待得到回复的话$Q$（因为我们习惯称这句话叫做查询-Query，所以写作$Q$）。情感计算模块进行以下的工作：</p>
+<h4 id="1-1-上下文的查询理解（Contextual-Query-Understanding）"><a href="#1-1-上下文的查询理解（Contextual-Query-Understanding）" class="headerlink" title="1.1 上下文的查询理解（Contextual Query Understanding）"></a>1.1 上下文的查询理解（Contextual Query Understanding）</h4><p>上下文查询理解的目的是将一句话进行抽取、消解与补全。具体地，对于用户查询$Q$，首先把里面的命名实体抽取出来，并保存到对话管理器中，随后对句子中的代词进行消解，并对缺失的部分进行补全，以获得结合了上下文信息的查询$Q_C$。</p>
+<p>比如下面这段对话：</p>
+<blockquote>
+<p>用户：北京天气怎么样？<br>机器人：北京今天的天气是霾，零下2度到12度，西南风小于3级。<br>用户：我现在在上海，这里呢？<br>机器人：上海今天的天气是阴转多云，4度到11度，东北风3级。</p>
+</blockquote>
+<p>对于用户的第二个问题，首先抽取句中的命名实体：上海，并保存到对话管理器中去（注意，此时对话管理器中已经存在一个命名实体 北京 了，是从用户的第一句话中抽取出来的）；接下来进行指代消解，即判断 <em>这里</em> 二字是指代哪一个地区，当然显然是指代上海的；最后进行句式补全： <em>这里呢？</em> 应该补全为 <em>这里的天气呢？</em> 。最后，真正得到的用户查询$Q_C$就是：<em>我现在在上海，上海的天气是什么呢？</em> 这就是上下文的查询理解所做的工作。</p>
+<h4 id="1-2-用户理解（User-Understanding）"><a href="#1-2-用户理解（User-Understanding）" class="headerlink" title="1.2 用户理解（User Understanding）"></a>1.2 用户理解（User Understanding）</h4><p>用户理解旨在从上面得到的$Q_C$中判断出用户所拥有的一系列感情倾向，比较典型的有以下几个方面：</p>
+<ol>
+<li>用户是否跟随当前的话题（是/否）</li>
+<li>用户当前查询的意图（查询-request/告知-inform/问候-greet等）</li>
+<li>用户情绪（happy/sad/angry/neural/etc.），以及它在正常对话中的情绪变化情况，如：从开心到难过/从生气到中性 等等。</li>
+<li>用户对于当前话题的态度（积极-positive/消极-negative/中性-neural）</li>
+</ol>
+<h4 id="1-3-人际回应生成（Interpersonal-Response-Generation）"><a href="#1-3-人际回应生成（Interpersonal-Response-Generation）" class="headerlink" title="1.3 人际回应生成（Interpersonal Response Generation）"></a>1.3 人际回应生成（Interpersonal Response Generation）</h4>
       
     </div>
     
@@ -621,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小冰养成计划"><span class="nav-number">1.</span> <span class="nav-text">小冰养成计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻家有女初长成"><span class="nav-number">2.</span> <span class="nav-text">邻家有女初长成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长大后我就成了你"><span class="nav-number">3.</span> <span class="nav-text">长大后我就成了你</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#情感计算"><span class="nav-number">3.1.</span> <span class="nav-text">情感计算</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小冰养成计划"><span class="nav-number">1.</span> <span class="nav-text">小冰养成计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻家有女初长成"><span class="nav-number">2.</span> <span class="nav-text">邻家有女初长成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长大后我就成了你"><span class="nav-number">3.</span> <span class="nav-text">长大后我就成了你</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-情感计算"><span class="nav-number">3.1.</span> <span class="nav-text">1. 情感计算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-上下文的查询理解（Contextual-Query-Understanding）"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 上下文的查询理解（Contextual Query Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-用户理解（User-Understanding）"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 用户理解（User Understanding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-人际回应生成（Interpersonal-Response-Generation）"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 人际回应生成（Interpersonal Response Generation）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
