@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="NLP,">
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="Is life always this hard, or is it just when you&apos;re a kid?">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chris Zhang">
-<meta property="og:url" content="/archives/2018/page/2/index.html">
+<meta name="description" content="想写一写Transformer，是因为在知乎上看到了一个很有意思的问题：有了Transformer框架后是不是RNN完全可以废弃了？，其中获赞超过100的答案都显式或隐式地持了肯定的态度。 有相当数量的研究者都认为一个框架碾压另一个框架，这种情况并不多见，我认真看了看回答，总结下来原因有以下几点：  Transformer在大数据情况下效果已经显著超过了RNN，如WMT数据集的机器翻译，BERT，">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="也来谈谈多头怪：Transformer">
+<meta property="og:url" content="/也来谈谈多头怪：Transformer/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta property="og:description" content="想写一写Transformer，是因为在知乎上看到了一个很有意思的问题：有了Transformer框架后是不是RNN完全可以废弃了？，其中获赞超过100的答案都显式或隐式地持了肯定的态度。 有相当数量的研究者都认为一个框架碾压另一个框架，这种情况并不多见，我认真看了看回答，总结下来原因有以下几点：  Transformer在大数据情况下效果已经显著超过了RNN，如WMT数据集的机器翻译，BERT，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-17T07:57:52.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chris Zhang">
-<meta name="twitter:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta name="twitter:title" content="也来谈谈多头怪：Transformer">
+<meta name="twitter:description" content="想写一写Transformer，是因为在知乎上看到了一个很有意思的问题：有了Transformer框架后是不是RNN完全可以废弃了？，其中获赞超过100的答案都显式或隐式地持了肯定的态度。 有相当数量的研究者都认为一个框架碾压另一个框架，这种情况并不多见，我认真看了看回答，总结下来原因有以下几点：  Transformer在大数据情况下效果已经显著超过了RNN，如WMT数据集的机器翻译，BERT，">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/archives/2018/page/2/">
+  <link rel="canonical" href="/也来谈谈多头怪：Transformer/">
 
 
 
 
 
-  <title>所有文章 | Chris Zhang</title>
+  <title>也来谈谈多头怪：Transformer | Chris Zhang</title>
   
 
 
@@ -141,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -235,146 +237,205 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/也来谈谈多头怪：Transformer/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">也来谈谈多头怪：Transformer</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-02-12T16:57:50+08:00">
+                2019-02-12
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-02-17T15:57:52+08:00" content="2019-02-17">
+                2019-02-17
+              </time>
+            </span>
+            
+
+            
+          </span>
           
-        
-        嗯..! 目前共计 19 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/Kick-Start-2018-Practice-Round/" itemprop="url">
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">Kick Start 2018-Practice Round</span>
+                <span class="post-meta-item-text">分类</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-07T09:08:35+08:00" content="2018-12-07">
-          12-07
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+          
 
+          
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/凸优化笔记-2-凸函数/" itemprop="url">
-              
-                <span itemprop="name">凸优化笔记(2): 凸函数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-06T14:44:19+08:00" content="2018-12-06">
-          12-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/凸优化笔记-1-凸集/" itemprop="url">
-              
-                <span itemprop="name">凸优化笔记(1): 凸集</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-05T19:33:48+08:00" content="2018-12-05">
-          12-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>想写一写Transformer，是因为在知乎上看到了一个很有意思的问题：<a href="https://www.zhihu.com/question/302392659" target="_blank" rel="noopener">有了Transformer框架后是不是RNN完全可以废弃了？</a>，其中获赞超过100的答案都显式或隐式地持了肯定的态度。</p>
+<p>有相当数量的研究者都认为一个框架碾压另一个框架，这种情况并不多见，我认真看了看回答，总结下来原因有以下几点：</p>
+<ol>
+<li><p>Transformer在<strong>大数据</strong>情况下效果已经显著超过了RNN，如WMT数据集的机器翻译，BERT，以及最近的TTS；在中等数据集（一百万）或小数据集（几万或几千）时，可能要靠调参（<code>by 吴俣</code>）；</p>
+</li>
+<li><p>RNN在长序列时对词顺序不敏感，对于相距100个词的序列甚至就完全忘了（<code>by 吴俣</code>）。这也是大家所诟病的 <em>RNN在处理较长序列时效果不佳</em> 的问题，为此大家常使用LSTM/GRU单元来替换基础的RNN单元，来选择性保留或遗忘长序列中的部分信息，这样能避免反向更新前面参数时候的梯度消失问题。Transformer本身并不能保留序列间的位置信息，但是通过position encoding给每个单词赋了一个表示它所在位置的向量。</p>
+</li>
+</ol>
+<a id="more"></a>
+<ol>
+<li>Transformer在Encoding阶段允许并行，而RNN的架构决定了它无论在Encoding还是Decoding都无法并行，效率间的差距很大。(<code>by 吴海波</code>)</li>
+</ol>
+<p>在前面我也写过 <a href="/Crash-Paper-Attention-Is-All-You-Need/">关于Transformer的博客</a>，主要是从 <code>[Attention is All You Need]</code> 这篇Paper来解读的，当时是翻译了一些论文中的段落，把Transformer的结构解释了一下，不过自己没有很好的理解其中的Attention Mechanism到底是个什么玩意儿，对于这个模型的分析也没能很好的理解。大致换言之也就是把里面的内容翻译了一下。在这里，我想再对Transformer进行一些概念与应用上的总结。<br>在前面我也写过 <a href="/Crash-Paper-Attention-Is-All-You-Need/">关于Transformer的博客</a>，主要是从 <code>[Attention is All You Need]</code> 这篇Paper来解读的，当时是翻译了一些论文中的段落，把Transformer的结构解释了一下，不过自己没有很好的理解其中的Attention Mechanism到底是个什么玩意儿，对于这个模型的分析也没能很好的理解。</p>
+<p>在本文中，我希望从以下几个方面重新讲述Transformer：</p>
+<ol>
+<li>Transformer的主体结构，及每部分结构的作用；</li>
+<li>Transformer最主要的Self-Attention究竟是什么样子的，设计的目的是什么；</li>
+<li>Transformer的复现情况（是的，如果没有复现出来，我就不打算发布这篇博客了）以及复现过程中出现的问题。</li>
+</ol>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/" rel="next" title="如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)">
+                <i class="fa fa-chevron-left"></i> 如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/二次元伴侣XiaoIce的养成/" rel="prev" title="二次元伴侣XiaoIce的养成">
+                二次元伴侣XiaoIce的养成 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -382,6 +443,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -613,6 +681,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

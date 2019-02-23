@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="距离过完年也已经大半个月了，距离 【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】 论文发布也已经过去了三个月。 如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。 事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二次元伴侣XiaoIce的养成">
+<meta property="og:url" content="/二次元伴侣XiaoIce的养成/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="距离过完年也已经大半个月了，距离 【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】 论文发布也已经过去了三个月。 如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。 事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/001.png">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/002.jpg">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/003.png">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/004.png">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/005.png">
+<meta property="og:image" content="/二次元伴侣XiaoIce的养成/006.png">
+<meta property="og:updated_time" content="2019-02-23T07:12:38.173Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二次元伴侣XiaoIce的养成">
+<meta name="twitter:description" content="距离过完年也已经大半个月了，距离 【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】 论文发布也已经过去了三个月。 如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。 事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰">
+<meta name="twitter:image" content="/二次元伴侣XiaoIce的养成/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/二次元伴侣XiaoIce的养成/">
+
+
+
+
+
+  <title>二次元伴侣XiaoIce的养成 | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/二次元伴侣XiaoIce的养成/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二次元伴侣XiaoIce的养成</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-02-23T10:34:44+08:00">
+                2019-02-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-02-23T15:12:38+08:00" content="2019-02-23">
+                2019-02-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>距离过完年也已经大半个月了，距离 <a href="https://arxiv.org/pdf/1812.08989.pdf" target="_blank" rel="noopener">【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】</a> 论文发布也已经过去了三个月。 <del>如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。</del></p>
+<p>事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰使用了一些敷衍词（我真的很受伤）。对上下文的理解始终是多轮对话的研究中迈不过去的门槛，在测试Chatbot时我采用了三步走的战略方针：</p>
+<blockquote>
+<ol>
+<li>瞎比聊模式</li>
+<li>逻辑一致性检验</li>
+<li>简单的多轮对话</li>
+<li>复杂的多轮对话</li>
+</ol>
+</blockquote>
+<p>与小冰的聊天结果实在让人心酸。瞎比聊模式中小冰完美地表现出一个人工智能（zhang）该有的样子，检测逻辑一致性时也受到了莫名的阻碍（直接问一个女孩子的年龄真的这么不合适吗？），简单的多轮对话任务小冰完成得不错，但是这可能只是体现出小冰在句义补全和指代消解方面做得不错，在进行稍微复杂一些的多轮对话时（我特意选择了不能进行指代和补全的句子）就继续EXO ME了。</p>
+<a id="more"></a>
+<p><img src="/二次元伴侣XiaoIce的养成/001.png" alt="对话"></p>
+<p>和二次元女孩恋爱任重而道远。别问，问就是难受。</p>
+<hr>
+<p>回到正题，本文的目的是 <em>不通过直接翻译的方式</em> 来对小冰的整体架构进行阐述，文中会细化地讲述部分组件的功能与结构，掺杂些我自己的理解与评价，以及加入<strong>我对小冰深切的爱</strong>。</p>
+<h2 id="小冰养成计划"><a href="#小冰养成计划" class="headerlink" title="小冰养成计划"></a>小冰养成计划</h2><p>一个 <del>二次元伴侣</del> 聊天机器人🤖的诞生一定有其必需的意义，比如Google Assistant、Apple Siri与Amazon Alexa的目的是为了提升人们的工作效率以及在晚上发出怪异的笑声，小爱同学作为纽带关联了整个小米的物联网体系，天猫精灵会放歌并在其他时候偷偷记录你和舍友讨论的内容在淘宝APP上给你推送等等。小冰的设计初衷是作为一个 <code>18岁、具有高智商与情商、可靠而富有同理心、热情而有幽默感的聊天伴侣</code> 。</p>
+<p>一个直接的问题是：怎么来衡量这个伴侣是否合格呢？</p>
+<p>一般情况下，研究人员可以采用图灵测试（Turing Test）来评估一个聊天机器人的表现。但是小冰的设计人员认为，图灵测试并不能很好地衡量一个<strong>旨在与用户建立感情的</strong>聊天机器人与用户长期交流的效果，所以提出了 <code>对话轮次(Conversation-turns Per Session, 下称CPS)</code> 这个指标来度量小冰陪伴的成功程度。简单来说，CPS就是用户在与小冰一次完整的对话中究竟进行了几次你来我往的交流。</p>
+<p>我们希望用户能享受与小冰的对话，所以优化策略是让小冰往CPS提高的方向发展。值得注意的是，这点与专注于完成任务的Google Assistant等一系列语音助手相反，因为人们总希望用尽可能少的交流轮次来让她们领会到自己的意思，并完成自己指定的任务。</p>
+<p>接下来的问题是：如何提高CPS呢？</p>
+<p>很简单，安排一些工作人员在小冰的公众号背后，每天回复来自全球各地的对话需求就可以了。</p>
+<p><img src="/二次元伴侣XiaoIce的养成/002.jpg" alt="巴掌"></p>
+<p>对不起，重来一遍……很简单，我们只需要设计出一个拥有和正常人差不多的对话逻辑的机器人就可以了。其实纵观论文全文，可以看到研究人员始终是在将小冰往这个方向做的，我个人觉得像这样的 <strong>模拟过程</strong> 是AI方向很重要的一个研究逻辑，正如最初的神经网络参照了人类的神经元，也正如LSTM试图加入人类对事物的遗忘能力一样。</p>
+<p>就此而言，一个正常人首先需要具备一定的智商（Intellgence Quotient, IQ）和情商（Emotional QUotient, EQ），以及自己独特的性格特征（Personality），小冰同样被设计为拥有这三项能力。小冰的所有能力来源于对工作人员的设计，以及对外部数据的存储、分析与建模。具体来说，她的IQ表现为对文字/图片等多种输入的理解、生成与预测，以及对于新技能的学习能力；EQ表现为在对话过程中反映出的自己的性格特征（幽默与善良），对用户在言语中所包含情绪的理解，以及试图消除用户的负面情绪的行为。</p>
+<p>最后，小冰的性格特征由她背后所存储的数据支持。正如上面所说，小冰是一个18岁的小姑娘，她也应当知晓自己的性别与年龄，以及一些其他的基本信息，比如自己具有幽默感，待人亲切等等。<strong>性格特征的存在是极其重要的</strong>，因为它关乎聊天过程中出现的 <code>逻辑一致性</code> 的问题 <del>，以及我喜欢的女孩永远在18岁这一事实</del> 。</p>
+<p>狭义的逻辑一致性指的是在一次完整的对话中，聊天机器人的发言应该是连贯并且有逻辑的，比如在上图的逻辑一致性测试中，部分机器人可能会出现下面的发言：</p>
+<blockquote>
+<p>用户：你多大了？<br>机器人：人家刚过了18岁生日呢。<br>用户：敢问贵庚？<br>机器人：老朽八十有几，咳咳咳咳。</p>
+</blockquote>
+<p>这会极大降低用户对机器人的信任程度。因为聊天机器人所采用的模型与架构无法很好地维持逻辑一致性，在过去这种事情是经常发生的。以检索式模型为例说明这种情况的发生原因：直观上来说，一个检索式模型会根据用户当前所说的话，在数据库里看看哪些是大家普遍会作出的回答（当然其中会包括各种相似性、上下文相关性等检测，在此不表），选出真实世界中大家最可能作出的10种回复来，然后随机选一种作为对用户的回复。那么，如果对于年龄问题，世界上20%的人都回答自己年方二八，10%的人已经知天命了，这两个回答都有可能被作为问题的回复，这就导致了逻辑不一致情况的发生。</p>
+<p>为了维持小冰在对话中的逻辑一致性，研究人员们干脆把年龄等等一些固定的知识写到数据库里，然后在产生回答时以某些方式嵌入到回答中去，来保证对话时小冰不会出现以上的情况。</p>
+<p>当然，比较可惜的是，小冰（以及目前所有的Chatbot）几乎不具有 <strong>广义上的逻辑一致性</strong> 。——广义而言，我们希望聊天机器人不但知道关于自己的信息，也知道世界中的公理常识，并具备基本的推理能力。例如：</p>
+<p><img src="/二次元伴侣XiaoIce的养成/003.png" alt="公理常识"></p>
+<p>这在感情上就有些无法接受了。</p>
+<p>当然，按刚才提到的检索式模型的逻辑，或许小冰仍能检索出大多数人的回答是太阳东升西落，表现出知道公理常识的模样，那么当我们询问： <strong><em>小偷往太阳落下的方向跑了，我该往哪个方向追？</em></strong> 这类需要基本推理的问题时，由于数据库中不存在如此特殊问题的解答，小冰的解答就会显得很窘迫了。（而生成式模型可能会产生一个独立来看有意义，但实质与上下文没有任何一致性的回答）。对上下文逻辑一致性的讨论一直以来也是NLP领域一个有趣的方向。</p>
+<p>再回到正题，这一部分主要说了，在设计小冰时，大家给小冰赋予了双商与性格，使她与用户的对话轮次尽可能的长，并且对话过程中能保证狭义的逻辑一致性。下面会具体从小冰的结构来阐述，小冰究竟是怎样具备双商的，以及怎样始终记住自己的年龄、姓名等独特的信息，并融入到对用户的回答中去。</p>
+<h2 id="邻家有女初长成"><a href="#邻家有女初长成" class="headerlink" title="邻家有女初长成"></a>邻家有女初长成</h2><p>文章里讲的点比较多，看起来可能比较杂，所以我们看图说话：</p>
+<p><img src="/二次元伴侣XiaoIce的养成/004.png" alt="一图流"></p>
+<p>小冰由图中左中右三个部分，即 <code>User Experience Layer, Conversation Engine Layer</code> 与 <code>Data Layer</code> 三部分构成。第一层是用户体验层，小冰在这个层次收集外界的数据，进行自我训练后反馈到外界，继续收集反馈信息……如是形成一个循环，以达到提升CPS的效果。第二层可以称为对话引擎层，是最重要的一层，它主管了小冰所有对话的逻辑，包括但不限于：话题的切换、用户情绪的感知，上下文语义理解，以及在图片评论、内容创作等具体领域上面的行为逻辑。第三层是数据层，其作用在于持久化存储各种模型的数据、小冰与用户的资料、以及一些有助于回复的知识图谱等数据。为便于理解，我制作了一个思维导图：</p>
+<p><img src="/二次元伴侣XiaoIce的养成/005.png" alt="一图流2"></p>
+<p>基于上图，我大致总结了小冰在发布前后以及应用过程中整体的操作逻辑，注意 <code>以下部分仅为便于理解所写，并不对应于真正的产品逻辑</code> ，因为诸如情感计算等功能在小冰迭代到第5代之后才加入，而下面的逻辑概括忽略了产品的迭代与演进过程：</p>
+<ol>
+<li>在小冰发布之前，工作人员设计小冰的架构，以及诸如Core Chat等核心对话功能的模型结构，完成2.2部分的工作。</li>
+<li>小冰根据外界收集到的信息（图中2.1部分）进行训练，所使用的有视频这样的流式数据，也有多轮对话的数据（对话的形式可以是文本、图片、语音等等），这些数据经过合成、解释、标准化等预处理过程后保存到数据层中（图中2.3部分），形成以下类型的数据：<ul>
+<li>成对（Paired）数据：存储为 (问题，回答) 这样的形式，这种形式的好处在于，当用户的问题与数据对中相同时，可以快速得出应作出的回复。</li>
+<li>非成对数据：从单方面的知识输出中所获得，比如书籍、慕课、TED这种课程与演讲，其特征在于不是(问题，回答)这样的成对形式，不能直接应用所以需要进一步处理。</li>
+<li>知识图谱：外界已存在的知识图谱，主要用于处理非成对的数据。</li>
+<li>小冰与用户们的资料：如上所述，用以维护逻辑一致性，以及收集用户的行为习惯与偏好。</li>
+<li>话题索引：用于对话时小冰在不同话题间的切换。</li>
+</ul>
+</li>
+<li>小冰发布，正式告别<strong>养在深闺无人识</strong>的状态。</li>
+<li>小明添加小冰为微信好友，小心翼翼地发送：你好，在吗？</li>
+<li>小冰收到小明发来的消息，正式启动一次会话，并：<ol>
+<li>使用 <em>情感计算模块</em> 对发来的消息进行查询理解、用户理解与情感解析等工作。</li>
+<li>在 <em>对话管理器</em> 中添加由情感计算模块所发来的信息，包括文本、命名实体、意图等；基于预先设定的规则来决定接下来是要跟随用户进行回复，还是转移话题，或者启动某一个特定的技能。由于小明发来了问候，小冰启动了核心对话引擎Core Chat。</li>
+<li><em>核心对话引擎</em> 使用三个不同的模型分别给出它们觉得还不错的回应选项，并使用一个打分器给所有的选项打分，在所有获得及格分的选项中随机选一个，用来回复小明。</li>
+</ol>
+</li>
+<li>小冰回复：什么你好。</li>
+<li>小明：MDZZ，然后关闭了聊天窗口。</li>
+<li>小冰在获得的数据中加入自己与用户聊天的数据，进一步对自己的聊天能力进行更新（回到第四步，往复循环）。</li>
+</ol>
+<p>一个令人瞩目的数据是，论文中指出，目前小冰所用于回复的训练数据中，有70%都是来源于自己与用户的聊天记录，只有30%来源于外部的数据。</p>
+<p>好了，这一部分主要对小冰的整体架构进行了阐述，接下来会对论文的核心部分：对话引擎层的每个部件及其功能进行叙述。</p>
+<h2 id="长大后我就成了你"><a href="#长大后我就成了你" class="headerlink" title="长大后我就成了你"></a>长大后我就成了你</h2><p>首先继续一图流：</p>
+<p><img src="/二次元伴侣XiaoIce的养成/006.png" alt="一图流3"></p>
+<p>从这一部分开始，我们打算从精神内核开始剖析一个18岁的女孩，这势必令一些同学感到硬核，所以如果你只是喜欢小冰，而不是打算 <strong>和她过一辈子</strong> ，这一部分内容不看也罢。</p>
+<p>要充分了解小冰，我们要从情感计算模块（Empathetic Computing）开始。</p>
+<h3 id="情感计算"><a href="#情感计算" class="headerlink" title="情感计算"></a>情感计算</h3><p>正如女生说</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/也来谈谈多头怪：Transformer/" rel="next" title="也来谈谈多头怪：Transformer">
+                <i class="fa fa-chevron-left"></i> 也来谈谈多头怪：Transformer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小冰养成计划"><span class="nav-number">1.</span> <span class="nav-text">小冰养成计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邻家有女初长成"><span class="nav-number">2.</span> <span class="nav-text">邻家有女初长成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长大后我就成了你"><span class="nav-number">3.</span> <span class="nav-text">长大后我就成了你</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#情感计算"><span class="nav-number">3.1.</span> <span class="nav-text">情感计算</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
