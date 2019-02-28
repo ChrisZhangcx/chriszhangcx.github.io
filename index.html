@@ -626,8 +626,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-01-14T16:13:02+08:00" content="2019-01-14">
-                2019-01-14
+              <time itemprop="dateUpdated" datetime="2019-02-28T20:27:52+08:00" content="2019-02-28">
+                2019-02-28
               </time>
             </span>
             
@@ -688,11 +688,11 @@
       
         
           <p>Sequence Models的第二部分，主要讲了 <code>自然语言处理</code> 与 <code>词嵌入 (Word Embedding)</code> 的内容（其实只讲了Word Embedding）。</p>
-<p>因为 最近有个面试 我在忙着进行 <del>虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的</del> 面试前的准备，所以先写一下所学到的内容概要，等结束面试以后再来更新。</p>
+<p>因为 最近有个面试 我在忙着进行 <del>虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的</del> 面试前的准备，所以这部分内容就只是简单地描述一下。</p>
 <p><strong><code>1. Word Representation</code></strong></p>
-<p>编码方式：One-Hot与Featurized Representation。</p>
-<p>Word Representation - Face Encoding.</p>
-<p>词嵌入的特征：进行归纳推理。 man$\rightarrow$woman $=$ king$\rightarrow$queen</p>
+<p>对词进行向量表示，也就是对每个单词进行特征提取。词的每一个维度可以看做是 <strong>一个不好直接解释的特征</strong> 。</p>
+<blockquote>
+<p>什么叫 <code>好解释</code> 的特征呢，比如说，我手动定义了两个维度：性别，高贵。现在有两个词 ‘皇后’ 与 ‘农妇’，那么很显然能推理出：一个好的词向量表示，两者在 <em>性别</em> 特征上的取值一定是相似的，但是在 <em>高贵</em> 特征上的取值前者会大于后者。</p></blockquote>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/Sequence-Models-2-NLP-Word-Embedding/" rel="contents">
