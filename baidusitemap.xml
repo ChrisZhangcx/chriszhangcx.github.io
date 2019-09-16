@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/python-pytorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/</loc>
+    <lastmod>2019-09-16T12:46:26.847Z</lastmod>
+  </url>  <url>
     <loc>/Sequence-Models-2-NLP-Word-Embedding/</loc>
     <lastmod>2019-02-28T12:27:52.316Z</lastmod>
   </url>  <url>
