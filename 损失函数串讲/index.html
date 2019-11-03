@@ -87,7 +87,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/损失函数串讲/01_sigmoid.png">
 <meta property="og:image" content="/损失函数串讲/02_loss_1.png">
-<meta property="og:updated_time" content="2019-11-03T08:01:22.957Z">
+<meta property="og:image" content="/损失函数串讲/03.png">
+<meta property="og:updated_time" content="2019-11-03T09:43:04.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="损失函数串讲">
 <meta name="twitter:description" content="本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。 时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 实际上是公司活儿太多了 ，为了不让blog继续这么僵下去，还是决定来更新点东西。 其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及">
@@ -297,7 +298,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-11-03T16:01:22+08:00" content="2019-11-03">
+              <time itemprop="dateUpdated" datetime="2019-11-03T17:43:04+08:00" content="2019-11-03">
                 2019-11-03
               </time>
             </span>
@@ -354,12 +355,12 @@
 </ul>
 <p>因此，在这篇blog中 <del>预计</del> 会出现的损失函数有以下几个：</p>
 <ul>
-<li>均方误差系列损失函数（MSE/RMSE/MAE/Smooth）</li>
+<li>均方误差系列损失函数（MSE / RMSE / MAE / Smooth L1）</li>
 <li>适用于多分类问题的交叉熵（Cross Entropy）</li>
 <li>适用于多标签分类问题的交叉熵（Sigmoid with CE / BCE）</li>
 <li>适用于类别不平衡问题的交叉熵（Focal Loss）</li>
 </ul>
-<p>本来想简单说一下模型的评价指标的（confusion matrix / $R^2$ 之类的东西），但是现在已经五点多了，一会儿还有IG的比赛，不知道能不能写到那时候，要不就先搁着吧。</p>
+<p>本来想简单说一下模型的评价指标的（confusion matrix / $R^2$ 之类的东西），但是现在已经五点多了，一会儿还有SKT打G2的比赛，不知道能不能写到那时候，干脆就先搁着吧。</p>
 <h2 id="小明的模型迭代之旅"><a href="#小明的模型迭代之旅" class="headerlink" title="小明的模型迭代之旅"></a>小明的模型迭代之旅</h2><h3 id="1-三天前的小明与逻辑回归"><a href="#1-三天前的小明与逻辑回归" class="headerlink" title="1. 三天前的小明与逻辑回归"></a>1. 三天前的小明与逻辑回归</h3><p>正如本科阶段的我一样，三天前的小明在听说机器学习和它的应用之后倍加振奋，似乎发现了振兴中华的秘诀。小明想，我是不是可以写一个分类的模型，来帮我判断一个女孩好不好追呢？</p>
 <p>拍了拍脑袋，小明先提出了两个可能会影响女孩是否好追的因素:</p>
 <ol>
@@ -415,7 +416,7 @@ x, & |x|<1 \\
 <p><code>正则化</code> 也是对两种loss进行魔改的一个好用的技巧。简单来说，我们在原本的loss基础上后面跟一个与模型复杂程度相关的正则项，这样能够有效防止因为模型设计得过于复杂，loss很低但在实际应用时却效果很差的过拟合现象。</p>
 <h3 id="2-一天前的小明与卷积神经网络"><a href="#2-一天前的小明与卷积神经网络" class="headerlink" title="2. 一天前的小明与卷积神经网络"></a>2. 一天前的小明与卷积神经网络</h3><p>在尝试了两天手撸模型之后，小明终于放弃了。他上网了解到scikit-learn上已经存在封装好的逻辑回归模型，只需要使用 <em>LogisticRegression</em> 来调用就好了，他顿时对实现这个模型感到兴致缺缺。另外，他也同时意识到一个很严重的问题：正如硬币落地前你就会知道你的选择一样，在标数据的时候，他已经对班级里的女孩做出了想要的筛选。 <strong>那我还要这个模型干嘛呢</strong> ，小明这样想。</p>
 <p>好追程度分类模型的构建无疾而终，小明觉得自己间接地导致了人类文明无法更进一步，心里十分愧疚，但他很快把注意力转移到了自己标注的数据上。在所有的女孩子里，小红是最不好追的那一个，同时身高与体重也十分符合自己的理想型。</p>
-<p>在机器学习引领时代潮流的今天，小明觉得自己有必要搞一个有应用价值的模型来宣示自己的学习能力与未来潜力，他看中了一个toy dataset: MNIST。因为逻辑回归在炫技层面的价值实在不值一哂，而CNN family所代表的一系列图像分类模型能够直观地展现出模型的落地价值，他决定依葫芦画瓢，搞一个图像分类模型出来。</p>
+<p>在机器学习引领时代潮流的今天，小明觉得自己有必要搞一个有应用价值的模型来向心仪的女孩宣示自己的学习能力与未来潜力，他看中了一个toy dataset: MNIST。因为逻辑回归在炫技层面的价值实在不值一哂，而CNN family所代表的一系列图像分类模型能够直观地展现出模型的落地价值，他决定依葫芦画瓢，搞一个图像分类模型出来。</p>
 <p>这次他已经充分了解到：使用pytorch或keras等深度学习框架，就能像搭乐高一样搭出一个想要的模型来。他写下以下几行：</p>
 <blockquote>
 <p>import torch.nn as nn<br>nn.Sequential(<br>&emsp;&emsp;nn.Conv2d(in_channels=3, out_channels=128, kernel_size=3)<br>&emsp;&emsp;nn.Relu(),<br>&emsp;&emsp;nn.Dropout(0.3),<br>&emsp;&emsp;nn.Linear(128, 2)<br>)</p>
@@ -429,9 +430,79 @@ x, & |x|<1 \\
 <p><del>炼金术士的生活，就是这么的枯燥，无聊，且乏味。</del></p>
 <hr>
 <p>让我们把小明丢在一旁，仔细理解一下交叉熵的理论逻辑：</p>
-<p>熵是信息论中的一个概念，用来衡量一种事物的混乱程度；在模型构建中，所对应的概念是随机变量的不确定程度。在建模过程中，我们往往需要衡量的是两个分布（正确的分布与预测得到的分布）之间的混乱程度，所以我们需要用到相对熵（relative entropy，也叫KL散度）。</p>
-<p>怎么计算一个分布的熵呢，</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>CNN：MNIST讲交叉熵，模型改进讲权重<br>模型迭代Object Detection讲Focal Loss<br>模型迭代讲BCE</p>
+<p>熵是信息论中的一个概念，用来衡量一种事物的混乱程度，也即随机变量的不确定程度。在建模过程中，我们往往需要衡量的是两个分布（正确的分布与预测得到的分布）之间的混乱程度，所以我们需要用到相对熵（relative entropy，也叫KL散度）。</p>
+<p>对于一个随机变量，我们怎么衡量它的不确定程度呢？考虑一个模型对猫狗进行分类，输入一个样本之后，它认为这个样本有40%的概率是猫，有60%的概率是狗，模型的形式化输出为：</p>
+<script type="math/tex; mode=display">
+(0.4, 0.6)</script><p>这是一个一维向量，第一个元素表征它是猫的概率，第二个元素表征它是狗的概率，我们提前保证了输出的所有概率加和为1，这才符合一个分布的现实情况（这往往通过一个softmax函数来实现）。怎么理解这个输出所带有的不确定程度呢？</p>
+<p><code>从零开始放弃建模系列公式一：信息熵</code></p>
+<script type="math/tex; mode=display">
+H(x) = -\sum_{i=1}^np(x_i)\;\text{log}p(x_i)</script><p>H(x)表示一个分布的熵，也就是这个分布的混乱程度。$p(x_i)$就是每个预测结果所对应的概率值。用这个公式来计算上述例子中的值，可以得到：</p>
+<script type="math/tex; mode=display">
+H(x) = - (0.4 \times \text{log}0.4 + 0.6\times\text{log}0.6)=0.673</script><p>即这个分布的熵值是0.673。因为熵表征的是一个分布的混乱程度，所以它的值越高说明分布越混乱，也就是预测的不确定程度越强。</p>
+<p>我们假设这个样本的实际类别是猫，也即其正确值是：</p>
+<script type="math/tex; mode=display">
+(1.0, 0.0)</script><p>这个分布的熵是：</p>
+<script type="math/tex; mode=display">
+H(x) = - (1.0 \times\text{log}1.0 + 0.0 \times \text{log}0.0) = 0</script><p>可以看到，一个正确的分布所具有的熵值为0，这符合我们对熵这个概念目前的认知。简单推广一下，即便我们的模型预测的是$n$分类，在正确值的向量中也只会有一个元素是1，因此熵值永远都是0。</p>
+<p>直觉上来说，一个最混乱的分布应该是所有的类别拥有相同的概率，即：</p>
+<script type="math/tex; mode=display">
+(0.5, 0.5)</script><p>其熵值为：</p>
+<script type="math/tex; mode=display">
+H(x) = - (0.5 \times\text{log}0.5 + 0.5\times\text{log}0.5)=0.693</script><p>也就是说这个分布最混乱的情况下，熵的上限是0.693（值得注意的是，根据输出类别$n$的不同，这个值上限是$-\text{log}\frac{1}{n}$）。而我们之前预测的信息熵值为0.673，可以看到已经无限接近于这个上限了，这说明这个输出的不确定程度很高，很难作为真正的参考。显而易见的，如果我们以熵来衡量一个分布，我们的建模目标应当是尽可能最小化模型预测结果的熵值。</p>
+<p>以上我们了解了如何衡量一个分布的不确定程度，那应该如何衡量两个分布之间的差距，以作为我们的损失函数呢？这里需要引入 <strong>相对熵</strong> 的概念。</p>
+<p><code>从零开始放弃建模系列公式二：相对熵/KL散度</code></p>
+<p>以下是相对熵的形式化表示：</p>
+<script type="math/tex; mode=display">
+D_{KL}(p||q)=\sum_{i=1}^N[p(x_i)\;\text{log}p(x_i)-p(x_i)\;\text{log}q(x_i)]</script><p>这里需要明确的一点是，$p(x)$表示真实事件的概率分布，而$q(x)$表示模型预测得到的概率分布。</p>
+<p>我们把它按加和情况展开：</p>
+<script type="math/tex; mode=display">
+D_{KL}(p||q)=\sum_{i=1}^N[p(x_i)\;\text{log}p(x_i)]-\sum_{i=1}^N[p(x_i)\;\text{log}q(x_i)]</script><p>根据 <code>从零开始放弃建模系列公式一</code>，这个展开项第一项就是真实分布的信息熵$H(p)$（的负数），也就是定值0（只有在多分类问题中才是0，在其他情况下会是一个其他定值）。由此，在学习过程中我们可以忽略这一项，因为相对熵的值只取决于后面一项：$-\sum_{i=1}^N[p(x_i)\;\text{log}q(x_i)]$。而这一项，就是大家常说的 <strong>交叉熵</strong> 。</p>
+<p>最后给出交叉熵的形式化公式：</p>
+<p><code>从零开始放弃建模系列公式三：交叉熵</code></p>
+<script type="math/tex; mode=display">
+\text{Cross Entropy}=-\sum_{i=1}^Np(x_i)\;\text{log}q(x_i)</script><p>显而易见，如果我们的预测结果$q(x)$与数据的真实分布$p(x)$完全一致，那这个式子就会退化为数据的真实分布，也就是0。而如果是我们上面例子中的情况，即40%猫、60%狗的交叉熵值，则有：</p>
+<script type="math/tex; mode=display">
+\text{Cross Entropy} = -(1.0\times\text{log}0.4+0.0\times\text{log}0.6) = -\text{log}0.4=0.916</script><p><del>实在是有点大。</del></p>
+<p>另外，也可以观察出，如果是多分类的问题中，其实只有真实值那一个元素所在的输出需要被考虑，因为其他项的系数都是0.0。不过，正如上面所说，我们已经把所有的概率加和控制为1，如果真实值项的概率上升，其他项的概率自然就会下降，所以也不足多虑。</p>
+<h3 id="3-今天的小明与茶杯犬"><a href="#3-今天的小明与茶杯犬" class="headerlink" title="3. 今天的小明与茶杯犬"></a>3. 今天的小明与茶杯犬</h3><p>小明在自己喜欢的女孩面前丢人现眼之后跑回家里，痛定思痛，发现自己模型准确度不高的原因在于训练样本太少，这也正是难倒无数调参英雄汉的难题：标注数据的缺失。在训练自己的模型时，小明拍遍了整条街道的猫猫狗狗，但似乎对于茶杯犬这种形状特意的犬种辨析度不够——因为遍寻整个街道，只有小红家有茶杯犬。</p>
+<p>只拍下了茶杯犬随地<em>*</em>时候的照片这一问题，也对模型学习到正确的样本特征提出了挑战。</p>
+<p>数据样本少，小明可以使用数据增强，但是对茶杯犬这种形似噪音的样本该怎么学习呢？如何修改loss，才能使这种噪音的样本权重更大呢？求助Bing，小明知道了Focal Loss。</p>
+<hr>
+<p>Focal Loss的提出并不旨在直接解决噪音样本的问题，但是他确实在某种程度上起到了类似MSE一样的 <strong>放大噪音样本所产生的损失</strong> 的作用，而它达到这个目的的方式是 <strong>缩小分类正确的样本所产生的损失</strong> 。让我们详细了解一下这个损失函数的提出背景。</p>
+<p>在Object Detection任务中，一个一步到位（one-stage）的目标检测模型所做的工作是：首先在一张图片中画出很多的方框，这些方框可以根据某种规则或者特征指导下画出很多个，随后我们判断这些方框中，哪些包含了我们需要识别的目标，把包含了识别目标的框拿出来，作为模型预测的目标所在的位置。</p>
+<p>用下面的图片来描述这一任务：</p>
+<p><img src="/损失函数串讲/03.png" alt="One-stage Object Detection"></p>
+<p>首先我们在图中标出了包括红黄两种颜色在内的许多方框（bounding box），注意黄色方框其实有很多个，图中只是给出了少量作为举例。</p>
+<p>在大量的bbox中，只有红色所在的是正确的目标，大量黄色的框都是错误的目标。但是值得注意的是，图中左边两个黄色的框是介于背景图与猫之中的，这两个框比较难以识别，在学习过程中需要重点关注这些框。</p>
+<p>然而，在所有的candidates中，占绝大多数数量（超过99.9%）的框都是像右边的黄色框一样，框出了毫无意义的背景图，这种框在学习过程中必须被标注为‘没检测到目标’。</p>
+<p>值得庆幸的是，这样的框确实很容易被模型识别为无意义的目标（即负样本），因为它和真实样本之间的差别实在是太大了。但是问题是：<strong>这样的框实在太多了！</strong> 我们可以直观上理解：即使这样样本被判断为负样本，它仍会提供非常小的损失值（因为模型不可能百分之百的判断这个样本是负样本，只能无限趋近于这个结论），而这么小的损失结合很大的基数，它仍会在整个损失里占到相当大的一部分，甚至影响模型的效果。</p>
+<p>出于以上的考虑，我们提出这样的期望：对于一个已经被很笃定判断为一个类别的值，尽管它还没有完全到1，但是我们还是应该降低它所产生的损失值；确切的说，我们希望一个样本的分类结果越趋向于1（同时它确实被分对了）的话，这个样本的损失越小越好。</p>
+<p>Focal Loss的提出就是为了解决大量负样本影响整体损失的问题。</p>
+<p>我们给出Focal Loss的形式化描述：<code>从零开始放弃建模系列公式四：Focal Loss</code></p>
+<script type="math/tex; mode=display">
+\text{Focal Loss} = -\alpha (1-p_i)^\gamma \;\text{log}(p_i)</script><p>为了方便比较，也直接给出刚才所提到的交叉熵公式：</p>
+<script type="math/tex; mode=display">
+\text{Cross Entropy}=-\text{log}(p_i)</script><p>这样就非常好理解Focal Loss与Cross Entropy之间的区别了：它只是在交叉熵损失前面加了两个系数$\alpha$和$\gamma$。我们接下来来理解这两个系数是如何达到上文所说的目的的：</p>
+<ul>
+<li>对于 <strong>$\alpha$</strong> ，这仅仅只是一个平滑系数，它控制了整个损失应该更突出还是更平滑，也即在图中这个损失的曲线是越陡峭还是越平缓。<em>我对这个系数的理解是用来缓冲后面那个系数太过强烈的控制作用的。</em></li>
+<li><strong>$\gamma$</strong> 所在项才是达到目的最重要的项。首先，$(1-p_i)$已经完全达到了上文所说的缩小正确样本损失的目的：一个被分对的样本，它的$p_i$值应当趋近于1，因此$(1-p_i)$这一系数项就能把它的损失给缩小。这个值越趋向于1，这个系数就越小，这个样本所产生的损失也就越小。——但是这样还不够：可能这样设置的系数数值上不太合适当前任务，所以我们需要用一个乘方系数$\gamma$来控制这个系数的大小。比如负样本太多的话，我们可以设置乘方系数为2，由此这个系数会更小，对整体造成更小的损失。</li>
+<li>再反过来看 <strong>$\alpha$</strong>，它和$\gamma$一起影响了前面的系数，而对于较大的$\gamma$，我们需要把$\alpha$调小，来使得整体的损失曲线更加平滑。</li>
+</ul>
+<blockquote>
+<p>BTW, Focal Loss的paper中，作者自己调出来的比较好的设置是$\alpha=0.25,\;\gamma=2.0$。</p>
+</blockquote>
+<hr>
+<p>Focal Loss被用在拥有大量负样本的情况下，但是根据上述的分析，它同样可以被用在我们需要把一些被分得很对的样本的损失调低，从而让模型更好地学习其他比较难以学习的样本的情况下。</p>
+<p>小明就使用了这个loss好好调教了一下茶杯犬分类模型，并且选择性调大了狗这一类的损失（在封装好的Cross Entropy Loss中可以通过传入weight来控制每一类的样本的损失），以更好地识别出茶杯犬。而就在这时，他再次意识到了一个很严肃 <del>且关乎炼金术士的操守</del> 的问题：如果我只想在小红 <del>甲方</del> 面前展现更好的模型效果，把茶杯犬 <del>某些样本</del> 分对，我直接拿这个数据来训练，直接整个过拟合的模型出来，岂不是万无一失 <del>蒙混过关</del>？</p>
+<h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p>从上面的故事中，我们可以得到的结论是：小明是一个不合格的调参工程师 <del>但很真实地反映了我的机器学习入门历程</del> 。</p>
+<p>此外，值得一提的是，Cross Entropy也经常被用于多标签模型的学习中。上文中所说的Object Detection任务就是一个典型的多标签任务：因为一张图片中往往不只有猫，有时也有狗，这样我们的正确标签可能是$(1.0, 1.0)$，这种情况下，我们需要做以下改动：</p>
+<ul>
+<li>首先，我们要取消形似softmax的归一化层，因为这些类不是互斥的，让它们的概率加和为1不存在任何意义；</li>
+<li>其次，我们仍要把每一类放缩到0到1之间，因为只有这样的值才具备概率的意义；</li>
+<li>最后，损失函数应当要把这些损失值全部加起来，而不是像上文一样只考虑正确类别的概率值（事实上Cross Entropy本身就支持这个操作）。</li>
+</ul>
+<p>由逻辑回归模型得到的启发，我们可以把拼接在最后的分类结果后面的softmax层取消（在目前大多数的深度学习框架中，softmax已经被集成在Cross Entropy系列的损失函数中 - 如上文中的 <em>nn.CrossEntropy()</em> ，在使用这些损失函数时，一定要注意是否里面有那么一个softmax），随后把每类的概率分别过一个sigmoid层，放缩到01之间，最后使用一个阈值（比如0.5）来判断分类模型所属出的这一类的值应当是0还是1。</p>
+<p>在实际的框架中，一般使用sigmoid+BCELoss来实现这个结果。</p>
 
       
     </div>
@@ -621,7 +692,7 @@ x, & |x|<1 \\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一天前的小明与卷积神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一天前的小明与卷积神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一天前的小明与卷积神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一天前的小明与卷积神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-今天的小明与茶杯犬"><span class="nav-number">2.3.</span> <span class="nav-text">3. 今天的小明与茶杯犬</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Appendix"><span class="nav-number">3.</span> <span class="nav-text">Appendix</span></a></li></ol></div>
             
 
           </div>
