@@ -250,6 +250,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Crash-Paper-SMN-Sequential-Matching-Network/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Crash-Paper-SMN-Sequential-Matching-Network/" itemprop="url">Crash Paper: SMN-Sequential Matching Network</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-09T14:18:51+08:00">
+                2018-12-09
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2018-12-09T19:47:24+08:00" content="2018-12-09">
+                2018-12-09
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots"><a href="#Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots" class="headerlink" title="Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots"></a>Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots</h1><h2 id="乱七八糟的序"><a href="#乱七八糟的序" class="headerlink" title="乱七八糟的序"></a>乱七八糟的序</h2><p>BDP课上组长大人布置下来的任务，是要研读这篇论文（因为名字太长了我写在了一级标题里面，让所有人都能第一时间看到它，下面统一使用SMN来指代论文中提出的模型）。我是属于 <del>牵着不走，打着倒退</del> 没人给出明确的任务目标就很难有动力主动学习的那种人，可能是高中时期延续下来的陋习，所以如果要给这篇post一个一级作者，那应该写 <em>社会我强哥</em> 才是。</p>
+<p>回到正题，首先来简单说一下多轮对话现在的研究态势吧。</p>
+<blockquote>
+<p>目前常用的对话建模方式有检索式、生成式以及两者融合的方式。<br>顾名思义，<strong>检索式</strong>就是对于一个提出的问题，我从当前已经有的资料中搜索出这个问题可能匹配的答案，候选答案可能有多个，但是在对话中最终回复的答案只能是一个，所以需要找到一种最优的算法来对这些候选答案进行筛选，选出可能性最大的那一个。<br><strong>生成式</strong>模型是指我先把目前所有已知的知识用来训练出一个模型，然后不管你说什么，我都用这个模型来解读你的问题，并用模型的输出来回答。<br>最后，<strong>检索与生成相结合的方法</strong>就是把前两者糅合起来，正也因此可以玩得花里胡哨，比如用检索模型获得的候选答案们，我训练一个生成模型来对这些答案排个序，或者用生成模型生成的答案放在检索模型给出的候选答案中，一起参与 <em>谁是大明星</em> 的角逐，又或者对于一个检索式模型获得的答案，我用生成式模型对它进行改进，等等等等。</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Crash-Paper-SMN-Sequential-Matching-Network/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/重修数据结构：线段树/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -942,7 +1106,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -964,7 +1128,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
