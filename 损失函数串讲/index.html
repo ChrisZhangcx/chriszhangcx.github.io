@@ -87,7 +87,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/损失函数串讲/01_sigmoid.png">
 <meta property="og:image" content="/损失函数串讲/02_loss_1.png">
-<meta property="og:updated_time" content="2019-11-03T07:29:51.168Z">
+<meta property="og:updated_time" content="2019-11-03T08:01:22.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="损失函数串讲">
 <meta name="twitter:description" content="本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。 时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 实际上是公司活儿太多了 ，为了不让blog继续这么僵下去，还是决定来更新点东西。 其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及">
@@ -297,7 +297,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-11-03T15:29:51+08:00" content="2019-11-03">
+              <time itemprop="dateUpdated" datetime="2019-11-03T16:01:22+08:00" content="2019-11-03">
                 2019-11-03
               </time>
             </span>
@@ -367,7 +367,7 @@
 <li>体重</li>
 </ol>
 <p>这个模型应该输入一个女孩的身高$x_1$与体重$x_2$，然后输出这个女孩是不是容易追求$y$。这是小明的建模目标。</p>
-<p>有了自变量与因变量，小明马上想到了数学老师昨天刚教的二元一次方程：如果我自己定义两个系数$\alpha_1$与$\alpha_2$，构建一个方程$y=\alpha_1x_1+\alpha_2x_2+\beta$，如果y的输出值大于0，我就认为这个女孩比较好追，否则就不好追，这不就是一个最简单的分类模型吗？这个模型简单又使用，可不能告诉别人。</p>
+<p>有了自变量与因变量，小明马上想到了数学老师昨天刚教的二元一次方程：如果我自己定义两个系数$\alpha_1$与$\alpha_2$，构建一个方程$y=\alpha_1x_1+\alpha_2x_2+\beta$，如果y的输出值大于0，我就认为这个女孩比较好追，否则就不好追，这不就是一个最简单的分类模型吗？这个模型简单又实用，可不能告诉别人。</p>
 <blockquote>
 <p>BTW, 我没记错的话，这个模型应该叫 <em>线性回归</em> 。</p>
 </blockquote>
@@ -413,9 +413,24 @@ x, & |x|<1 \\
 -1, & x<-1
 \end{cases}</script><p>这个损失函数尽管被称为Smooth L1，实际上更像是对L1和L2的结合：在正负1区间内，使用L2的形式，使得导数平滑；在大于1区间，使用L1的形式，使得损失不至于因为少数离群点而呈现出指数爆炸的形式。</p>
 <p><code>正则化</code> 也是对两种loss进行魔改的一个好用的技巧。简单来说，我们在原本的loss基础上后面跟一个与模型复杂程度相关的正则项，这样能够有效防止因为模型设计得过于复杂，loss很低但在实际应用时却效果很差的过拟合现象。</p>
-<h3 id="2-一天前的小明与图像分类"><a href="#2-一天前的小明与图像分类" class="headerlink" title="2. 一天前的小明与图像分类"></a>2. 一天前的小明与图像分类</h3><p>在尝试了两天手撸模型之后，小明终于放弃了。他上网了解到scikit-learn上已经存在封装好的逻辑回归模型，只需要使用 <em>LogisticRegression</em> 来调用就好了，他顿时对实现这个模型感到兴致缺缺。另外，他也同时意识到一个很严重的问题：正如硬币落地前你就会知道你的选择一样，在标数据的时候，他已经对班级里的女孩做出了想要的筛选。 <strong>那我还要这个模型干嘛呢</strong> ，小明这样想。</p>
+<h3 id="2-一天前的小明与卷积神经网络"><a href="#2-一天前的小明与卷积神经网络" class="headerlink" title="2. 一天前的小明与卷积神经网络"></a>2. 一天前的小明与卷积神经网络</h3><p>在尝试了两天手撸模型之后，小明终于放弃了。他上网了解到scikit-learn上已经存在封装好的逻辑回归模型，只需要使用 <em>LogisticRegression</em> 来调用就好了，他顿时对实现这个模型感到兴致缺缺。另外，他也同时意识到一个很严重的问题：正如硬币落地前你就会知道你的选择一样，在标数据的时候，他已经对班级里的女孩做出了想要的筛选。 <strong>那我还要这个模型干嘛呢</strong> ，小明这样想。</p>
 <p>好追程度分类模型的构建无疾而终，小明觉得自己间接地导致了人类文明无法更进一步，心里十分愧疚，但他很快把注意力转移到了自己标注的数据上。在所有的女孩子里，小红是最不好追的那一个，同时身高与体重也十分符合自己的理想型。</p>
 <p>在机器学习引领时代潮流的今天，小明觉得自己有必要搞一个有应用价值的模型来宣示自己的学习能力与未来潜力，他看中了一个toy dataset: MNIST。因为逻辑回归在炫技层面的价值实在不值一哂，而CNN family所代表的一系列图像分类模型能够直观地展现出模型的落地价值，他决定依葫芦画瓢，搞一个图像分类模型出来。</p>
+<p>这次他已经充分了解到：使用pytorch或keras等深度学习框架，就能像搭乐高一样搭出一个想要的模型来。他写下以下几行：</p>
+<blockquote>
+<p>import torch.nn as nn<br>nn.Sequential(<br>&emsp;&emsp;nn.Conv2d(in_channels=3, out_channels=128, kernel_size=3)<br>&emsp;&emsp;nn.Relu(),<br>&emsp;&emsp;nn.Dropout(0.3),<br>&emsp;&emsp;nn.Linear(128, 2)<br>)</p>
+</blockquote>
+<p>乐高真好玩，他想。</p>
+<p>这个模型旨在输入一个$32\times32\times3$的小图像，模型将会输出这个模型属于猫狗之间的哪个类。</p>
+<p>又到了选择损失函数的时候，这次小明选择的是 <strong>Cross Entropy Loss</strong> ，中文称其为 <strong>交叉熵</strong> 损失。作为一个损失函数，交叉熵(along with Adam optimizer)是最不容易出问题的那种：它可以在多分类问题中被使用，也可以在多标签问题中使用，在特殊情况下也能够手动指定每个类别对最终损失所应该贡献的权重。</p>
+<blockquote>
+<p>import torch.nn as nn<br>loss = nn.CrossEntropyLoss()</p>
+</blockquote>
+<p><del>炼金术士的生活，就是这么的枯燥，无聊，且乏味。</del></p>
+<hr>
+<p>让我们把小明丢在一旁，仔细理解一下交叉熵的理论逻辑：</p>
+<p>熵是信息论中的一个概念，用来衡量一种事物的混乱程度；在模型构建中，所对应的概念是随机变量的不确定程度。在建模过程中，我们往往需要衡量的是两个分布（正确的分布与预测得到的分布）之间的混乱程度，所以我们需要用到相对熵（relative entropy，也叫KL散度）。</p>
+<p>怎么计算一个分布的熵呢，</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>CNN：MNIST讲交叉熵，模型改进讲权重<br>模型迭代Object Detection讲Focal Loss<br>模型迭代讲BCE</p>
 
       
@@ -606,7 +621,7 @@ x, & |x|<1 \\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一天前的小明与图像分类"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一天前的小明与图像分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一天前的小明与卷积神经网络"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一天前的小明与卷积神经网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
