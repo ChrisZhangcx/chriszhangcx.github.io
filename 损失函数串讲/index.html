@@ -86,7 +86,8 @@
 <meta property="og:description" content="本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。 时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 实际上是公司活儿太多了 ，为了不让blog继续这么僵下去，还是决定来更新点东西。 其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/损失函数串讲/01_sigmoid.png">
-<meta property="og:updated_time" content="2019-11-03T06:34:26.512Z">
+<meta property="og:image" content="/损失函数串讲/02_loss_1.png">
+<meta property="og:updated_time" content="2019-11-03T07:29:51.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="损失函数串讲">
 <meta name="twitter:description" content="本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。 时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 实际上是公司活儿太多了 ，为了不让blog继续这么僵下去，还是决定来更新点东西。 其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及">
@@ -296,7 +297,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2019-11-03T14:34:26+08:00" content="2019-11-03">
+              <time itemprop="dateUpdated" datetime="2019-11-03T15:29:51+08:00" content="2019-11-03">
                 2019-11-03
               </time>
             </span>
@@ -336,7 +337,7 @@
       
         <p>本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。</p>
 <p>时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 <del>实际上是公司活儿太多了</del> ，为了不让blog继续这么僵下去，还是决定来更新点东西。</p>
-<p>其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及其decode的理解，一些BERT调参心得，或者Nested NER或GNN方面的survey。之所以确定写这个，一个是好久没碰技术型blog了，一时甚至不知道怎么来写，另一方面纯粹是因为我发现每次要用到交叉熵的时候，我都需要跑到别人博客里重新看一遍这到底是什么玩意儿，忘性太大。后来我一想，反正都要看，那我不如自己写个blog，自产自销搞个闭环，增加自己的点击量呢。</p>
+<p>其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及其decode的理解，一些BERT调参心得，或者Nested NER或GNN方面的survey。之所以确定写这个，一个是好久没碰技术型blog了，一时甚至不知道怎么来写，另一方面纯粹是因为我发现每次要用到交叉熵的时候，都需要跑到别人博客里重新看一遍这到底是什么玩意儿，忘性太大。后来我一想，反正都要看，那我不如自己写个blog，自产自销搞个闭环，增加自己的点击量呢。</p>
 <p>是为序。</p>
 <a id="more"></a>
 <h2 id="损失函数及其意义"><a href="#损失函数及其意义" class="headerlink" title="损失函数及其意义"></a>损失函数及其意义</h2><p>损失函数，顾名思义就是衡量损失的函数。比如小明家里进了小偷，小明报了警，警察来了以后小明就抹着眼泪和警察说哪些东西不见了，价值是多少。这时候警察脑子里就有个损失函数：电脑没了+5000，电视没了+3000，拖鞋没了+30，肥皂没了+8，最后小明的损失就是8838。在这个参照下，损失函数的<strong>计算逻辑</strong>是加和，损失的<strong>参照对象</strong>是被偷之前的小明。</p>
@@ -353,11 +354,10 @@
 </ul>
 <p>因此，在这篇blog中 <del>预计</del> 会出现的损失函数有以下几个：</p>
 <ul>
-<li>均方误差系列损失函数（MSE/RMSE/MAE）</li>
+<li>均方误差系列损失函数（MSE/RMSE/MAE/Smooth）</li>
 <li>适用于多分类问题的交叉熵（Cross Entropy）</li>
 <li>适用于多标签分类问题的交叉熵（Sigmoid with CE / BCE）</li>
 <li>适用于类别不平衡问题的交叉熵（Focal Loss）</li>
-<li>用于回归问题的$L1, L2$与smooth</li>
 </ul>
 <p>本来想简单说一下模型的评价指标的（confusion matrix / $R^2$ 之类的东西），但是现在已经五点多了，一会儿还有IG的比赛，不知道能不能写到那时候，要不就先搁着吧。</p>
 <h2 id="小明的模型迭代之旅"><a href="#小明的模型迭代之旅" class="headerlink" title="小明的模型迭代之旅"></a>小明的模型迭代之旅</h2><h3 id="1-三天前的小明与逻辑回归"><a href="#1-三天前的小明与逻辑回归" class="headerlink" title="1. 三天前的小明与逻辑回归"></a>1. 三天前的小明与逻辑回归</h3><p>正如本科阶段的我一样，三天前的小明在听说机器学习和它的应用之后倍加振奋，似乎发现了振兴中华的秘诀。小明想，我是不是可以写一个分类的模型，来帮我判断一个女孩好不好追呢？</p>
@@ -389,7 +389,34 @@ MSE(\hat{Y}, Y) = \frac{1}{m}\sum_{i=1}^m(\hat{y_i}-y_i)^2</script><p>两者的�
 <li>如果模型的预测值与正确值不一致，并且 <strong>相差值超过了1</strong> ，则这个差值在MSE中会被进一步放大，极端而言，如果一个离群点与正确值相差很远（当然距离肯定超过了1），即便最终的损失值取了均值，这个值仍会成为其中主要的损失来源。</li>
 </ul>
 <p>在此分析基础上，我们可以得出一个结论：如果在模型训练过程中，更期望它能尝试把所有的点尽量分对，那可以选择MSE损失；而如果实际业务中允许忽略一部分离群点，不要求对整体的准确度，则可以选择MAE损失。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>逻辑回归：MSE及其系列<br>CNN：MNIST讲交叉熵，模型改进讲权重<br>模型迭代Object Detection讲Focal Loss<br>模型迭代讲BCE<br>回归内容补充</p>
+<p>我们还能从另一个角度比较一下这两个函数：是否容易求导及求导后的梯度。这里部分使用了来自 <a href="https://zhuanlan.zhihu.com/p/45790146" target="_blank" rel="noopener">知乎文章</a> 此处的图片，以便直接说明（如有侵权，我会马上删掉）。</p>
+<p>给出预测值变化下的损失变化图：</p>
+<p><img src="/损失函数串讲/02_loss_1.png" alt="Sigmoid"></p>
+<p>左边是MAE的预测值和误差值的变化关系，右边是MSE的变化。容易观察到，在学习过程中，MAE的导数是始终不变的，即在学习（梯度下降）过程中，无论预测值距离正确值的差距多大，每次的下降方向不会改变。如果我们选择一个固定的学习率，在预测值与正确值比较接近的情况下，很可能会发生振荡。而右图的MSE在预测值趋近与正确值时，它的方向也会趋近平缓，这样的MSE天然具有模型学习上的亲近性。而前者则需要设置动态的学习率。</p>
+<p>最后也简单提一句 <strong>RMSE</strong> (均方根误差)的公式及使用：</p>
+<script type="math/tex; mode=display">
+RMSE(\hat{Y},Y) = \sqrt{\frac{1}{m}\sum_{i=1}^m(\hat{y_i}-y_i)^2}</script><p>和MSE相比，它在公式上只多了一个全局的根号，在名称上也只多了一个根号(R-ROOT)。在使用上，RMSE能够完全保留误差所具有的意义，在需要理解模型误差含义时能够被很好地使用。在好追程度模型上这个意义并不明晰，我们假设小明想要训练一个模型预测人的生存年龄。如果使用了RMSE，小明可以对小红说：我的模型的平均误差现在是6.3年；而如果使用MSE，小明对小红说：我的模型现在平均误差是39.69平方年，小红一想什么玩意儿，就不和小明继续玩了。</p>
+<hr>
+<p>在图像处理领域也有一系列其他损失函数的提出，它们或多或少解决了上面所提到部分问题，我们走马观花一下：</p>
+<p><code>FastRCNN</code> 中使用的是 <strong>Smooth L1-loss</strong> 。与一般的L1-loss（MAE）而言，它对这个损失函数做了一个平滑操作，以使它在0点处的导数更加平滑，不会影响模型的收敛效果：</p>
+<script type="math/tex; mode=display">
+Smooth\;\;L_1 =
+\begin{cases}
+0.5x^2, & |x|<1 \\
+|x| - 0.5, & x<-1\; or x>1
+\end{cases}</script><p>求导得到：</p>
+<script type="math/tex; mode=display">
+Smooth\;\;L_1' =
+\begin{cases}
+x, & |x|<1 \\
+1, & x>1 \\
+-1, & x<-1
+\end{cases}</script><p>这个损失函数尽管被称为Smooth L1，实际上更像是对L1和L2的结合：在正负1区间内，使用L2的形式，使得导数平滑；在大于1区间，使用L1的形式，使得损失不至于因为少数离群点而呈现出指数爆炸的形式。</p>
+<p><code>正则化</code> 也是对两种loss进行魔改的一个好用的技巧。简单来说，我们在原本的loss基础上后面跟一个与模型复杂程度相关的正则项，这样能够有效防止因为模型设计得过于复杂，loss很低但在实际应用时却效果很差的过拟合现象。</p>
+<h3 id="2-一天前的小明与图像分类"><a href="#2-一天前的小明与图像分类" class="headerlink" title="2. 一天前的小明与图像分类"></a>2. 一天前的小明与图像分类</h3><p>在尝试了两天手撸模型之后，小明终于放弃了。他上网了解到scikit-learn上已经存在封装好的逻辑回归模型，只需要使用 <em>LogisticRegression</em> 来调用就好了，他顿时对实现这个模型感到兴致缺缺。另外，他也同时意识到一个很严重的问题：正如硬币落地前你就会知道你的选择一样，在标数据的时候，他已经对班级里的女孩做出了想要的筛选。 <strong>那我还要这个模型干嘛呢</strong> ，小明这样想。</p>
+<p>好追程度分类模型的构建无疾而终，小明觉得自己间接地导致了人类文明无法更进一步，心里十分愧疚，但他很快把注意力转移到了自己标注的数据上。在所有的女孩子里，小红是最不好追的那一个，同时身高与体重也十分符合自己的理想型。</p>
+<p>在机器学习引领时代潮流的今天，小明觉得自己有必要搞一个有应用价值的模型来宣示自己的学习能力与未来潜力，他看中了一个toy dataset: MNIST。因为逻辑回归在炫技层面的价值实在不值一哂，而CNN family所代表的一系列图像分类模型能够直观地展现出模型的落地价值，他决定依葫芦画瓢，搞一个图像分类模型出来。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>CNN：MNIST讲交叉熵，模型改进讲权重<br>模型迭代Object Detection讲Focal Loss<br>模型迭代讲BCE</p>
 
       
     </div>
@@ -579,7 +606,7 @@ MSE(\hat{Y}, Y) = \frac{1}{m}\sum_{i=1}^m(\hat{y_i}-y_i)^2</script><p>两者的�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数及其意义"><span class="nav-number">1.</span> <span class="nav-text">损失函数及其意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小明的模型迭代之旅"><span class="nav-number">2.</span> <span class="nav-text">小明的模型迭代之旅</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-三天前的小明与逻辑回归"><span class="nav-number">2.1.</span> <span class="nav-text">1. 三天前的小明与逻辑回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一天前的小明与图像分类"><span class="nav-number">2.2.</span> <span class="nav-text">2. 一天前的小明与图像分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
