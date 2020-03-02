@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="NLP,">
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="Is life always this hard, or is it just when you&apos;re a kid?">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chris Zhang">
-<meta property="og:url" content="/archives/2019/09/index.html">
+<meta name="description" content="主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 外部信息 ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。 你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训">
+<meta name="keywords" content="NLP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈Knowledge-Injected BERTs">
+<meta property="og:url" content="/浅谈Knowledge-Injected-BERTs/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta property="og:description" content="主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 外部信息 ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。 你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-02T06:36:38.158Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chris Zhang">
-<meta name="twitter:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta name="twitter:title" content="浅谈Knowledge-Injected BERTs">
+<meta name="twitter:description" content="主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 外部信息 ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。 你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/archives/2019/09/">
+  <link rel="canonical" href="/浅谈Knowledge-Injected-BERTs/">
 
 
 
 
 
-  <title>所有文章 | Chris Zhang</title>
+  <title>浅谈Knowledge-Injected BERTs | Chris Zhang</title>
   
 
 
@@ -141,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -235,107 +237,188 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 22 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/浅谈Knowledge-Injected-BERTs/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/Dataset-for-AI-Practice/" itemprop="url">
-              
-                <span itemprop="name">Dataset for AI Practice</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">浅谈Knowledge-Injected BERTs</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-28T12:07:33+08:00" content="2019-09-28">
-          09-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2020-03-02T14:26:55+08:00">
+                2020-03-02
+              </time>
+            
 
-    </header>
-  </article>
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
 
+              <time itemprop="dateUpdated" datetime="2020-03-02T14:36:38+08:00" content="2020-03-02">
+                2020-03-02
+              </time>
+            </span>
+            
 
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/python-pytorch安装指南/" itemprop="url">
-              
-                <span itemprop="name">python & pytorch 安装指南</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-09-16T20:42:21+08:00" content="2019-09-16">
-          09-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <p>主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 <code>外部信息</code> ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。</p>
+<p>你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训练过程，迭代学习7个任务等奇妙的方式来实现这一目的。</p>
+<p>本文首发在知乎文章，因为 <strong>知乎</strong> 和 <strong>Hexo</strong> 的markdown格式有冲突的地方，直接拷过来排版属实不能看，所以请移步下方链接：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/102278228" target="_blank" rel="noopener">浅谈：Knowledge-injected BERTs</a></p>
+<p>本文也被收录至知乎 <code>Paperweekly</code> 专栏及同名公众号中。</p>
+<a id="more"></a>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/损失函数串讲/" rel="next" title="损失函数串讲">
+                <i class="fa fa-chevron-left"></i> 损失函数串讲
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -343,6 +426,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -574,6 +664,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
