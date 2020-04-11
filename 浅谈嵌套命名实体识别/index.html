@@ -90,7 +90,7 @@
 <meta property="og:image" content="/浅谈嵌套命名实体识别/311.png">
 <meta property="og:image" content="/浅谈嵌套命名实体识别/312.png">
 <meta property="og:image" content="/浅谈嵌套命名实体识别/313.png">
-<meta property="og:updated_time" content="2020-04-11T08:30:53.991Z">
+<meta property="og:updated_time" content="2020-04-11T08:32:42.220Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈嵌套命名实体识别">
 <meta name="twitter:description" content="1. 序命名实体识别（Named Entity Recognition, 下称NER）任务，主要目的是从一段话中抽取出其中可能为实体的所有元素。比如：      &quot;Hi Siri, 今天北京天气怎么样？&quot;   如果下游任务要求我们从其中抽取出地点，那我们期望 北京 能被识别成Location，如果我们希望从中抽取的产品名称，那么 Siri 应该被标记成Product——换言之，能从句子中抽出什么实">
@@ -300,7 +300,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2020-04-11T16:30:53+08:00" content="2020-04-11">
+              <time itemprop="dateUpdated" datetime="2020-04-11T16:32:42+08:00" content="2020-04-11">
                 2020-04-11
               </time>
             </span>
@@ -369,6 +369,7 @@
 <p>NER在很多下游任务中都是非常重要的一环。比如在电商行业，我们可能需要从用户的查询中提取出品牌或商品，来针对性地给用户返回内容。金主爸爸可能也希望用户在查指定品牌的时候，将一些商品放在第一位。在任务型人机对话方面，正如上面所说，一个合格的Chatbot需要能够准确地识别时间、地点、事件等元素以回答相关问题或安排日程，同时做到不偷听用户的日常对话。</p>
 <p>而<strong>嵌套NER</strong>，顾名思义，就是识别的实体中可能会存在嵌套的情况。比如 <code>北京大学</code> 不仅是一个组织，同时 <code>北京</code> 也是一个地点；<code>雅诗兰黛小棕瓶</code> 是一个产品，同时 <code>雅诗兰黛</code> 是一个品牌。</p>
 <p>准确地识别嵌套内容有什么作用呢？简单来讲，如果一个模型能够识别出 <code>北京大学</code> 是一个组织，它倾向于将所有出现的 <code>北京大学</code> 都标记成组织。但如果它能够在识别前者的同时将 <code>北京</code> 标记成地点，我们就认为它有能力将所有 <code>[地点]大学</code> 的模式都识别出来，因为后者的角度，模型学到的是一种pattern，而非记住了一种具体情况。此外，提取出来的额外信息也能作为辅助特征，增强其他任务的效果。</p>
+<a id="more"></a>
 <p>具体地，我会介绍以下几部分内容：</p>
 <ul>
 <li>当前普遍使用的传统NER解决方案；</li>

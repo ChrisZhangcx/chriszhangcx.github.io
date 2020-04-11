@@ -295,7 +295,7 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2020-04-11T16:30:53+08:00" content="2020-04-11">
+              <time itemprop="dateUpdated" datetime="2020-04-11T16:32:42+08:00" content="2020-04-11">
                 2020-04-11
               </time>
             </span>
@@ -356,8 +356,7 @@
 
       
         
-          
-            <h2 id="1-序"><a href="#1-序" class="headerlink" title="1. 序"></a>1. 序</h2><p><strong>命名实体识别（Named Entity Recognition, 下称NER）</strong>任务，主要目的是从一段话中抽取出其中可能为<strong>实体</strong>的所有元素。比如：</p>
+          <h2 id="1-序"><a href="#1-序" class="headerlink" title="1. 序"></a>1. 序</h2><p><strong>命名实体识别（Named Entity Recognition, 下称NER）</strong>任务，主要目的是从一段话中抽取出其中可能为<strong>实体</strong>的所有元素。比如：</p>
 <p align="center">
     "Hi Siri, 今天北京天气怎么样？"
 </p>
@@ -366,235 +365,13 @@
 <p>NER在很多下游任务中都是非常重要的一环。比如在电商行业，我们可能需要从用户的查询中提取出品牌或商品，来针对性地给用户返回内容。金主爸爸可能也希望用户在查指定品牌的时候，将一些商品放在第一位。在任务型人机对话方面，正如上面所说，一个合格的Chatbot需要能够准确地识别时间、地点、事件等元素以回答相关问题或安排日程，同时做到不偷听用户的日常对话。</p>
 <p>而<strong>嵌套NER</strong>，顾名思义，就是识别的实体中可能会存在嵌套的情况。比如 <code>北京大学</code> 不仅是一个组织，同时 <code>北京</code> 也是一个地点；<code>雅诗兰黛小棕瓶</code> 是一个产品，同时 <code>雅诗兰黛</code> 是一个品牌。</p>
 <p>准确地识别嵌套内容有什么作用呢？简单来讲，如果一个模型能够识别出 <code>北京大学</code> 是一个组织，它倾向于将所有出现的 <code>北京大学</code> 都标记成组织。但如果它能够在识别前者的同时将 <code>北京</code> 标记成地点，我们就认为它有能力将所有 <code>[地点]大学</code> 的模式都识别出来，因为后者的角度，模型学到的是一种pattern，而非记住了一种具体情况。此外，提取出来的额外信息也能作为辅助特征，增强其他任务的效果。</p>
-<p>具体地，我会介绍以下几部分内容：</p>
-<ul>
-<li>当前普遍使用的传统NER解决方案；</li>
-<li>传统NER在解决嵌套NER任务时存在的问题；</li>
-<li>如何解构NER任务，从不同的角度解决问题，使模型能够识别嵌套的NER；</li>
-<li>介绍近几年嵌套NER领域有代表性的解决方案。</li>
-</ul>
-<h2 id="2-从-NER-到-Nested-NER"><a href="#2-从-NER-到-Nested-NER" class="headerlink" title="2. 从 NER 到 Nested NER"></a>2. 从 NER 到 Nested NER</h2><h3 id="2-1-NER-任务的解决方案"><a href="#2-1-NER-任务的解决方案" class="headerlink" title="2.1 NER 任务的解决方案"></a>2.1 NER 任务的解决方案</h3><p>在进入Nested NER之前，我们先来简单谈谈目前普通NER任务（下称Flat NER）的解决方案，即，将实体识别当做序列标注问题。</p>
-<p>具体来说，对于一个长度为$n$的句子$S={s_1, s_2,…,s_n}$，其中$s_i$表示句子中的第$i$个token。序列标注即给每个token打一个标签，来表示这个token所在的实体类别。一组相邻且类别相同的token构成的子序列 $\text{span}(\text{start}, \text{end}, \text{type})$ 就是我们想要的实体。这样，一个抽取实体的问题就被转化为一个给每个token进行分类的问题。</p>
-<p>在序列标注中，需要定义不同的Schema，来使得将序列标注的结果从token层面提高到实体层面，并且保持其唯一性。定义有效的Schema的意义在于消除从token标注复原出实体时的歧义，例如：</p>
-<blockquote>
-<p>如果我们希望识别出地点。给定句子：北京市海淀区。我们希望抽取出来两个实体，分别为：北京市+海淀区。然而如果只对每个token进行分类，所有的token都将被分到Location标签中，这样两个相邻的同类型实体边界就无法正确区分开来。</p>
-</blockquote>
-<p>为此，我们需要定义一个Schema（即类型标签），使得给token打完标签之后，能够从token复原出实体，同时有效标识两个实体之间的边界。在这里介绍两种最常见的Schema：</p>
-<ul>
-<li>BIO：即Beginning、Inside、Outside，对于一个实体的第一个token，标注为B-[type]，实体其他位置的token标注为I-[type]，不属于任何实体的token标注为O；这样，对于一个标签数 $T$ 的实体集，使用BIO标注将转变为 $2 * T + 1$ 个标签；</li>
-<li>BIOES：即Beginning、Inside、End、Outside、Single。其中End用来标识一个实体的结束，而Single用来标识仅包含一个token的实体。</li>
-</ul>
-<blockquote>
-<p>在给定BIO标注Schema的前提下，北京市海淀区的标注结果为：B-Location, I-Location, I-Location, B-Location, I-Location, I-Location。能够完整且没有歧义地复原出模型的标注结果。</p>
-</blockquote>
-<p>基于上述表述，我们可以将一个<strong>基于序列标注（Sequence Labeling）</strong>的NER任务解决方案总结为两个简单的步骤：</p>
-<ol>
-<li>选择一个有效的标注Schema；</li>
-<li>选择分类模型（常用CNN/Bi-LSTM/BERT），对每个token进行分类；根据分类结果复原出原文中的实体。</li>
-</ol>
-<h3 id="2-2-Nested-NER"><a href="#2-2-Nested-NER" class="headerlink" title="2.2 Nested NER"></a>2.2 Nested NER</h3><p>我们现在回头来看嵌套NER的解决方式，一步步提出该问题的基础解决方案，并探讨这些方案存在的不足。</p>
-<p>很显然，2.1节中所定义的Flat NER解决方案是没有办法解决嵌套情况的，因为在嵌套NER中，一个token可能分别拥有两个不同的类型。例如：<code>北京大学</code> 中的 <code>北</code> 同时属于B-Location，也属于B-Organization；而 <code>京</code> 也拥有I-Location与I-Organization两个标签。</p>
-<p>如果从最简单的角度出发，能够想出什么方法，使得现有的NER解决方案支持嵌套的情况呢？</p>
-<h4 id="将分类任务的目标从单标签变成多标签"><a href="#将分类任务的目标从单标签变成多标签" class="headerlink" title="将分类任务的目标从单标签变成多标签"></a>将分类任务的目标从单标签变成多标签</h4><p>一个容易想到的解决方式是：Schema不变，模型也不变，将输出从单分类转变为多分类：即在最后分类的时候，从输出一个类到输出所有满足一个指定阈值 $\phi$ 的所有类。更为具体地，存在以下两种方案：</p>
-<ul>
-<li>[<a href="#r1">1</a>] 完全不改变Schema，只是在输入训练集的时候，训练集中的label从原来的one-hot编码形式变成一个指定类别的均匀分布；在训练时将损失函数改为BCE或KL-divergence；在进行推理时，给定一个hard threshold，所有概率超过这个阈值的类别都会被预测出来，当做这个token的类。</li>
-<li>[<a href="#r2">2</a>] 修改Schema，将可能共同出现的所有类别两两组合，产生新的标签（如：将B-Location与B-Organization组合起来，构造一个新的标签B-Loc|Org）；这样做的好处是最后的分类任务仍然是一个单分类，因为所有可能的分类目标我们都在Schema中覆盖了。</li>
-</ul>
-<p>我相信在这些年探索中，这个方案是有学者研究过的，因为它简单易行，改动也小；不过除了NAACL18与ACL19中的两篇文章仔细探讨了这些方案以外，我很少有见到有使用这种思路解决问题的paper。因为它存在一些比较明显的问题：</p>
-<ol>
-<li>（仅针对第一种实现方式）模型学习的目标设置过难，阈值定义比较主观，很难泛化；</li>
-<li>（仅针对第二种实现方式）指数级增加了标签，导致分布过于稀疏，很难学习；对于多层嵌套，需要定义非常多的复合标签；</li>
-<li>以及最初的问题：修改后的Schema预测的结果，复原回实体的时候又不再具有唯一性了。</li>
-</ol>
-<p>当然，我们仍然能够给模型添加规则与约束，来一一解决这些问题，具体内容在论文中有相应的阐述。</p>
-<h4 id="修改模型的Decode过程"><a href="#修改模型的Decode过程" class="headerlink" title="修改模型的Decode过程"></a>修改模型的Decode过程</h4><p>在这里，Decode过程指的是基于模型输出的token表示来给token分类的过程，在Sequence Labeling中指的是 FFN + Softmax/CRF + Argmax 这一套操作。严格来说，解决方案1的第一个实现方式也算是非常naive的修改了Decode过程，不过在这里我们讨论一些更加有效的方案。</p>
-<p>值得注意的是，修改Decoder的目的是为了<strong>保证能够给一个token同时赋予多个类别</strong>，所以我们仍然将下面的方案视作Sequence Labeling任务（尽管最后输出的label list长度可能与token的数量不同，但这是因为由原来的单分类变成了多分类所必然导致的）。</p>
-<ul>
-<li><p>[<a href="#r2">2</a>] 既然直接使用FFN映射做单分类没法解决嵌套问题，做多分类又不容易做work，那是否可以考虑使用生成式的方法，如<strong>seq2seq中的Decoder来逐个生成每个token的标签</strong>？使用Decoder能够将输入的token数量与输出的类别数量解绑，允许给token打上超过一个的标签——但是与原来的生成方法不同，除了使用特殊字符 <code>[EOS](end of sentence)</code> 来标识整个生成过程结束以外，我们需要引入一个特殊字符 <code>[EOW](end of word)</code> 来标识接下来生成的是属于下一个token的标签。</p>
-</li>
-<li><p>[<a href="#r3">3</a>] <strong>使用分层的方式对token的表示进行预测</strong>也是一个非常有意思的方案：如果一次分类无法解决实体嵌套的问题，那就对第一次的分类结果继续做分类，如是迭代，直到达到最大迭代次数或是不再有新的实体产生为止。这种解决方案存在的问题是对Decoder的学习要求较高，如果前面的迭代过程中出现了错判，这个问题可能会传递到后续迭代过程中。</p>
-</li>
-</ul>
-<p>这一类方法相较于普通的多标签分类，从任务本身的角度来进行设计，通过横向（序列生成）与纵向（分层标注）两个层面修改了原始的Sequence Labeling模型将输入token与输出label强制绑定的形式。</p>
-<h4 id="抛弃Sequence-Labeling"><a href="#抛弃Sequence-Labeling" class="headerlink" title="抛弃Sequence Labeling"></a>抛弃Sequence Labeling</h4><p>依稀记得之前看过一篇让我印象深刻的知乎文章，名为 <code>&quot;丢掉幻想，全面拥抱Transformer&quot;</code> 。借由此名，最后一种解决嵌套NER问题的方式可以叫做 <code>&quot;丢掉序列标注，全面拥抱Multi-Stage&quot;</code> 。</p>
-<p>我们已经在上文中多次提到，序列标注任务是天然不支持给一个token赋予多个标签的，尽管我们已经进行了多个层面的修饰，使它能够应用到多标签分类上。但是既然它应用到Nested任务上时效果并不突出，也没有其不可替代性，为什么不直接舍弃掉这个任务形式，尝试其它的解决方案呢？</p>
-<p>撇开原来的NER解决方案，从头考虑一个实体识别的方案，我们仍然从一个非常naive的proposal出发：</p>
-<blockquote>
-<p>将句子$s$中所有的子序列<strong>全部枚举</strong>出来，即得到一个子序列集合：${s_1, s_1s_2,s_1s_2s_3,…, s_2, s_2s_3, …, s_n}$。</p>
-<p>训练一个分类器$C$，负责将子序列映射到给定的标签集合（即：Location, Organization, …, O）中：$s_1:\text{location}, s_1s_2: \text{O}, …$。</p>
-</blockquote>
-<p>如果上面的proposal真的能够做work，它就完美地胜过了以Sequence Labeling为基准的Flat NER解决方案：因为这个方案同时能够应用到Flat与Nested情况下——倒不如说，这是一个理论上的<strong>NER任务终极解决方案</strong>。</p>
-<p>当然，通过常识来推断，这个任务做work的概率非常小，因为这样的设定会带来包括（但不限于）：时空复杂度极高、分类器训练十分困难、负样本极多（大部分的子序列都是没有意义的$O$标签）等等。</p>
-<p>当然，我们仍旧可以通过一些人工规则或设定来减弱这些问题，例如：</p>
-<ul>
-<li>模型训练困难：给每个类型单独训练一个分类器；</li>
-<li>时空复杂度：假设最长的实体长度为$n$，全枚举子序列时只枚举长度小于$n$的所有情况；</li>
-<li>负样本很多：在执行分类之前，先训练一个/多个通用的筛选器，或通过人工规则首先筛掉一批负样本；在训练过程中对负样本进行采样，而非使用全部。</li>
-</ul>
-<p>事实上，目前几乎所有撇掉Sequence Labeling，另辟蹊径的解决方案都是在寻找好用的 2-stage 模型，并致力于减弱这些问题：</p>
-<ul>
-<li>非常典型地，我们可以以现有的模型骨架（Bi-LSTM、ELMo等）来简便地搭建一份上面所描述的模型。[<a href="#r4">4</a>] 使用了7个Bi-LSTM与1个ELMo来提取不同level的上下文信息，并使用了一个Self-Attention来通过上下文来增强每个子序列的表示。</li>
-</ul>
-<blockquote>
-<p>由于这篇paper不会在下面详细讲到，我在这里冒昧做个简单的评价：</p>
-<p>尽管是非常典型的上述proposal实现模板，这篇paper的建模操作总体而言并不算特别elegant，并且加了一些人工设定，有少部分的操作甚至难以解读，而作者也没有专门去解释一些操作的含义，导致我读完之后小小的脑袋里充满着大大的问号。我倾向于以为是因为这篇paper提出的方案除了约束长度为$R$的全枚举以外，其他与上面那个比较naive的proposal比较接近，所以把它做work相对会更难。在文中作者引入了多个Bi-LSTM模型以期学到不同层次的信息，就我而言，此举本质上是引入了更多的参数量与外部信息以解决这个问题。</p>
-<p>另外还有一个比较有意思的设定，想与大家分享：在通过3个Bi-LSTM+1个ELMo让token获得了全局信息之后，作者将token的输出 $s_i$ 通过一个全连接网络映射到了一个$2R$的空间，然后表示：这个向量的前$R$个数值，代表了这个token前后的$R$个子序列是一个合理的实体candidate的概率，然后这个空间的后$R$个数值，代表了它前后$R$个子序列不是一个合理的candidate的概率，比较这两个概率，我们就能对这个包含这个token的共$R$个候选实体进行筛选。</p>
-<p>这个设定能够work超过了我的常识。我能理解Encode以后的token表示中确实有蕴含整个句子中上下文信息，但就此判定，并期许它所表示的正好就是 <strong>该token附近特定区域的某一概率</strong>，似乎比直接用该区域的表示来做出这个判定要来得牵强些。希望有阅读过这篇paper的同学与我讨论，解答我的疑惑。</p>
-</blockquote>
-<ul>
-<li>[<a href="#r5">5</a>] 给出了思路上与 [<a href="#r4">4</a>] 相似的解决方案。不过相较于全枚举，[<a href="#r5">5</a>] 选择从另一个角度来获得候选实体：预测两个token之间相连的概率。如果两个token之间相连的概率较大（在文中体现为值趋向于0），认为它们在当前level更倾向于在同一个实体中。随后迭代更新实体中每个token的表示，就能识别多层的嵌套信息。</li>
-<li>[<a href="#r6">6</a>] 提出了一个假设：在一个实体中，总会存在一个或多个token是该实体的<em>锚点</em>（即如果这个token出现，则有相当概率该token在一个实体之内。作者以 <code>The department of [xxx]</code> 中的 <code>department</code> 为例，阐述它很有可能出现在一个类型为Organization的实体中）。由此，我们可以将识别嵌套实体的任务转换为<strong>寻找锚点</strong>的任务：首先找到锚点并判定它所代表的类别，随后找到该锚点所在实体的边界。</li>
-<li>[<a href="*r7">7</a>] 将寻找实体的任务视为<strong>阅读理解</strong>（Machine Reading Comprehension，下称MRC）任务，即：查询句子中是否存在指定问句的答案。在这里问句代表了一个指定类别的查询（如：Is there any Location in this sentence?），而作为问句的答案，模型将输出句子中所有对应实体的开始与结束位置。</li>
-<li>[<a href="*r8">8</a>] 受到构造一棵语句解析树过程的启发，将识别嵌套实体视为一个<strong>构造解析树</strong>的过程：在每一个时间步中，模型将根据当前状态来决定是给指定token赋予一个标签，还是给已经赋予标签的两段实体打上一个更高层次的标签（以此实现了标签的嵌套），抑或是跳过当前处理的token。这样的操作比较像一个内部带着条件语句的RNN单元，它能根据当前的情况来以不同的方式处理一个token：给它打标签，或者不做处理。</li>
-</ul>
-<h2 id="3-相关Paper选读"><a href="#3-相关Paper选读" class="headerlink" title="3. 相关Paper选读"></a>3. 相关Paper选读</h2><p>上面的部分主要是阐述了Flat NER与Nested NER任务形态上的区别，通过Sequence Labeling的缺陷来从各个方面推导出一些可行的解决方案。由于篇幅与时间所限，接下来我将挑选三篇思路上比较有趣的paper，来具体阐述研究者是究竟是如何解决Nested NER这一任务的。</p>
-<h3 id="3-1-逐个token的解析：基于状态转换-Transition-的方法"><a href="#3-1-逐个token的解析：基于状态转换-Transition-的方法" class="headerlink" title="3.1 逐个token的解析：基于状态转换(Transition)的方法"></a>3.1 逐个token的解析：基于状态转换(Transition)的方法</h3><p>[<a href="^r8">8</a>] 基于状态转换的方法在近三年所提出的Nested NER解决方案中占据了一席之地。这个方法有些像编译原理中的有穷自动机，而且十分相似的一点是，它们确实都在对某个输入进行解析。</p>
-<p>如果对自动机有了解，大家知道自动机的下一个状态依赖于当前状态与当前的输入，而如果从玄学的角度来看待，自动机当前的状态是由从开始到现在所有的状态转换以及所有的输入共同影响达到的，也就是说<strong>当前状态中理应Encode了从开始为止所有操作的信息</strong>。但是实际上，当前的状态只是一个状态而已，之前的所有操作与信息都随着时间的流逝进入到历史的长河中去了。</p>
-<p>现在回头考虑Nested NER的问题：如果我们能通过以一个状态转换的形式来解析一个句子，从中提取出所有的嵌套实体，我们首先需要解决的就是<strong>如何在当前状态中把之前的信息也放进来</strong>，令人高兴的是有一个结构天然带有这样的性质：即 <em>时间序列</em> 模型。</p>
-<p>首先我们来看一个带有嵌套实体的句子：</p>
-<p align="center">
-    <img src="/浅谈嵌套命名实体识别/301.png">
-</p>
-
-<p>受 <code>constituency parsing</code> 中shift-reduce解析方式的启发，作者设计出了一个解析上述句子的体系。在整个过程中，我们需要维护下面三个结构：</p>
-<ol>
-<li>一个<strong>栈</strong>（Stack），栈顶元素是当前需要处理的元素。我们需要根据上下文与当前的状态来决定：忽略该元素、给该元素打标签，或是将该元素与前一个元素进行复合，打上更高层次的标签。</li>
-<li>一个<strong>队列</strong>（Buffer）。队列中是句子中待处理的剩余token。</li>
-<li>一个<strong>操作器</strong>（Action）。这个操作器本质是一个模型，它将根据目前的系统状态来决定执行哪一种解析操作。</li>
-</ol>
-<p><strong>解析操作</strong>共有下面三种：</p>
-<ol>
-<li><strong><em>SHIFT</em></strong>: 将队列头部的一个token弹出，移入栈中。值得注意的是，这并不代表我们跳过了当前token的处理，由栈的功能定义可知，这一步的目的实际是要开始处理这个token了；</li>
-<li><strong><em>Unary-X</em></strong>: 将栈顶的元素弹出，给它打上标签[X]，随后重新压入栈中；</li>
-<li><strong><em>Reduce-X</em></strong>: 弹出两次栈顶元素，给它们打上标签[X]，随后重新压入栈中。</li>
-</ol>
-<p>从上述操作中容易看到，只有Reduce操作是赋予了实体更高层次，也即嵌套的标签。</p>
-<p>假设目前输入句子：<strong><em>Indonesian leaders visited him</em></strong> ，一个正确的解析操作序列应该如下图的Action列所示：</p>
-<p align="center">
-    <img src="/浅谈嵌套命名实体识别/302.png">
-</p>
-
-<p>上图的操作十分易懂，在此不多解释了。值得注意的是在句子的末尾需要添加一个结束符$，当这个符号被移入栈顶时，意味着整个处理过程的结束（实际上我们也可以通过：<em>下一步要执行的操作是SHIFT，并且队列为空</em> 这两个情况的出现来标志处理过程的结束，不过队列为空不便于对未处理的句子进行表示，因此作者添加了这一符号）。</p>
-<p>这个设定其实非常的有意思（至少我看到的时候是这样认为的），但是直接移植到嵌套NER任务时，仍存在一些亟待解决的问题：</p>
-<ol>
-<li>上述的Unary+Reduce操作最终得到的解析树中的每个实体只能是一棵<strong>二叉树</strong>（可以参照上图的解析过程来辅助理解为什么一定是一棵二叉树）；二叉树意味着一个被识别出来的实体里面只能包含最多两个token，然而现实中非常多的实体是由超过两个token所构成的；</li>
-<li>如果不停的进行无意义的操作，会显著加剧栈所占的内存空间，同时得到的结果是不合理的（例如反复连续执行同一个类型的Unary），需要对操作进行约束；</li>
-<li>最后一个问题，同时也是Deep Learning大家族灵魂拷问：在完全正确的Action操作顺序下，我们确实能完成对嵌套实体的识别，但怎样判断当前应该执行哪一个Action呢？</li>
-</ol>
-<p>好消息是，这些问题都很好解决。对于问题1，我们引入对于每个标签$X$都引入一个辅助标签$X^*$，如果有一个类型为Person的实体$ABC$，我们只需要转化为解析结果：</p>
-<script type="math/tex; mode=display">
-\{\text{Person}\rightarrow\{\text{Person}^*\rightarrow A,B\},C\}</script><p>就可以了。对于问题2，我们人工添加规则来约束，禁止反复给一个元素标多个相同标签等不符合事实的情况出现。</p>
-<p>接下来主要讲述的是问题3，也就是论文的核心部分：<strong>如何获得一个尽可能准确地Action序列</strong>。下面的处理方式堪称 <code>万物皆可Embedding</code> 的实践典范。</p>
-<p>我们的目的是<strong>通过当前整体系统的状态来判断接下来应该执行的操作</strong>，操作将在上面预定义的三种中任选一种，这就允许我们将其视为一个分类任务。如果我们能够将整个系统进行表示，集成到一个数值向量中，再通过一个FFN，就能实现这个分类任务了。</p>
-<p>正如上面所说，有三个部分共同构成了当前的整个系统，作者分别对它们进行了表示：</p>
-<ul>
-<li><strong>队列</strong>中保存的是当前还未处理的所有token，作者使用了一个反向的LSTM来学习这个队列的表示。之所以使用反向（即从队列尾开始到队列头），是由于我们当前下一个待处理token是队列头的字符，因此所需要的信息自然是从文本尾部到当前文本的信息；</li>
-<li><strong>栈</strong>中保存的是目前已经处理的token以及处理结果（即目前为止嵌套实体的识别结果），与队列的表示方法相似，从栈底到栈顶使用单向LSTM来获得栈顶元素的表示；值得注意的是，由于栈顶的两个元素可能会被修改（或因为下一个token的移入而被改变），作者在此使用了Stack-LSTM来避免频繁修改带来的时空开销；<ul>
-<li>当一个新token被移入栈顶时，基于该token的表示与Stack-LSTM特性更新新的栈顶表示；</li>
-<li>当栈顶元素被执行Unary-X操作时，我们将类型$X$的表示集成到当前栈顶元素的表示中去，即$h_p =W_{u,l}^Th_c+b_{u,l}$，其中$h_p$是新的向量，$h_c$是栈顶元素当前向量，$W^T_{u,i},b_{u,l}$分别是类型$l$的权重矩阵与正则项，$u$表示当前执行的是unary操作；</li>
-<li>当栈顶元素执行Reduce-X操作时，与上面操作相同，更新栈顶元素的表示为$h_p=W_{b,l}^T[h_{lc},h_{rc}] + b_{b,l}$，其中$h_{lc},h_{rc}$分别是次栈顶元素与栈顶元素的表示，即二叉树的左右子节点。</li>
-</ul>
-</li>
-<li><strong>操作器</strong>之前所做的历史操作我们也使用一个结构将其保存下来，并使用一个单向LSTM来获得整体表示，方向为从第1个Action一直到离当前最近的Action。</li>
-</ul>
-<p>获得队列的表示$b_k$，操作历史的表示$a_k$与当前栈的表示$s_k$之后，当前整个系统的向量就可以表示为三者的拼接：</p>
-<script type="math/tex; mode=display">
-p_k=[b_k,a_k,s_k]</script><p>最后我们使用一个FFN来判断在给定$p_k$的条件下应当执行哪一个Action就可以了。模型最后的Loss定义为所有训练数据中的Action的损失之和：</p>
-<script type="math/tex; mode=display">
-L(\theta)=-\sum_i\sum_k\log p(z_{ik})+\frac{\lambda}{2}||\theta||^2</script><p>其中$z_{ik}$意味第$i$个句子的第$k$个动作，Loss的第二项是一个L2正则参数。</p>
-<p>简单总结一下，作者相当于将待处理的文本内容、已处理的文本结果，与已经进行的Action操作视为一个系统，将其Embed到一个向量中，以表征当前的整体状态，再基于这个状态使用分类器来判断下一步执行的操作。这里的每一步都在Embed层面进行。当然，这样的做法虽然work，但这种将一切都看成Embed，然后使用各种模型结构进行交互的方式，放在自动机体系中或许成立，放在其他应用中，是否仍然可行？即便可行，这种将所有一切元素都视作表示的思路究竟又是否能够直观上进行解释，能否引申出一条截然不同的理解语言之路，这些都是值得进一步探索的。</p>
-<h3 id="3-2-基于超图-Hypergraph-的方法"><a href="#3-2-基于超图-Hypergraph-的方法" class="headerlink" title="3.2 基于超图(Hypergraph)的方法"></a>3.2 基于超图(Hypergraph)的方法</h3><p>现在我们重新审视句子：<strong><em>… that his fellow pilot Dabid William had …</em></strong> 及其嵌套标注结果（其中L=Last=End=E, U=Unit=Single=S）：</p>
-<p align="center">
-    <img src="/浅谈嵌套命名实体识别/311.png" <="" p="">
-
-</p><p>可以看到，像 <em>his</em> 这样的token虽然嵌套在三个实体中，但只会有两种取值。我们将每个token的相同取值合并，能够得到下图所示的Hypergraph：</p>
-<p align="center">
-    <img src="/浅谈嵌套命名实体识别/312.png">
-</p>
-
-<p>值得注意的是，我们需要保证每个token至少都有一个O标签。这么做的目的是为了能够有效的建模每个新实体的开头的概率。如上图所示，如果一个token没有O标签，我们需要加一个虚空O进去。</p>
-<p>接下来，我们期望训练的模型能够<strong>给定一个输入的token，输出它所有可能的标签</strong>。例如：输入 <em>his</em> 模型应该输出 <em>U_{PER}</em> 以及 $B_{PER}$ （这里没有直接预测输出O，不过我们会在后面提到加入的虚空O应该怎么加入到训练过程中去）。我们可以使用一个Decoder来实现这个过程。</p>
-<blockquote>
-<p>值得注意的是，虽然这里使用了 <strong>Decoder</strong>，但是这个Decoder输出的标签数量与输入的token数量是一致的，这也是我在第二章节划分体系时将其分类到多标签任务体系，而非修改了Decode过程体系的原因：在该模型中，使用Decoder的原因并不是因为Decoder能够以生成式的方式产生非等量标签的特性，而是因为RNN家族的单元在Decoder中能够传递隐层信息以增强当前标签识别结果的特性。在这样的理解上，将这个Decoder换成一个表达能力相对较差的CRF也是成立的，（虽然效果不会那么好但）大概率也能做work。</p>
-<p>作者在文中提到 <em>we have a decoder-style model</em> 而非直接提出 <em>we apply a decoder</em>，或许也是因为这个原因吧</p>
-</blockquote>
-<p>这个Decoder使用的是LSTM Unit，以下的分析假设读者已经对LSTM的内部结构有一定的了解。</p>
-<p>首先，假设我们已经获得了所有标签的Embedding表示，这个表示可以在训练时初始化，在训练过程中进行更新。对于标签$l_i\in L$，它所对应的表示为$g_i$。</p>
-<p>我们采用以小见大的方式，先来考虑假设已经有了上一个时间步Unit的隐层输出$h_{t-1}$，上一个时间步的模型输出$o_{t-1}$，以及当前时间步输入的token表示$x_t$，如何基于这些参数来求出当前的隐层输出$h_t$与当前时间步的模型输出$o_t$。</p>
-<ol>
-<li><p>上一个时间步的模型输出$o_{t-1}$是一个概率分布，我们将整个分布通过softmax映射到01区间，随后将所有概率大于我们预先设定的hard threshold: $T$ 的标签找出来。以上图举例，如果模型得到我们预期的结果，对于当前token <em>his</em>，模型应该找到两个符合阈值要求的标签$U_{PER}$与$B_{PER}$。<strong>注意</strong>，由于这里没有预测出标签O，我们手动给它加上O的标签，即模型最终预测得到$U_{PER}$、$B_{PER}$与$O$；</p>
-</li>
-<li><p>由于上一个时间步模型预测得到了三个可能的标签，我们需要考察这三个标签在当前步分别可能对应哪个标签。所以我们将当前的$x_t$复制三份，每一份都通过LSTM单元计算当前的隐层输出。特别地，对于上一个时间步的可能标签$k$，当前时间步的隐层结果为：</p>
-<script type="math/tex; mode=display">
-h_t^k=\text{LSTM}(x_t,h_{t-1}^k,g_k)</script></li>
-<li><p>这样，对于上一个时间步的每一个预测结果，我们都能得到对应的当前时间步的隐层表示。现在我们有了三个隐层表示，将它求平均：</p>
-<script type="math/tex; mode=display">
-h_t=\frac{1}{|G_{t-1}|}\sum_kh_t^k</script><p>其中$|G_{t-1}|$就是上一个时间步中所有满足阈值的标签数量，在当前我们所讲的case中取值为3.</p>
-</li>
-<li><p>获得当前时间步的输出$o_t=Uh_t+b$，其中$U,b$分别为FFN的权重矩阵与正则项。</p>
-</li>
-</ol>
-<p>以上就是使用类似Decoder的形式来逐个输出每个token所有可能标签的形式，如果上面表述比较难以直接理解，也可以通过paper中所给的模型结构图来比较理解。</p>
-<p align="center">
-    <img src="/浅谈嵌套命名实体识别/313.png" <="" p="">
-
-</p><p>与我们的讨论过程一致，我们在此给出基于上述思路的损失函数的公式描述：</p>
-<script type="math/tex; mode=display">
-L_t^k=-\sum_c(e_t^k)\log (\hat{e}_t^k)</script><p>本质上就是一个多分类交叉熵损失函数，就不再一一讲述其中符号的含义了。</p>
-<p>作者在文中也比较了使用softmax与sparse softmax的结果，采用后者是因为作者认为在每个时间步中输出的标签大部分都比较少，换言之即比较稀疏，因此使用sparse softmax会有更好的效果。后面的实验中也证明了这一点：<strong>使用sparse softmax相较于普通的softmax，能在ACE2004与ACE2005测试集中得到5个点以上的提升，令人震惊TAT</strong>，有兴趣的同学可以去原文中详细阅读作者的试验分析过程。</p>
-<p>此外，这里对于一些word embedding层、multi-layer Bi-LSTM层也不再进行详述，因为他们的实现方式大同小异，只在于使用了静态GLoVe还是动态ELMo、加Character LSTM与否，以及使用了Bi-LSTM还是BERT作为上下文信息学习框架，亦或在顶层是否添加了一个Attention的区别。</p>
-<h3 id="3-3-基于阅读理解的方法"><a href="#3-3-基于阅读理解的方法" class="headerlink" title="3.3 基于阅读理解的方法"></a>3.3 基于阅读理解的方法</h3><p>Shannon.AI在去年年中左右提出了将NER任务作为MRC来做的思路 [<a href="#r7">7</a>]。这是目前在ACE04&amp;05、GENIA与KBP2017四个嵌套实体识别数据集中都位于SOTA的方法，尤其在后两个数据集上做到了大幅度的提升；此外，作者在中英文的Flat NER任务上也进行了测试，都得到了SOTA的结果。</p>
-<blockquote>
-<p>据笔者所知，MSRA有位同学应该做了更好的结果出来，不过考虑它要投的顶会时间，保守估计在5月份才会挂到Arxiv上，让我们一起期待吧: )</p>
-</blockquote>
-<p>MRC任务一般可以被形式化表述为：</p>
-<blockquote>
-<p>给定一段<strong>信息(passage)</strong>与给定一个<strong>问题(question)</strong>，模型需要从信息中找到回答这个问题的<strong>短语(span)</strong>。</p>
-</blockquote>
-<p>从任务理解上来看，这个解决思路似乎与NER是十分相似的：我们只需要将每个标签$X$都看做一个问句：<strong><em>这个句子中的$X$标签的实体是什么？</em></strong> 随后输入待抽取实体的句子进行询问，然后将模型输出的短语作为这个句子中$X$标签的实体就好了。</p>
-<p>乍一听这个方法充满了玄学，但当我们拥有一个BERT的时候，这个任务就非常好做了。由于预训练时的任务设计，BERT天生就允许往模型中同时输入两个不同的句子。我们向BERT中以下面的形式输入问题与信息：</p>
-<script type="math/tex; mode=display">
-\text{[CLS]}\quad \text{Question}\quad\text{[SEP]}\quad\text{Passage}\quad\text{[SEP]}</script><p>其中[CLS]与[SEP]分别用于标识一个输入的开头与间隔两个句子。然后静静等待模型给我们结果就可以了。</p>
-<p>问题是，怎么拿到这个结果，再将这个结果复原回原来的实体结果呢？</p>
-<p>作者训练了三个分类器，分别用于预测模型输出后的：</p>
-<ul>
-<li>当前token是否为一个实体的<strong>开头</strong>位置；</li>
-<li>当前token是否为一个实体的<strong>结束</strong>位置；</li>
-<li>前两个分类器中的两两位置是否<strong>匹配</strong>（如果开头位置$i$与结束位置$j$匹配，我们就认为从${x_i,x_{i+1},…,x_{j-1},x_j}$是一个实体。</li>
-</ul>
-<blockquote>
-<p>如果没有完全理清楚整个处理逻辑，你可能会有疑惑：即便我知道了$i,j$是一个实体，但是这个实体类型是什么呢？答案是：这个实体类型就是这个问题的类型，如果问题的类型是：这个句子中PERSON的实体是什么，那么抽出来的实体类型就是PERSON。是不是非常有趣？</p>
-</blockquote>
-<p>如此看来，一个问题的优秀程度直接影响了模型抽取实体的效果，那如何<strong>设计问题</strong>呢？</p>
-<p>首先要明确的一点是，像我们上文一直使用的：<strong><em>这句子中的 [X]实体是什么？</em></strong> 这种问句是十分不合理的，想象一下更换不同的 <em>[x]</em> 时，整个句子的其他token表示都没有变，只有[x]所在的一个或几个token的表示被改变了，我们怎么能寄希望于模型像找茬一样能够分清楚这些问句之间微小的差异，并将其有效应用在文章理解中呢？</p>
-<p>作者在paper中讨论了多种问句的设计方式，有兴趣的同学可以自行阅读原文。作为问句设计的结果，作者最后使用了<strong>数据一开始标注时的每个标签的指南</strong>来作为一个问句：我们在人工标注一个数据之前，如果希望能够标出Location标签，我们首先会对Location进行一个定义，如：</p>
-<p align="left">
-    Location: Find locations in the text, including non-geographical locations, mountain ranges and bodies of water. (地点：找到文中所有的地点，包括非地理的位置，山脉与水体。)
-</p>
-
-<p>使用类型标注指南作为定义在结果上会work，个人觉得是因为指南中会存在许多 <code>&quot;head word&quot;</code>（还记得上面所提到的 <em>department</em> 会有很大概率作为 <em>organization</em> 实体的head word吗？），与此同时这些 <code>head word</code> 基本不会出现在其他标签的标注指南中。这些非常unique的信息作为问句，能够让模型很好地区分当前的问题，从而在句子中找到更加精确的实体。</p>
-<p>作为以上任务设计的结果，整个模型的损失函数由：起始位置识别+末尾位置识别+位置匹配三者的交叉熵损失之和决定，即：</p>
-<script type="math/tex; mode=display">
-\begin{align}
-&L_{\text{start}}=\text{CE}(P_{\text{start}},Y_{\text{start}})\\
-&L_{\text{end}}=\text{CE}(P_{\text{end}},Y_{\text{end}}) \\
-&L_{\text{span}}=\text{CE}(P_{i_{\text{start}},j_{\text{end}}}, Y_{i_{\text{start}},j_{\text{end}}}) \\
-&L = L_{\text{start}} + L_{\text{end}} + L_{\text{span}}
-\end{align}</script><h2 id="4-跋"><a href="#4-跋" class="headerlink" title="4. 跋"></a>4. 跋</h2><p>以上就是近几年来Nested NER领域的整体研究现状综述，在最后想加点我的个人感想。</p>
-<p>在第二部分我着重从我理解的角度出发，来分析为什么Nested NER不适用于现在普遍应用的NER任务的解决方案，也从我个人的感受出发，给近几年所有的相关paper分了体系，其划分依据主要是撇开整个故事不谈，从模型角度它究竟修改了原来NER解决方案中的哪个部分，或者说解决了其中哪个不足。</p>
-<p>于是在第三部分，我解读了三篇我觉得非常有意思的解决方案。他们可能不是结果最好的，但都给我以眼前一亮的感觉：原来这个问题还能这么做。我觉得从接触一个领域，到了解该领域的研究现状，到提出该领域存在的不足，这三个过程是每个研究过程中都不可或缺的，但是最重要的是在此之后<strong>针对存在的问题，提出有效的解决方案</strong>。作为全新角度来解决问题的paper，他们一开始的构思可能比较简单，但之后也能通过人为增加约束的形式将任务做work，这是研究中不断实验进步的过程。而后面这两个过程，才是研究者能否做出有独创性、有价值成果的决定性因素。</p>
-<p>毕竟只会前三步的我，只能写博客，而掌握后两步的大家，就能发顶会了。</p>
-<p>与君共勉。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a name="r1">[1]</a> Katiyar A, Cardie C. Nested named entity recognition revisited[C]//Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers). 2018: 861-871.</p>
-<p><a name="r2">[2]</a> Straková, Jana, Milan Straka, and Jan Hajič. “Neural architectures for nested NER through linearization.” <em>arXiv preprint arXiv:1908.06926</em> (2019).</p>
-<p><a name="r3">[3]</a> Shibuya, Takashi, and Eduard Hovy. “Nested Named Entity Recognition via Second-best Sequence Learning and Decoding.” <em>arXiv preprint arXiv:1909.02250</em> (2019).</p>
-<p><a name="r4">[4]</a> Xia, Congying, et al. “Multi-Grained Named Entity Recognition.” <em>arXiv preprint arXiv:1906.08449</em> (2019).</p>
-<p><a name="r5">[5]</a> Fisher, Joseph, and Andreas Vlachos. “Merge and Label: A novel neural network architecture for nested NER.” <em>arXiv preprint arXiv:1907.00464</em> (2019).</p>
-<p><a name="r6">[6]</a> Lin, Hongyu, et al. “Sequence-to-nuggets: Nested entity mention detection via anchor-region networks.” <em>arXiv preprint arXiv:1906.03783</em> (2019).</p>
-<p><a name="r7">[7]</a> Li, Xiaoya, et al. “A Unified MRC Framework for Named Entity Recognition.” <em>arXiv preprint arXiv:1910.11476</em> (2019).</p>
-<p><a name="r8">[8]</a> Wang, Bailin, et al. “A neural transition-based model for nested mention recognition.” <em>arXiv preprint arXiv:1810.01808</em> (2018).</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/浅谈嵌套命名实体识别/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
