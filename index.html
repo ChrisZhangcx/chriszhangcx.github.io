@@ -250,177 +250,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/" itemprop="url">[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2022-08-27T13:59:11+08:00">
-                2022-08-27
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2022-08-27T15:34:58+08:00" content="2022-08-27">
-                2022-08-27
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>KDD 2022，唐杰老师课题组的paper，最近挂在Arxiv上的，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。</p>
-<p>论文有几方面的亮点：</p>
-<ol>
-<li>把KG里面的节点关系（relation/edge）转换成了<strong>关系节点</strong>，从而把两个节点+两者的关系变成了一个三元组。文中称之为 <strong>Triple Transformation Method</strong>；</li>
-<li>使用了<strong>两阶段pre-training</strong>。第一阶段主要是通过两种Random Walk来对整个图进行随机采样，然后进行训练；第二阶段是通过预定义的一些范式（1p/2p/3p/2i/3i）来采样并训练；文中称之为<strong>Dense initialization与Sparse refinement</strong>；预训练的任务与BERT相类似，都是通过mask其中若干节点，并要求模型预测这些节点；（值得注意的是，在fine-tune过程中，也mask若干节点，但只要求模型预测出最终节点）‘</li>
-<li>在Multi-Head Attention上层训练多个FFN，以模拟出多专家投票的效果，来增大模型参数量；使用Gating的方式控制每次只选择2个FFN产出结果，以节省计算时间。文中称之为<strong>Mix-of-Experts（MoE）</strong>。</li>
-</ol>
-<p>这些亮点使得论文提出的kgTransformer能够具有以下优势：</p>
-<ol>
-<li>动态的KG embedding（因为使用了transformer，好比GloVe与BERT）；</li>
-<li>模型的学习过程与应用的目标是匹配的（这句话是针对部分模型，训练目标是补全一阶的graph relation link，而应用到多跳的逻辑查询）。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/浅谈无监督场景下的句向量表示方法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1866,6 +1695,168 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Crash-Paper-Attention-Is-All-You-Need/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Crash-Paper-Attention-Is-All-You-Need/" itemprop="url">Crash Paper: Attention Is All You Need</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-26T19:56:09+08:00">
+                2018-12-26
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2018-12-30T13:25:37+08:00" content="2018-12-30">
+                2018-12-30
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="1-预备知识"><a href="#1-预备知识" class="headerlink" title="1. 预备知识"></a>1. 预备知识</h2><h3 id="1-1-Encoder-Decoder"><a href="#1-1-Encoder-Decoder" class="headerlink" title="1.1 Encoder/Decoder"></a>1.1 Encoder/Decoder</h3><p>序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：</p>
+<p><img src="/Crash-Paper-Attention-Is-All-You-Need/001.png" alt=""></p>
+<p>Encoder的每一个单元会根据前一个hidden state以及当前的input来计算当前的hidden state，并将其传到下一个单元中去。而Decoder对于传入的单元进行解码，来找到最合适的一个输出。注意每个Decoder单元只会输出一个output symbol。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Crash-Paper-Attention-Is-All-You-Need/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1916,7 +1907,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1938,7 +1929,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
