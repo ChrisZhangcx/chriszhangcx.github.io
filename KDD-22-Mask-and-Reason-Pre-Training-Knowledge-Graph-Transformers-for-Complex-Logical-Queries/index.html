@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="凸优化,">
+  <meta name="keywords" content="Knowledge Graph,Transformers,GNN,Complex Logic Query,EPFO,">
 
 
 
@@ -77,18 +77,20 @@
 
 
 
-<meta name="description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
-<meta name="keywords" content="凸优化">
+<meta name="description" content="PrefaceKDD 2022，唐杰老师课题组的paper，最近挂在Arxiv上的，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple">
+<meta name="keywords" content="Knowledge Graph,Transformers,GNN,Complex Logic Query,EPFO">
 <meta property="og:type" content="article">
-<meta property="og:title" content="凸优化笔记(2): 凸函数">
-<meta property="og:url" content="/凸优化笔记-2-凸函数/index.html">
+<meta property="og:title" content="[KDD&#39;22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries">
+<meta property="og:url" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta property="og:description" content="PrefaceKDD 2022，唐杰老师课题组的paper，最近挂在Arxiv上的，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T01:46:18.000Z">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png">
+<meta property="og:updated_time" content="2022-08-27T07:34:58.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="凸优化笔记(2): 凸函数">
-<meta name="twitter:description" content="让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。 写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。 基本性质与例子首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigr">
+<meta name="twitter:title" content="[KDD&#39;22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries">
+<meta name="twitter:description" content="PrefaceKDD 2022，唐杰老师课题组的paper，最近挂在Arxiv上的，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple">
+<meta name="twitter:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="/凸优化笔记-2-凸函数/">
+  <link rel="canonical" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
 
 
 
 
 
-  <title>凸优化笔记(2): 凸函数 | Chris Zhang</title>
+  <title>[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries | Chris Zhang</title>
   
 
 
@@ -251,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/凸优化笔记-2-凸函数/">
+    <link itemprop="mainEntityOfPage" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">凸优化笔记(2): 凸函数</h1>
+          <h1 class="post-title" itemprop="name headline">[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries</h1>
         
 
         <div class="post-meta">
@@ -281,11 +283,23 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-08T09:46:18+08:00">
-                2018-12-08
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2022-08-27T13:59:11+08:00">
+                2022-08-27
               </time>
             
 
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2022-08-27T15:34:58+08:00" content="2022-08-27">
+                2022-08-27
+              </time>
+            </span>
             
 
             
@@ -305,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/凸优化/" itemprop="url" rel="index">
-                    <span itemprop="name">凸优化</span>
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
                   </a>
                 </span>
 
@@ -342,49 +356,43 @@
       
 
       
-        <p>让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。</p>
-<p>写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。</p>
-<h1 id="基本性质与例子"><a href="#基本性质与例子" class="headerlink" title="基本性质与例子"></a>基本性质与例子</h1><p>首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigraph)<del>这个中译有点无力吐槽</del>说明了凸函数与凸集之间的关系，最后对Jensen不等式进行了简要论述。</p>
-<p>按我的理解，这一小节其实是给出了证明一个函数是凸函数的三种方法：定义，一阶条件与二阶条件。</p>
-<a id="more"></a>
-<h2 id="凸函数与扩展值延伸"><a href="#凸函数与扩展值延伸" class="headerlink" title="凸函数与扩展值延伸"></a>凸函数与扩展值延伸</h2><p>给出如下定义：一个函数$f:R^n\rightarrow R$是<strong>凸</strong>的，如果：</p>
+        <h2 id="Preface"><a href="#Preface" class="headerlink" title="Preface"></a>Preface</h2><p>KDD 2022，唐杰老师课题组的paper，最近挂在Arxiv上的，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。</p>
+<p>论文有几方面的亮点：</p>
 <ol>
-<li>$x$的定义域是凸集，即$x$的取值范围是凸集</li>
-<li>对于$\forall x, y\in\mathrm{dom} f, \theta\in[0,1]$，有：$f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)$</li>
+<li>把KG里面的节点关系（relation/edge）转换成了<strong>关系节点</strong>，从而把两个节点+两者的关系变成了一个三元组。文中称之为 <strong>Triple Transformation Method</strong>；</li>
+<li>使用了<strong>两阶段pre-training</strong>。第一阶段主要是通过两种Random Walk来对整个图进行随机采样，然后进行训练；第二阶段是通过预定义的一些范式（1p/2p/3p/2i/3i）来采样并训练；文中称之为<strong>Dense initialization与Sparse refinement</strong>；预训练的任务与BERT相类似，都是通过mask其中若干节点，并要求模型预测这些节点；（值得注意的是，在fine-tune过程中，也mask若干节点，但只要求模型预测出最终节点）‘</li>
+<li>在Multi-Head Attention上层训练多个FFN，以模拟出多专家投票的效果，来增大模型参数量；使用Gating的方式控制每次只选择2个FFN产出结果，以节省计算时间。文中称之为<strong>Mix-of-Experts（MoE）</strong>。</li>
 </ol>
-<p>特别地，如果2中的不等式中没有等号，称函数是<strong>严格凸的</strong>。</p>
-<p>基于上述定义，我们可以知道：一个仿射函数$f(x)=Ax+b$肯定是凸的——事实上，仿射函数既是凸的也是凹的，因为仿射函数在上式中始终取到等号。</p>
-<p>为了更好的简化符号的描述，书中对凸函数的定义域进行了延伸，即：一个凸函数在其定义域中取到值$f(x)$，而在其它不在定义域的范围内取到$+\infty$。这样的延伸约定不会改变不等式性质，Boyd教授对此是十分推崇的<del>可能数学家对定义域或者论证严谨性都有很高的要求吧我总觉得这些东西无关紧要至少不需要单开一小节来说明TAT</del>。</p>
-<p>另外提到了凸集的<strong>示性函数</strong>，简单说一下，其实顾名思义就是这个函数是用来展示凸性的，所以$x\in C$的部分都取0，表示这些域里是凸的，其它也就是$x\notin C$的部分都取作$+\infty$，和上面的扩展值延伸巧妙的重合了。</p>
-<h2 id="一阶条件"><a href="#一阶条件" class="headerlink" title="一阶条件"></a>一阶条件</h2><p>假设$f$可微（也就是梯度在开集$\mathrm{dom}f$内处处存在），则函数$f$是凸函数的<strong>充要条件</strong>是：$\mathrm{dom}f$是凸集，并且对于任意的$x,y\in\mathrm{dom}f$，有下式成立：</p>
-<script type="math/tex; mode=display">f(y)\geq f(x)+\nabla f(x)^T(y-x)</script><p>Boyd说：上面的不等式说明从一个凸函数的局部信息（即它在某点$x$的函数值与导数），我们可以得到一些全局信息，这也许是凸函数的最重要的信息。比如说我们知道在$x$点的$\nabla f(x)=0$，那么对于所有在$f$定义域中的点$y$，根据不等式都有$f(y)\geq f(x)$，也就是说$x$是函数$f$的全局极小点。</p>
-<p>对一阶条件的充要性的证明可以从构造$g(t)=f(ty+(1-t)x)$着手：对于充分性，有$g(1)\geq g(0)+g^\prime(0)$；必要性直接按步骤推导即可。</p>
-<h2 id="二阶条件"><a href="#二阶条件" class="headerlink" title="二阶条件"></a>二阶条件</h2><p>二阶条件首先要求函数$f$二阶可微，即对于开集$\mathrm{dom}f$内的任意一点，它的Hessian矩阵或者二阶导数$\nabla^2f$存在。</p>
+<p>这些亮点使得论文提出的kgTransformer能够具有以下优势：</p>
+<ol>
+<li>动态的KG embedding（因为使用了transformer，好比GloVe与BERT）；</li>
+<li>模型的学习过程与应用的目标是匹配的（这句话是针对部分模型，训练目标是补全一阶的graph relation link，而应用到多跳的逻辑查询）。</li>
+</ol>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><h3 id="Complex-Logical-Query"><a href="#Complex-Logical-Query" class="headerlink" title="Complex Logical Query"></a>Complex Logical Query</h3><p>本文主要解决的问题是复杂逻辑查询，包括：补充边（imputed edges）、多源的实体、Existential Positive First-Order（EPFO）逻辑，以及未知的中间实体等。下面是EPFO的一个示例：</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png" alt="001"></p>
+<p>具体地，对于一句自然语言：</p>
 <blockquote>
-<p>关于Hessian矩阵，又称海赛阵，这个名字我在本科数值计算方法里学过但是忘记了，查了查资料试着捡起来：Hessian矩阵是一个二阶偏导数构成的方阵，描述了函数的局部曲率。Hessian具有对称性，因为如果函数$f$在定义域内二阶连续可导，那么二阶偏导数的求导顺序对求导结果没有影响。</p>
+<p>What musical instrucments did Minnesota-born Nobel Prize winners play?</p>
 </blockquote>
-<p>好了，二阶条件实在非常简单，就是Hessian矩阵是半正定阵，即：</p>
-<script type="math/tex; mode=display">\nabla^2f(x)\succeq0</script><p>换句话说，这也是函数$f$是凸的充要条件。</p>
-<h2 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h2><p>首先给出的是定义在$R$上的凸函数例子：</p>
-<ul>
-<li><strong>指数函数</strong>：$f(x)=e^{ax}, a,x\in R$是凸的。</li>
-<li><strong>幂函数</strong>：$f(x)=x^a$在$a\in[0,1]$时是$R_{++}$上的凹函数，与之相对，$a\leq 0$或$a\geq 1$时在$R_{++}$上是凸函数。</li>
-<li><strong>绝对值幂函数</strong>：$f(x)=|x|^p$在$p\geq1$时是$R$上的凸函数</li>
-<li><strong>对数函数</strong>$\mathrm{log}x$在$R_{++}$上是凹函数</li>
-<li>etc, 懒得列举了。另外Boyd教授在视频中主要讨论的是四个函数（都是通过二阶Hessian矩阵的性质也就是二阶条件来证明凸/凹性的）<ul>
-<li>二次-线性分式函数$f(x)=x^2/y$，定义域$x\in R, y&gt;0$在$R^n$上是凸函数；</li>
-<li>指数和的对数$f(x)=\mathrm{log}(e^{x_1}+…+e^{x_n})$。Boyd教授提到这个一般用于EE中是为了起一个平滑的作用：把$x_i$看作第$i$个到来的信号，如果这个信号很大，其exp也会很大，所以要求和以后再求对数，来平滑这个很大的信号所造成的影响。</li>
-<li>几何平均：$f(x)=(\prod_{i=1}^nx_i)^{1/n}$，在定义域$R^n_{++}$上是凹函数；</li>
-<li>对数行列式：$f(x)=\mathrm{log}\mathrm{det}X$在定义域$S^n_{++}$上是凹函数，在视频中还进行了简单的证明。</li>
-</ul>
-</li>
-</ul>
-<h2 id="下水平集与上境图"><a href="#下水平集与上境图" class="headerlink" title="下水平集与上境图"></a>下水平集与上境图</h2><p><strong>下水平集</strong>就是，对于好好的一个函数，我设定一个y值，然后把所有让函数$f(x)\leq y$的定义域$\mathrm{dom}f$择出来，这其中的性质是：如果函数$f$是凸集，那么它的<strong>任意</strong>下水平集都是凸集——值得注意的是，这个性质反过来是不成立的。</p>
-<p>上境图的翻译实在是无力吐槽，我用实际名词epigraph进行替代吧。<strong>epigraph</strong>就是所有在函数曲线上面的部分。这里直接反映了凸函数和凸集的关系：<strong>一个函数是凸函数，当且仅当这个函数的epigraph是凸集</strong>。</p>
-<h2 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h2><p>讲到这里的时候，Boyd教授忽然介绍了Jensen不等式，然后露出迷之微笑，说，大家可以看到Jensen不等式就是我们的凸函数的定义，在此再抄一遍，就是：</p>
-<script type="math/tex; mode=display">f(\theta x+(1-\theta)y)\leq \theta f(x)+(1-\theta)f(y)</script><p>当然这里面的元素还可以扩展到多个。</p>
-<p>很多著名的不等式都可以通过把Jensen不等式应用到合适的凸函数来得到。<strong>书中说道：事实上，凸性和Jensen不等式可以构成不等式理论的基础</strong>，我把这句话摘出来并且加粗是因为从我这个数学外行角度来看，这是很厉害的一句话了。书里面举了个例子：对于算术-几何平均的不等式$\sqrt{ab}\leq (a+b)/2$，就是使用了凸性和Jensen不等式对函数$f(x)=-\mathrm{log}x$进行讨论，在$\theta=1/2$时候推导出来的结果。</p>
-
+<p>所解析得到的EPFO查询，里面蕴含了一个若干约束的二跳（2-hop）知识图谱查询：</p>
+<ol>
+<li>第一个约束是查询一个实体，出生在Minnesota；</li>
+<li>第二个约束是查询一个实体，获得了诺贝尔奖，与上一个约束指向同一个实体；</li>
+<li>第二跳是查询上面得到的实体所Play的乐器。</li>
+</ol>
+<p>可知，第二跳的查询结果才是问句所想要得到的答案。</p>
+<p>此类EPFO查询的难点在于：</p>
+<ol>
+<li>EPFO查询的解析复杂度与hop之间的关系是指数级的；</li>
+<li>EPFO查询要求模型具有比较强的迁移与泛化能力。</li>
+</ol>
+<h3 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h3><p>论文的贡献在于：</p>
+<ol>
+<li>kgTransformer: 提出了kgTransformer，使用Triple Transformation策略来将知识图谱带有属性的边（relation）转换为不带属性的有向边；提出了MoE来顺应GNN稀疏激活的特性。</li>
+<li>Masked Pre-Training: 为了提升泛化能力，作者将复杂逻辑查询问题看作一个预测mask的问题，通过两阶段预训练来训练模型；在FB15k-237与NELL995两个数据集上进行了验证，说明了模型具有SoTA的效果。</li>
+</ol>
+<h2 id="KG-Pre-Training-Framework"><a href="#KG-Pre-Training-Framework" class="headerlink" title="KG Pre-Training Framework"></a>KG Pre-Training Framework</h2>
       
     </div>
     
@@ -401,7 +409,15 @@
       
         <div class="post-tags">
           
-            <a href="/tags/凸优化/" rel="tag"># 凸优化</a>
+            <a href="/tags/Knowledge-Graph/" rel="tag"># Knowledge Graph</a>
+          
+            <a href="/tags/Transformers/" rel="tag"># Transformers</a>
+          
+            <a href="/tags/GNN/" rel="tag"># GNN</a>
+          
+            <a href="/tags/Complex-Logic-Query/" rel="tag"># Complex Logic Query</a>
+          
+            <a href="/tags/EPFO/" rel="tag"># EPFO</a>
           
         </div>
       
@@ -414,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/重修数据结构：线段树/" rel="next" title="重修数据结构：线段树">
-                <i class="fa fa-chevron-left"></i> 重修数据结构：线段树
+              <a href="/浅谈无监督场景下的句向量表示方法/" rel="next" title="浅谈无监督场景下的句向量表示方法">
+                <i class="fa fa-chevron-left"></i> 浅谈无监督场景下的句向量表示方法
               </a>
             
           </div>
@@ -423,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/Crash-Paper-SMN-Sequential-Matching-Network/" rel="prev" title="Crash Paper: SMN-Sequential Matching Network">
-                Crash Paper: SMN-Sequential Matching Network <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +589,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本性质与例子"><span class="nav-number">1.</span> <span class="nav-text">基本性质与例子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#凸函数与扩展值延伸"><span class="nav-number">1.1.</span> <span class="nav-text">凸函数与扩展值延伸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶条件"><span class="nav-number">1.2.</span> <span class="nav-text">一阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶条件"><span class="nav-number">1.3.</span> <span class="nav-text">二阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些例子"><span class="nav-number">1.4.</span> <span class="nav-text">一些例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下水平集与上境图"><span class="nav-number">1.5.</span> <span class="nav-text">下水平集与上境图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jensen不等式"><span class="nav-number">1.6.</span> <span class="nav-text">Jensen不等式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Complex-Logical-Query"><span class="nav-number">2.1.</span> <span class="nav-text">Complex Logical Query</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Contributions"><span class="nav-number">2.2.</span> <span class="nav-text">Contributions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KG-Pre-Training-Framework"><span class="nav-number">3.</span> <span class="nav-text">KG Pre-Training Framework</span></a></li></ol></div>
             
 
           </div>
