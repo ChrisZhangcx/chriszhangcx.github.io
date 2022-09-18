@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/</loc>
+    <lastmod>2022-09-18T01:34:47.683Z</lastmod>
+  </url>  <url>
     <loc>/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/</loc>
-    <lastmod>2022-09-11T05:23:11.165Z</lastmod>
+    <lastmod>2022-09-11T05:32:41.626Z</lastmod>
   </url>  <url>
     <loc>/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/</loc>
     <lastmod>2022-09-03T13:49:19.000Z</lastmod>

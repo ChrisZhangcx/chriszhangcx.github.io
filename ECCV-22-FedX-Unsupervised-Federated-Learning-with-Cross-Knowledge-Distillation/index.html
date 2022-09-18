@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Data Mining,">
+  <meta name="keywords" content="Federated Learning,Unsupervised Learning,Constrastive Learning,Knowledge Distillation,">
 
 
 
@@ -77,18 +77,22 @@
 
 
 
-<meta name="description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
-<meta name="keywords" content="Data Mining">
+<meta name="description" content="论文的立意是在 联邦学习 过程中，结合 对比学习 ，用局部与全局的两种 蒸馏 方式来 无监督 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监">
+<meta name="keywords" content="Federated Learning,Unsupervised Learning,Constrastive Learning,Knowledge Distillation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
-<meta property="og:url" content="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/index.html">
+<meta property="og:title" content="[ECCV&#39;22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
+<meta property="og:url" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta property="og:description" content="论文的立意是在 联邦学习 过程中，结合 对比学习 ，用局部与全局的两种 蒸馏 方式来 无监督 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-09-11T05:32:41.626Z">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/002.png">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/003.png">
+<meta property="og:updated_time" content="2022-09-18T01:34:47.683Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
-<meta name="twitter:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta name="twitter:title" content="[ECCV&#39;22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
+<meta name="twitter:description" content="论文的立意是在 联邦学习 过程中，结合 对比学习 ，用局部与全局的两种 蒸馏 方式来 无监督 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监">
+<meta name="twitter:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+  <link rel="canonical" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/">
 
 
 
 
 
-  <title>[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration | Chris Zhang</title>
+  <title>[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation | Chris Zhang</title>
   
 
 
@@ -251,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+    <link itemprop="mainEntityOfPage" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration</h1>
+          <h1 class="post-title" itemprop="name headline">[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation</h1>
         
 
         <div class="post-meta">
@@ -281,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2022-09-11T12:08:52+08:00">
-                2022-09-11
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2022-09-18T09:31:51+08:00">
+                2022-09-18
               </time>
             
 
@@ -294,8 +298,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2022-09-11T13:32:41+08:00" content="2022-09-11">
-                2022-09-11
+              <time itemprop="dateUpdated" datetime="2022-09-18T09:34:47+08:00" content="2022-09-18">
+                2022-09-18
               </time>
             </span>
             
@@ -354,29 +358,47 @@
       
 
       
-        <p>假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。</p>
-<p>背景：<strong>联邦学习</strong>中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个<strong>统一的模型</strong>来在样本全集上拥有相对更好的效果。</p>
-<p>问题：不同用户的数据子集分布是有差异的，差异体现在两方面：特征分布差异与标签分布差异，本文主要聚焦于标签分布的差异。</p>
-<p>公式描述：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}_{Cal}(y;f(x))=-\log \frac{e^{f_y(x)-\tau\cdot n_y^{-1/4}}}{\sum_{i\neq y}e^{f_i(x)-\tau\cdot n_i^{-1/4}}}</script><p>其中 $Cal$ 表示<strong>校准</strong>后的交叉熵损失函数，$y$ 是样本 $x$ 的真实标签， $f(x)$ 表示logits分布。右侧是一个非常类似交叉熵损失函数的式子，唯一不同的是，对于真实标签 $y$ 的logits值 $f_y(x)$ ，将其logits减去了一个基于该标签数量 $n_y$ 的正则项 $\tau n_y^{-1/4}$ ，其中 $\tau$ 是一个超参数，用来控制平滑程度。</p>
+        <p>论文的立意是在 <strong><em>联邦学习</em></strong> 过程中，结合 <strong><em>对比学习</em></strong> ，用局部与全局的两种 <strong><em>蒸馏</em></strong> 方式来 <strong><em>无监督</em></strong> 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。</p>
+<p>关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监督学习（Unsupervised Learning）。</p>
+<p>联邦学习的整体流程如下图所示：</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png" alt=""></p>
+<p>其中：</p>
+<ol>
+<li>Local Update：每个client各自学习自己的样本表示，获得各自独立的本地参数模型；</li>
+<li>Local model update：将本地参数模型上传到中心服务器；</li>
+<li>Global aggregation：中心服务器对所有client上传的模型进行聚合，最简单的方式是（假设本地模型都是同构的）根据client各自拥有样本数量的占比进行加权平均；</li>
+<li>Global model download：每个client将global model各自下载到本地。</li>
+</ol>
+<p>论文主要聚焦的是步骤1。</p>
 <a id="more"></a>
-<p>简单理解这个公式起到的作用：如果某个标签 $y$ 是少数类，即该标签的样本数量很少，那么对应的 $\tau n_y^{-1/4}$ 就会比较大，该标签的logits值会被减去一个相对更大的数目，而其它非真实标签的logits会被减去一个相对较小的值，使得 $\log$ 函数内的分式总值变大，最终计算出来的损失值 $\mathcal{L}_{Cal}$ 会比校正前更小。</p>
-<p>从结果上来讲，只要一个类是少数类，它的样本所计算出来的损失值会被变相地缩小，具体的缩小幅度是由超参数 $\tau$ 控制的， $\tau$ 越大表示越不重视少数类的权重。</p>
-<p>可以想象，如果不在意自己样本子集内的少数类，那么在子集少数类上的过拟合就会减小。联邦学习到最后统一的模型中，各自模型都聚焦于自己样本较多、训练较为充分的那部分，最终的效果就会更好。</p>
-<p>实验：</p>
-<ul>
-<li>2种标签偏离情况：quantity-based, distribution-based （后者更接近真实的分布），以及两者的组合</li>
-<li>数据集-真实：SVHN, CIFAR-10, CIFAR-100, ImageNet,</li>
-<li>数据集-模拟：人工合成的数据集, FEMNIST</li>
-</ul>
-<p>本文的优点：和原文几乎等量的附录，用于证明文中提出的公式的有效性。</p>
-<hr>
-<p>多想一步，这个函数能不能使用在更加普适的场景里，比如标签不平衡的数据集？</p>
-<p>直觉上应该是不行的，因为这里的设定是，原分布标签是均匀或接近均匀的，而样本子集的标签是有偏的，为了使得样本子集不在少数类上过拟合，从而降低了少数类的权重；而目前在数据（标签）分布不均匀的问题上，都是采用采样或者调整loss的方式让少数类的权重更高（使模型更focus在少数类问题的分类准确度上），所以解决问题的初衷是不一致的。</p>
-<p>那广义来讲，这个损失函数能用在什么场景里呢？</p>
-<p>假设我们已知标签的分布是基本均匀的，但因为某些原因我们的训练数据里的标签不均匀，此时可以用这个方式来调整训练数据的标签权重。</p>
-<p><code>TODO：阅读附录，确认loss所造成的影响和理解的是否一致</code></p>
+<p>以SimCLR为例，传统对比学习的损失函数如下所示：</p>
+<script type="math/tex; mode=display">
+L_c^{local}=-\log\frac{\exp(sim(z_i,\tilde{z_i})/\tau)}{\sum_{k\in(B\cup \tilde B-{i})}\exp (sim(z_i,z_k)/\tau)}</script><p>其中，$B$与$\tilde B$分别表示原批次的训练样本，与进行了数据增强后的训练样本，即从一个真实样本中采用窗口看到的某个截图； $sim$ 表示某种对两个向量的相似性度量方法（比如余弦相似度，值得注意的是，作者在论文中也提到了余弦相似度，不过在实际的代码实现里用的是两个正则化（torch.F.normalize）后的向量内积）， $\tau$ 类似知识蒸馏中用于控制程度的超参（temperature）。</p>
+<p>整个函数的目标是：对于样本 $i$ ，已知模型最后一个隐层对于它的向量表示 $z_i$ ，及其增强后的样本 $\tilde{z_i}$ ，希望两者的向量更加接近，其相似度更高；而对于两个批次中其他 $2n-1$ 个负样本，希望其向量相似度越低。</p>
+<p>在此背景基础上，论文提出，在本地模型更新时，除了每个样本和自己的增强后样本进行对比学习，两者还可以从彼此的分布中进一步学习，谓之为 <strong>关系损失（relational loss）</strong> 。特别地，给定：</p>
+<script type="math/tex; mode=display">
+r_i^j=\frac{\exp(sim(z_i,z_j)/\tau)}{\sum_{k\in B_r}\exp (sim(z_i,z_k)/\tau)}</script><p>公式（2）表示了正样本 $i$ 的隐层向量 $z_i$ 对于一个随机采样的批次 $B_r$ 中任意一个样本 $j$ 的隐层向量 $z_j$ 的概率分布。与之对应，正样本在对比学习中的增强样本隐层向量 $\tilde{z_i}$ 与后者也会有一个对应的向量分布：</p>
+<script type="math/tex; mode=display">
+\tilde{r_i}^j=\frac{\exp(sim(\tilde{z_i},z_j)/\tau)}{\sum_{k\in B_r}\exp (sim(\tilde{z_i},z_k)/\tau)}</script><p>作者提出的关系损失理念是：如果模型真的能辨认出增强前后的样本归属于同一个样本（或者标签），那么，除了对比学习本身设计的目标——这两个样本间的相似度高于同批次中其他负样本的相似度——以外，<strong>这两个样本对于某个随机的负样本的相似度分布函数也应该相似</strong>。</p>
+<p>但是这个相似度要怎么度量呢？作者提出将这两个概率向量相加作为两者要学习的目标，即：</p>
+<script type="math/tex; mode=display">
+L_r^{local}=\frac{1}{2}KL(r_i||r_i^{target})+\frac{1}{2}KL(\tilde{r_i}||r_i^{target}), \quad where\; r_i^{target}=\frac{1}{2}(r_i+\tilde{r_i})</script><p>其中$KL$指的是KL散度，也即相对熵（其实就是真实分布不是one-hot前提下的交叉熵）。</p>
+<p>正如上面所述，这个损失函数最小化的目标是两个概率分布对于其分布均值之间的距离。举个具体的例子，比如正样本及其增强分别代表下图中的同一只狗的两种不同的视角：</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/002.png" alt=""></p>
+<p>那么，对于另一个随机采样的样本（比如猫的某个视角），正样本的向量和随机采样样本的向量的相似度，预期上应该是低于正样本的向量和另一张狗的随机采样样本的相似度的；而作为正样本的增强样本，它对于不同的随机样本，也应该具有这样相似的特性。</p>
+<p>最后，将对比学习的损失函数与关系损失函数加和，得到了联邦学习的步骤1中的最终损失函数：</p>
+<script type="math/tex; mode=display">
+L_{Local-KD}=L_c^{Local}+L_r^{Local}</script><hr>
+<p>除了局部的损失函数外，作者也引入了全局的损失函数，出于这样的考虑：模型不但要从自己独立的样本中来学习分布，自然也要从全局模型中学习信息，所以在全局上提出了与式（6）类似的全局损失函数。唯一的差别在于，全局损失函数的关系损失函数中，随机采样的<strong>负样本的表示向量从全局模型中取得</strong>（此时全局模型的参数是不冻结的，只用于提供特征向量）。</p>
+<p>作者在CIFAR-10，SVHN，F-MNIST三个数据集上进行了实验，使用Dirichlet分布模拟联邦学习中各个client分得的样本分布，采用了SimCLR，MoCo，BYOL，ProtoCL，FedU一共5个方法作为基线模型，将各自加入关系损失后的+FedX方法作为提出的方法，在三个数据集上分别取得了4.29pp, 5.52pp和1.58pp的增长。</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/003.png" alt=""></p>
+<p>此外，作者也进行了一系列的有效性实验（在此不再赘述）包括：</p>
+<ol>
+<li>验证模块有效性的消融实验（本地关系损失函数+全局关系损失函数+一个额外添加的两层全连接层变换） ；</li>
+<li>参数敏感性实验：控制不同的数据量，不同的client数量与不同的本地-全局模型交互次数；</li>
+<li>Embed空间：全局模型与局部模型向量间的分布情况，预期上类内更加相似，类间更加不同。</li>
+</ol>
+<p>最后，作者也提出了将FedX扩展到半监督学习的场景中的设定，在这个场景下，首先用未标注数据对模型进行参数的初始化，然后再在模型上层添加一个全连接层，使用标注数据再额外训练一定的轮次做微调。</p>
 
       
     </div>
@@ -394,7 +416,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Data-Mining/" rel="tag"># Data Mining</a>
+            <a href="/tags/Federated-Learning/" rel="tag"># Federated Learning</a>
+          
+            <a href="/tags/Unsupervised-Learning/" rel="tag"># Unsupervised Learning</a>
+          
+            <a href="/tags/Constrastive-Learning/" rel="tag"># Constrastive Learning</a>
+          
+            <a href="/tags/Knowledge-Distillation/" rel="tag"># Knowledge Distillation</a>
           
         </div>
       
@@ -407,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" rel="next" title="[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
-                <i class="fa fa-chevron-left"></i> [PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification
+              <a href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/" rel="next" title="[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration">
+                <i class="fa fa-chevron-left"></i> [ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration
               </a>
             
           </div>
@@ -416,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/" rel="prev" title="[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
-                [ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
