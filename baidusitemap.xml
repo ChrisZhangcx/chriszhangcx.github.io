@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/Transformer-family/</loc>
+    <lastmod>2023-02-19T04:46:15.923Z</lastmod>
+  </url>  <url>
+    <loc>/CIKM-22-Retrieval-Based-Time-Series-Forecasting/</loc>
+    <lastmod>2022-10-04T07:35:08.047Z</lastmod>
+  </url>  <url>
     <loc>/CIKM-22-Towards-Understanding-the-Overfitting-Phenomenon-of-Deep-Click-Through-Rate-Prediction-Models/</loc>
     <lastmod>2022-09-19T12:19:21.561Z</lastmod>
   </url>  <url>
