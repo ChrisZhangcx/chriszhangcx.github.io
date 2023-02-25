@@ -250,6 +250,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/" itemprop="url">[WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-02-25T11:22:14+08:00">
+                2023-02-25
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2023-02-25T13:41:43+08:00" content="2023-02-25">
+                2023-02-25
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Recommendation-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Recommendation System</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Facebook(Meta) 发表的一篇关于使用对比学习+多任务学习，增强推荐商品相关性的一篇文章，目前在Facebook Marketplace里A/B测试了两周，能够将用户-推荐商品的交互率增加4.5%。</p>
+<p>有意思的一点是，这个一作哥们一次性在arXiv上挂了两篇文章，发表在不同的顶会上，起了类似的名字 <em><a href="https://arxiv.org/abs/2302.10527" target="_blank" rel="noopener">名称+解释+facebook marketplace</a></em> ，说明F家的线上值得介绍的新方法应用还挺多。 <del>然而还是被美国马裁员了4/5，令人唏嘘。</del></p>
+<p>文章一如工业界的行事风格，不整弯弯绕绕的理论分析，直接给方法+线上效果，有种简单有效的美。</p>
+<hr>
+<p>文章的亮点在于，除了比较基础的对 &lt;用户query，推荐商品&gt; 使用对比学习来获得两者的表示以外，还加入了另一个任务来更好地匹配线上的推荐逻辑。具体来说，由于线上的推荐过程包含了检索、排序在内的多阶段步骤，所以仅仅获得语义相关的向量表示是不够的（例如，基于cos-similarity优化的对比学习向量表示只能增强检索阶段的效果，但对排序阶段的效果增强不够显著，甚至会起负作用）。作者引入了easy/hard negative sample的概念，加入了另一个学习任务，使得获得的向量表示对线上使用更加有效。</p>
+<p><img src="/./WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/001.png" alt=""></p>
+<hr>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/Transformer-family/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -794,8 +960,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2022-09-18T09:34:47+08:00" content="2022-09-18">
-                2022-09-18
+              <time itemprop="dateUpdated" datetime="2023-02-25T11:27:33+08:00" content="2023-02-25">
+                2023-02-25
               </time>
             </span>
             
@@ -1741,170 +1907,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/浅谈Knowledge-Injected-BERTs/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/浅谈Knowledge-Injected-BERTs/" itemprop="url">浅谈Knowledge-Injected BERTs</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2020-03-02T14:26:55+08:00">
-                2020-03-02
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2020-03-02T14:36:38+08:00" content="2020-03-02">
-                2020-03-02
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 <code>外部信息</code> ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。</p>
-<p>你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训练过程，迭代学习7个任务等奇妙的方式来实现这一目的。</p>
-<p>本文首发在知乎文章，因为 <strong>知乎</strong> 和 <strong>Hexo</strong> 的markdown格式有冲突的地方，直接拷过来排版属实不能看，所以请移步下方链接：</p>
-<p><a href="https://zhuanlan.zhihu.com/p/102278228" target="_blank" rel="noopener">浅谈：Knowledge-injected BERTs</a></p>
-<p>本文也被收录至知乎 <code>Paperweekly</code> 专栏及同名公众号中。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/浅谈Knowledge-Injected-BERTs/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1955,7 +1957,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
