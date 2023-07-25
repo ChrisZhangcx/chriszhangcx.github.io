@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Data Mining,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -77,18 +77,17 @@
 
 
 
-<meta name="description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
-<meta name="keywords" content="Data Mining">
+<meta name="description" content="整理公司项目时候做的关于CTR预估的基础模型的笔记： Notion site">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
-<meta property="og:url" content="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/index.html">
+<meta property="og:title" content="关于CTR预估模型的笔记">
+<meta property="og:url" content="/关于CTR预估模型的笔记/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta property="og:description" content="整理公司项目时候做的关于CTR预估的基础模型的笔记： Notion site">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2022-09-11T05:32:41.626Z">
+<meta property="og:updated_time" content="2023-07-25T06:52:11.130Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
-<meta name="twitter:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta name="twitter:title" content="关于CTR预估模型的笔记">
+<meta name="twitter:description" content="整理公司项目时候做的关于CTR预估的基础模型的笔记： Notion site">
 
 
 
@@ -118,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+  <link rel="canonical" href="/关于CTR预估模型的笔记/">
 
 
 
 
 
-  <title>[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration | Chris Zhang</title>
+  <title>关于CTR预估模型的笔记 | Chris Zhang</title>
   
 
 
@@ -251,7 +250,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+    <link itemprop="mainEntityOfPage" href="/关于CTR预估模型的笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chengxi Zhang">
@@ -268,7 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration</h1>
+          <h1 class="post-title" itemprop="name headline">关于CTR预估模型的笔记</h1>
         
 
         <div class="post-meta">
@@ -281,8 +280,8 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2022-09-11T12:08:52+08:00">
-                2022-09-11
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-07-25T14:51:17+08:00">
+                2023-07-25
               </time>
             
 
@@ -294,8 +293,8 @@
               </span>
               更新时间
 
-              <time itemprop="dateUpdated" datetime="2022-09-11T13:32:41+08:00" content="2022-09-11">
-                2022-09-11
+              <time itemprop="dateUpdated" datetime="2023-07-25T14:52:11+08:00" content="2023-07-25">
+                2023-07-25
               </time>
             </span>
             
@@ -304,28 +303,6 @@
           </span>
           
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Data-Mining/" itemprop="url" rel="index">
-                    <span itemprop="name">Data Mining</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -354,29 +331,8 @@
       
 
       
-        <p>假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。</p>
-<p>背景：<strong>联邦学习</strong>中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个<strong>统一的模型</strong>来在样本全集上拥有相对更好的效果。</p>
-<p>问题：不同用户的数据子集分布是有差异的，差异体现在两方面：特征分布差异与标签分布差异，本文主要聚焦于标签分布的差异。</p>
-<p>公式描述：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}_{Cal}(y;f(x))=-\log \frac{e^{f_y(x)-\tau\cdot n_y^{-1/4}}}{\sum_{i\neq y}e^{f_i(x)-\tau\cdot n_i^{-1/4}}}</script><p>其中 $Cal$ 表示<strong>校准</strong>后的交叉熵损失函数，$y$ 是样本 $x$ 的真实标签， $f(x)$ 表示logits分布。右侧是一个非常类似交叉熵损失函数的式子，唯一不同的是，对于真实标签 $y$ 的logits值 $f_y(x)$ ，将其logits减去了一个基于该标签数量 $n_y$ 的正则项 $\tau n_y^{-1/4}$ ，其中 $\tau$ 是一个超参数，用来控制平滑程度。</p>
-<a id="more"></a>
-<p>简单理解这个公式起到的作用：如果某个标签 $y$ 是少数类，即该标签的样本数量很少，那么对应的 $\tau n_y^{-1/4}$ 就会比较大，该标签的logits值会被减去一个相对更大的数目，而其它非真实标签的logits会被减去一个相对较小的值，使得 $\log$ 函数内的分式总值变大，最终计算出来的损失值 $\mathcal{L}_{Cal}$ 会比校正前更小。</p>
-<p>从结果上来讲，只要一个类是少数类，它的样本所计算出来的损失值会被变相地缩小，具体的缩小幅度是由超参数 $\tau$ 控制的， $\tau$ 越大表示越不重视少数类的权重。</p>
-<p>可以想象，如果不在意自己样本子集内的少数类，那么在子集少数类上的过拟合就会减小。联邦学习到最后统一的模型中，各自模型都聚焦于自己样本较多、训练较为充分的那部分，最终的效果就会更好。</p>
-<p>实验：</p>
-<ul>
-<li>2种标签偏离情况：quantity-based, distribution-based （后者更接近真实的分布），以及两者的组合</li>
-<li>数据集-真实：SVHN, CIFAR-10, CIFAR-100, ImageNet,</li>
-<li>数据集-模拟：人工合成的数据集, FEMNIST</li>
-</ul>
-<p>本文的优点：和原文几乎等量的附录，用于证明文中提出的公式的有效性。</p>
-<hr>
-<p>多想一步，这个函数能不能使用在更加普适的场景里，比如标签不平衡的数据集？</p>
-<p>直觉上应该是不行的，因为这里的设定是，原分布标签是均匀或接近均匀的，而样本子集的标签是有偏的，为了使得样本子集不在少数类上过拟合，从而降低了少数类的权重；而目前在数据（标签）分布不均匀的问题上，都是采用采样或者调整loss的方式让少数类的权重更高（使模型更focus在少数类问题的分类准确度上），所以解决问题的初衷是不一致的。</p>
-<p>那广义来讲，这个损失函数能用在什么场景里呢？</p>
-<p>假设我们已知标签的分布是基本均匀的，但因为某些原因我们的训练数据里的标签不均匀，此时可以用这个方式来调整训练数据的标签权重。</p>
-<p><code>TODO：阅读附录，确认loss所造成的影响和理解的是否一致</code></p>
+        <p>整理公司项目时候做的关于CTR预估的基础模型的笔记：</p>
+<p><a href="https://chriszhangcx.notion.site/KG-CTR-literature-review-Reading-notes-05-06-2022-007ec5b02d954587b620398ac8fa9aa8?pvs=4" target="_blank" rel="noopener">Notion site</a></p>
 
       
     </div>
@@ -392,12 +348,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Data-Mining/" rel="tag"># Data Mining</a>
-          
-        </div>
-      
 
       
       
@@ -407,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" rel="next" title="[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
-                <i class="fa fa-chevron-left"></i> [PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification
+              <a href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/" rel="next" title="[WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace">
+                <i class="fa fa-chevron-left"></i> [WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace
               </a>
             
           </div>
@@ -416,10 +366,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/" rel="prev" title="[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
-                [ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
