@@ -250,6 +250,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/" itemprop="url">CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-07-26T14:14:53+08:00">
+                2023-07-26
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2023-07-26T15:28:44+08:00" content="2023-07-26">
+                2023-07-26
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTR/" itemprop="url" rel="index">
+                    <span itemprop="name">CTR</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇<a href="https://dl.acm.org/doi/abs/10.1145/3447548.3467077" target="_blank" rel="noopener">文章</a>，正好借机把CTR模型中关于数值特征的embedding方法整理一下。</p>
+<ol>
+<li>No Embedding：数值拼接后作为特征直接输入到模型中；<ol>
+<li>[Google Play] Wide &amp; Deep</li>
+<li>[JD] DMT</li>
+<li>[YouTube] DNN: 原始值、乘方、开方三者拼接</li>
+<li>[Facebook] DLRM: 两层全连接</li>
+</ol>
+</li>
+<li>Field Embedding：多用于学术界。每一个数值都对应一个向量，数值的embedding是值与向量的乘积；</li>
+<li>Discretization：离散化，多用于工业界。离散边界的选择有下面三种方式：<ol>
+<li>基于固定距离/固定频数；</li>
+<li>取对数（Kaggle某比赛的冠军使用过）后向下取整；</li>
+<li>基于模型的分桶方式，如GBDT</li>
+</ol>
+</li>
+</ol>
+<p>论文提出：离散化的方式存在三个比较关键的问题：</p>
+<ol>
+<li>分桶指标的选择比较固定，往往需要一个独立的模块，没法做成端到端的方式；</li>
+<li>桶的上边界和上一个桶的下边界，两者数值相差可能很小，但实际的embedding差异很大；</li>
+<li>同一个桶的上边界和下边界，两者数值相差可能很大，但实际的embedding是相同的。</li>
+</ol>
+<p>论文主要的思路是将每个数值域的桶都用可学习的矩阵形式表示（行数为桶，列数为每个桶的embedding），随后学习一个长度为桶数的权重，来将每一个数值转化为每一个桶的权重。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/关于CTR预估模型的笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1709,170 +1892,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/浅谈无监督场景下的句向量表示方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/浅谈无监督场景下的句向量表示方法/" itemprop="url">浅谈无监督场景下的句向量表示方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2021-09-10T13:50:26+08:00">
-                2021-09-10
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2021-09-16T17:00:50+08:00" content="2021-09-16">
-                2021-09-16
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>如何无监督地获得一个句子的向量表示？</p>
-<p>或许上过NLP或大数据课程的同学会想到课程小作业的王者：TF-IDF。掌握一些NLP基础的同学可能还会想到静态或动态的词向量：Word2Vec、GloVe、ELMo，BERT——有着探索精神的同学或许会再试试BERT的一些为人所熟知的变种：RoBERTa、DistillBERT。对BERT的结构及其各层表达能力有所了解的同学（底层学基础特征，中部学句法信息，上层学语义信息）<sup><a href="#fn_1" id="reffn_1">1</a></sup>会试着取出多层的词向量表示后再做聚合。当然，还需要将这些词向量汇总成一个句子的最终向量，不外乎求和、平均、各种Pooling……最后，也会有同学去寻找一些专门为词向量表达能力进行过强化的预训练模型Sent2Vec、SentenceBERT。总之，换模型、换方法、换idea，已经21世纪了，调参调包谁不会呢？</p>
-<p>有所不同的是，除了盘点上述常用的无监督句向量获得方式外（作为快速获得无监督词向量的途径，上面的方法在落地时具有轮子齐全、即插即用的巨大优势），本文<strong>还将介绍一些获得无监督句向量表示的较新方法</strong>。这些方法或是解决了上述方法在形式上过于简单粗暴而存在的一些问题，或是在句向量表达能力的评估系统（如STS tasks）中具有压倒性的优势——众所周知，在21世纪，SoTA与Accept呈显著正相关。</p>
-<p>现在就让我们开始吧。</p>
-<p>本文第一部分会介绍基于词袋模型的一系列句向量表示方法，第二部分主要讲述基于预训练词向量的Power Mean Embedding表示方法，第三部分将通过4篇论文串讲的方式，从0到1地介绍对比学习（Contrastive Learning）在无监督句向量中的应用，最后在文末整理了一些值得思考与讨论的点，希望能为大家的工作带来一些微小的启发。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/浅谈无监督场景下的句向量表示方法/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1923,7 +1942,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1934,7 +1953,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

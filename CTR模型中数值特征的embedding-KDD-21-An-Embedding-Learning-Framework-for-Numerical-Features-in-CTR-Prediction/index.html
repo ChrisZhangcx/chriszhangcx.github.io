@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="CTR,">
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="Is life always this hard, or is it just when you&apos;re a kid?">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chris Zhang">
-<meta property="og:url" content="/tags/凸优化/index.html">
+<meta name="description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
+<meta name="keywords" content="CTR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTR模型中数值特征的embedding - [KDD&#39;21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+<meta property="og:url" content="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/index.html">
 <meta property="og:site_name" content="Chris Zhang">
-<meta property="og:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta property="og:description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-07-26T07:28:44.151Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chris Zhang">
-<meta name="twitter:description" content="Is life always this hard, or is it just when you&apos;re a kid?">
+<meta name="twitter:title" content="CTR模型中数值特征的embedding - [KDD&#39;21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+<meta name="twitter:description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="/tags/凸优化/">
+  <link rel="canonical" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
 
 
 
 
 
-  <title>标签: 凸优化 | Chris Zhang</title>
+  <title>CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction | Chris Zhang</title>
   
 
 
@@ -141,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -235,78 +237,229 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>凸优化<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/凸优化笔记-2-凸函数/" itemprop="url">
-              
-                <span itemprop="name">凸优化笔记(2): 凸函数</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-08T09:46:18+08:00" content="2018-12-08">
-          12-08
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-07-26T14:14:53+08:00">
+                2023-07-26
+              </time>
+            
 
-    </header>
-  </article>
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
 
+              <time itemprop="dateUpdated" datetime="2023-07-26T15:28:44+08:00" content="2023-07-26">
+                2023-07-26
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTR/" itemprop="url" rel="index">
+                    <span itemprop="name">CTR</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/凸优化笔记-1-凸集/" itemprop="url">
-              
-                <span itemprop="name">凸优化笔记(1): 凸集</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-05T19:33:48+08:00" content="2018-12-05">
-          12-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <p>最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇<a href="https://dl.acm.org/doi/abs/10.1145/3447548.3467077" target="_blank" rel="noopener">文章</a>，正好借机把CTR模型中关于数值特征的embedding方法整理一下。</p>
+<ol>
+<li>No Embedding：数值拼接后作为特征直接输入到模型中；<ol>
+<li>[Google Play] Wide &amp; Deep</li>
+<li>[JD] DMT</li>
+<li>[YouTube] DNN: 原始值、乘方、开方三者拼接</li>
+<li>[Facebook] DLRM: 两层全连接</li>
+</ol>
+</li>
+<li>Field Embedding：多用于学术界。每一个数值都对应一个向量，数值的embedding是值与向量的乘积；</li>
+<li>Discretization：离散化，多用于工业界。离散边界的选择有下面三种方式：<ol>
+<li>基于固定距离/固定频数；</li>
+<li>取对数（Kaggle某比赛的冠军使用过）后向下取整；</li>
+<li>基于模型的分桶方式，如GBDT</li>
+</ol>
+</li>
+</ol>
+<p>论文提出：离散化的方式存在三个比较关键的问题：</p>
+<ol>
+<li>分桶指标的选择比较固定，往往需要一个独立的模块，没法做成端到端的方式；</li>
+<li>桶的上边界和上一个桶的下边界，两者数值相差可能很小，但实际的embedding差异很大；</li>
+<li>同一个桶的上边界和下边界，两者数值相差可能很大，但实际的embedding是相同的。</li>
+</ol>
+<p>论文主要的思路是将每个数值域的桶都用可学习的矩阵形式表示（行数为桶，列数为每个桶的embedding），随后学习一个长度为桶数的权重，来将每一个数值转化为每一个桶的权重。</p>
+<a id="more"></a>
+<p>论文的模型主要有三部分构成：</p>
+<ol>
+<li><p>Meta-embeddings：每个数值类型特征学习一个向量，例如第$j$个数值域，学习$R^{H_j\times d}$的向量，其中$H_j$表示特征域$j$的桶数，$d$表示embedding维度；</p>
+</li>
+<li><p>Automatic Discretization：通过学习权重矩阵的方式获得每一个数值的分桶结果，这个结果不是一个$0\sim H_j$中的一个值，而是每一个桶对应的权重。例如对于数值$x_j$：</p>
+<script type="math/tex; mode=display">
+h_j=\text{Leaky\_ReLU}(w_jx_j) \\
+\widetilde{x_j}=W_jh_j+\alpha h_j</script><p>其中$w_j\in\textbf{R}^{1\times H_j}$，$W_j\in\textbf{R}^{H_j\times H_j}$，都是可学习的矩阵，$\alpha$是自定义的skip-connection的权重。最终获得的$\widetilde{x_j}\in{1\times H_j}$，这个向量经过带temperature的softmax作为数值$x_j$在每一个桶中的权重。</p>
+<script type="math/tex; mode=display">
+\widehat{x_j}=\frac{e^{\frac{1}{\tau}}\widetilde{x_j}^h}{\sum_{l=1}^{H_j}e^{\frac{1}{\tau}}\widetilde{x_j}^l}</script></li>
+</ol>
+<p>   值得注意的是，temperature $\tau$也是一个可学习的值，在此不再赘述。</p>
+<ol>
+<li><p>Aggregation Function：作者提出了三种方法，但实际选择的默认就是最后一种：带权聚合。</p>
+<ol>
+<li>Max-pooling：softmax后选择值最大的一个取下标作为分到的桶</li>
+<li>Top-K Sum：取softmax后值最大的K个，将对应的桶向量求和</li>
+<li>Weighted-Average：使用softmax后的权重乘到1中的meta-embedding中，获得对应数值最终的权重。</li>
+</ol>
+</li>
+</ol>
+<p>实验的结果可参见原文。整体来说，和上面的方法比起来，论文的亮点是其中第二个部分，也就是使用soft分桶结果来替换掉了原来的（称之为hard）分桶结果，避免了上面提出的离散化三个问题的发生。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTR/" rel="tag"># CTR</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/关于CTR预估模型的笔记/" rel="next" title="关于CTR预估模型的笔记">
+                <i class="fa fa-chevron-left"></i> 关于CTR预估模型的笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -314,6 +467,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -545,6 +705,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
