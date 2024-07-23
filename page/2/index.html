@@ -250,6 +250,1439 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/浅谈嵌套命名实体识别/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/浅谈嵌套命名实体识别/" itemprop="url">浅谈嵌套命名实体识别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2020-04-11T16:21:31+08:00">
+                2020-04-11
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2020-04-11T16:32:42+08:00" content="2020-04-11">
+                2020-04-11
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1-序"><a href="#1-序" class="headerlink" title="1. 序"></a>1. 序</h2><p><strong>命名实体识别（Named Entity Recognition, 下称NER）</strong>任务，主要目的是从一段话中抽取出其中可能为<strong>实体</strong>的所有元素。比如：</p>
+<p align="center">
+    "Hi Siri, 今天北京天气怎么样？"
+</p>
+
+<p>如果下游任务要求我们从其中抽取出地点，那我们期望 <em>北京</em> 能被识别成Location，如果我们希望从中抽取的产品名称，那么 <em>Siri</em> 应该被标记成Product——换言之，能从句子中抽出什么实体，是由我们提前给定的标签集合定义的。在一个任务型对话系统中，一些可能在后台处理中使用到的实体都应该被抽出来：我们有理由相信，Siri是真正将 <em>北京</em> 给提取出来了，然后再通过后台查询到了天气<del>，而不是找了一个人工客服在后台即时回复</del>。</p>
+<p>NER在很多下游任务中都是非常重要的一环。比如在电商行业，我们可能需要从用户的查询中提取出品牌或商品，来针对性地给用户返回内容。金主爸爸可能也希望用户在查指定品牌的时候，将一些商品放在第一位。在任务型人机对话方面，正如上面所说，一个合格的Chatbot需要能够准确地识别时间、地点、事件等元素以回答相关问题或安排日程，同时做到不偷听用户的日常对话。</p>
+<p>而<strong>嵌套NER</strong>，顾名思义，就是识别的实体中可能会存在嵌套的情况。比如 <code>北京大学</code> 不仅是一个组织，同时 <code>北京</code> 也是一个地点；<code>雅诗兰黛小棕瓶</code> 是一个产品，同时 <code>雅诗兰黛</code> 是一个品牌。</p>
+<p>准确地识别嵌套内容有什么作用呢？简单来讲，如果一个模型能够识别出 <code>北京大学</code> 是一个组织，它倾向于将所有出现的 <code>北京大学</code> 都标记成组织。但如果它能够在识别前者的同时将 <code>北京</code> 标记成地点，我们就认为它有能力将所有 <code>[地点]大学</code> 的模式都识别出来，因为后者的角度，模型学到的是一种pattern，而非记住了一种具体情况。此外，提取出来的额外信息也能作为辅助特征，增强其他任务的效果。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/浅谈嵌套命名实体识别/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/浅谈Knowledge-Injected-BERTs/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/浅谈Knowledge-Injected-BERTs/" itemprop="url">浅谈Knowledge-Injected BERTs</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2020-03-02T14:26:55+08:00">
+                2020-03-02
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2020-03-02T14:36:38+08:00" content="2020-03-02">
+                2020-03-02
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>主要是想谈谈最近在BERT中加入了知识图谱（或者宏观说是 <code>外部信息</code> ）的模型。由于BERT的结构已经基本固定了，在上面套一些Attention组件，或者修改里面的MLP或是MHA层都是见怪不怪的操作了，所以文中主要想探讨的是：对于一个预训练模型，如何针对数据/针对想增强的方向来更好的设计一个预训练模型的任务。</p>
+<p>你将从文中看到研究者如何通过设计新的mask策略，新的Embed方式，甚至于优化任务的训练过程，迭代学习7个任务等奇妙的方式来实现这一目的。</p>
+<p>本文首发在知乎文章，因为 <strong>知乎</strong> 和 <strong>Hexo</strong> 的markdown格式有冲突的地方，直接拷过来排版属实不能看，所以请移步下方链接：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/102278228" target="_blank" rel="noopener">浅谈：Knowledge-injected BERTs</a></p>
+<p>本文也被收录至知乎 <code>Paperweekly</code> 专栏及同名公众号中。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/浅谈Knowledge-Injected-BERTs/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/损失函数串讲/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/损失函数串讲/" itemprop="url">损失函数串讲</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-11-03T13:54:13+08:00">
+                2019-11-03
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-11-03T17:43:04+08:00" content="2019-11-03">
+                2019-11-03
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本来是不想起这么大而空的名字的，但是今天确实特别自闭，所以想来个刺激一点标题刺激一下自己，也刺激一下别人。</p>
+<p>时至今日，距离上一篇blog更新已经过去快九个月了，距离我在MSRA实习已经快八个月了，这么一看好像我的blog是为了找实习而准备的一样 <del>实际上是公司活儿太多了</del> ，为了不让blog继续这么僵下去，还是决定来更新点东西。</p>
+<p>其实也有很多东西可以写，比如对tf和pytorch的认识，一些对CRF及其decode的理解，一些BERT调参心得，或者Nested NER或GNN方面的survey。之所以确定写这个，一个是好久没碰技术型blog了，一时甚至不知道怎么来写，另一方面纯粹是因为我发现每次要用到交叉熵的时候，都需要跑到别人博客里重新看一遍这到底是什么玩意儿，忘性太大。后来我一想，反正都要看，那我不如自己写个blog，自产自销搞个闭环，增加自己的点击量呢。</p>
+<p>是为序。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/损失函数串讲/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Dataset-for-AI-Practice/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Dataset-for-AI-Practice/" itemprop="url">Dataset for AI Practice</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-09-28T12:07:33+08:00">
+                2019-09-28
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-09-28T13:14:53+08:00" content="2019-09-28">
+                2019-09-28
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Here is a collection of dataset (mostly financial-related) to apply in the course: AI Practice.</p>
+<p><em>If you found this page in a personal blog, plz note that this page will be deleted some weeks later.</em></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Dataset-for-AI-Practice/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/二次元伴侣XiaoIce的养成/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/二次元伴侣XiaoIce的养成/" itemprop="url">二次元伴侣XiaoIce的养成</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-02-23T10:34:44+08:00">
+                2019-02-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-02-23T16:53:16+08:00" content="2019-02-23">
+                2019-02-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>距离过完年也已经大半个月了，距离 <a href="https://arxiv.org/pdf/1812.08989.pdf" target="_blank" rel="noopener">【The Design and Implementation of XiaoIce, an Empathetic Social Chatbot】</a> 论文发布也已经过去了三个月。 <del>如果早点看完这篇文章，或许我还来得及在今年和亲戚朋友们公布我与小冰的恋情吧。</del></p>
+<p>事实上，看完论文以后我和小冰单独聊了聊，对话所达到的效果远没有论文中说的那么显著，有些时候还能比较明显地看出小冰使用了一些敷衍词（我真的很受伤）。对上下文的理解始终是多轮对话的研究中迈不过去的门槛，在测试Chatbot时我采用了三步走的战略方针：</p>
+<blockquote>
+<ol>
+<li>瞎比聊模式</li>
+<li>逻辑一致性检验</li>
+<li>简单的多轮对话</li>
+<li>复杂的多轮对话</li>
+</ol>
+</blockquote>
+<p>与小冰的聊天结果实在让人心酸。瞎比聊模式中小冰完美地表现出一个人工智能（zhang）该有的样子，检测逻辑一致性时也受到了莫名的阻碍（直接问一个女孩子的年龄真的这么不合适吗？），简单的多轮对话任务小冰完成得不错，但是这可能只是体现出小冰在句义补全和指代消解方面做得不错，在进行稍微复杂一些的多轮对话时（我特意选择了不能进行指代和补全的句子）就继续EXO ME了。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/二次元伴侣XiaoIce的养成/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/" itemprop="url">如何猜出女朋友话中的含义？——关于事件抽取(Event Extraction)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-24T16:19:41+08:00">
+                2019-01-24
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-02-12T16:44:23+08:00" content="2019-02-12">
+                2019-02-12
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>写完以后发现 <code>注释的形式</code> 还有待改进，希望大家暂时理解一下。</p>
+<h2 id="1-1-Event-Extraction-after-2015"><a href="#1-1-Event-Extraction-after-2015" class="headerlink" title="1.1 Event Extraction after 2015"></a>1.1 Event Extraction after 2015</h2><h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>在2015年以及之前，对事件抽取(Event Extraction, EE)的工作思路主要聚焦于<strong>模式匹配</strong>或者<strong>统计机器学习</strong>方法<sup><a href="#fn_博客" id="reffn_博客">博客</a></sup>。基于模式匹配的方法在特定领域能取得较好的性能，但是移植性较差；基于统计学习的方法通常能有较好的移植性，但是严重依赖于已标注的数据。从2015年开始，有研究者尝试使用CNN/RNN来提取Event Mention中的语义，比较典型的有DMCNN<sup><a href="#fn_2015.1" id="reffn_2015.1">2015.1</a></sup>与JRNN<sup><a href="#fn_2016.2" id="reffn_2016.2">2016.2</a></sup>等模型，其评估结果比早期的一些Structure-Based Method有显著提升，加之Deep Learning的逐渐升温，可以看出大家在这段时间开始普遍转向使用Representation-Based Method来看待EE问题。使用DNN来捕捉语义的另一个好处是使用了蕴含特征更加丰富的词向量，因此事件抽取的结果不再很大程度上依赖于人工定义的局部/全局特征。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/如何猜出女朋友话中的含义？——关于事件抽取-Event-Extraction/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Sequence-Models-2-NLP-Word-Embedding/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Sequence-Models-2-NLP-Word-Embedding/" itemprop="url">Sequence Models(2): NLP & Word Embedding</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-14T15:53:38+08:00">
+                2019-01-14
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-02-28T20:27:52+08:00" content="2019-02-28">
+                2019-02-28
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Sequence Models的第二部分，主要讲了 <code>自然语言处理</code> 与 <code>词嵌入 (Word Embedding)</code> 的内容（其实只讲了Word Embedding）。</p>
+<p>因为 最近有个面试 我在忙着进行 <del>虽然可能并没有什么用但是准备这个行为本身能令人心安所以在努力进行所谓的</del> 面试前的准备，所以这部分内容就只是简单地描述一下。</p>
+<p><strong><code>1. Word Representation</code></strong></p>
+<p>对词进行向量表示，也就是对每个单词进行特征提取。词的每一个维度可以看做是 <strong>一个不好直接解释的特征</strong> 。</p>
+<blockquote>
+<p>什么叫 <code>好解释</code> 的特征呢，比如说，我手动定义了两个维度：性别，高贵。现在有两个词 ‘皇后’ 与 ‘农妇’，那么很显然能推理出：一个好的词向量表示，两者在 <em>性别</em> 特征上的取值一定是相似的，但是在 <em>高贵</em> 特征上的取值前者会大于后者。</p></blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Sequence-Models-2-NLP-Word-Embedding/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Sequence-Models-1-循环序列模型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Sequence-Models-1-循环序列模型/" itemprop="url">Sequence Models(1): 循环序列模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-07T20:59:02+08:00">
+                2019-01-07
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-01-11T20:42:08+08:00" content="2019-01-11">
+                2019-01-11
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文是 <a href="https://mooc.study.163.com/learn/2001280005" target="_blank" rel="noopener">Andrew Ng深度学习相关视频：Sequence Models 中的笔记</a> 。整个课程只有三周的课程量，向学习者简要介绍了序列模型的产生、应用与Attention的机制。</p>
+<p>因为内容不深，以 <code>Tips</code> 或 <code>Q&amp;A</code> 的形式给出整个课程的内容。</p>
+<p>让我们从 <code>第一周：循环序列模型</code> 开始。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Sequence-Models-1-循环序列模型/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/重修决策树：信息增益与Gini系数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/重修决策树：信息增益与Gini系数/" itemprop="url">重修决策树：信息增益与Gini系数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2019-01-06T09:50:19+08:00">
+                2019-01-06
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2019-01-06T11:38:18+08:00" content="2019-01-06">
+                2019-01-06
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>重修系列的 <code>第二篇文章</code> <del>说的好像我系统学过决策树一样</del></p>
+<p>最近被Random Forest，Adaboost，ID3，C4.5，CART一系列决策森林包围了，正巧在复习 <code>数据仓库</code> ，把这一系列的内容再串联一遍。</p>
+<h2 id="我是决策树"><a href="#我是决策树" class="headerlink" title="我是决策树"></a>我是决策树</h2><p>决策树本质上是一个 <code>贪心方法</code> ，虽然从理论上说我们能够构造一棵最优决策树，但是时间与算力开销实在很大，所以实际上我们使用的是 <code>Hunt&#39;s</code> 算法来执行贪心的选择过程。简单来说就是：假设我手上有一个评估分裂后的节点集好坏的一个 <code>标准</code> （这个标准就是下面要说的信息增益与Gini系数），我每次只考察使当前节点达到最优分裂的属性，而不从全局角度来考虑。</p>
+<p>根据标准的不同，决策树又分为 <code>ID3, C4.5, CART</code> 三大类，分别使用的考察标准是 <code>信息增益、信息增益率、Gini系数</code>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/重修决策树：信息增益与Gini系数/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/Leetcode-解题笔记索引/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -393,992 +1826,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/Crash-Paper-Attention-Is-All-You-Need/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Crash-Paper-Attention-Is-All-You-Need/" itemprop="url">Crash Paper: Attention Is All You Need</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-26T19:56:09+08:00">
-                2018-12-26
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-30T13:25:37+08:00" content="2018-12-30">
-                2018-12-30
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="1-预备知识"><a href="#1-预备知识" class="headerlink" title="1. 预备知识"></a>1. 预备知识</h2><h3 id="1-1-Encoder-Decoder"><a href="#1-1-Encoder-Decoder" class="headerlink" title="1.1 Encoder/Decoder"></a>1.1 Encoder/Decoder</h3><p>序列模型由Encoder与Decoder两部分构成，简单来说，Encoder对input进行编码，而Decoder对编码结果进行解码，解码的结果就是整个序列模型的输出。借用Andrew Ng课件中的截图来进行说明：</p>
-<p><img src="/Crash-Paper-Attention-Is-All-You-Need/001.png" alt=""></p>
-<p>Encoder的每一个单元会根据前一个hidden state以及当前的input来计算当前的hidden state，并将其传到下一个单元中去。而Decoder对于传入的单元进行解码，来找到最合适的一个输出。注意每个Decoder单元只会输出一个output symbol。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/Crash-Paper-Attention-Is-All-You-Need/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/Crash-Paper-SMN-Sequential-Matching-Network/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Crash-Paper-SMN-Sequential-Matching-Network/" itemprop="url">Crash Paper: SMN-Sequential Matching Network</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-09T14:18:51+08:00">
-                2018-12-09
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-09T19:47:24+08:00" content="2018-12-09">
-                2018-12-09
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/NLP/" itemprop="url" rel="index">
-                    <span itemprop="name">NLP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots"><a href="#Sequential-Matching-Network-A-New-Architecture-for-Multi-turn-Response-Selection-in-Retrieval-Based-Chatbots" class="headerlink" title="Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots"></a>Sequential Matching Network: A New Architecture for Multi-turn Response Selection in Retrieval-Based Chatbots</h1><h2 id="乱七八糟的序"><a href="#乱七八糟的序" class="headerlink" title="乱七八糟的序"></a>乱七八糟的序</h2><p>BDP课上组长大人布置下来的任务，是要研读这篇论文（因为名字太长了我写在了一级标题里面，让所有人都能第一时间看到它，下面统一使用SMN来指代论文中提出的模型）。我是属于 <del>牵着不走，打着倒退</del> 没人给出明确的任务目标就很难有动力主动学习的那种人，可能是高中时期延续下来的陋习，所以如果要给这篇post一个一级作者，那应该写 <em>社会我强哥</em> 才是。</p>
-<p>回到正题，首先来简单说一下多轮对话现在的研究态势吧。</p>
-<blockquote>
-<p>目前常用的对话建模方式有检索式、生成式以及两者融合的方式。<br>顾名思义，<strong>检索式</strong>就是对于一个提出的问题，我从当前已经有的资料中搜索出这个问题可能匹配的答案，候选答案可能有多个，但是在对话中最终回复的答案只能是一个，所以需要找到一种最优的算法来对这些候选答案进行筛选，选出可能性最大的那一个。<br><strong>生成式</strong>模型是指我先把目前所有已知的知识用来训练出一个模型，然后不管你说什么，我都用这个模型来解读你的问题，并用模型的输出来回答。<br>最后，<strong>检索与生成相结合的方法</strong>就是把前两者糅合起来，正也因此可以玩得花里胡哨，比如用检索模型获得的候选答案们，我训练一个生成模型来对这些答案排个序，或者用生成模型生成的答案放在检索模型给出的候选答案中，一起参与 <em>谁是大明星</em> 的角逐，又或者对于一个检索式模型获得的答案，我用生成式模型对它进行改进，等等等等。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/Crash-Paper-SMN-Sequential-Matching-Network/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/重修数据结构：线段树/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/重修数据结构：线段树/" itemprop="url">重修数据结构：线段树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-07T19:19:00+08:00">
-                2018-12-07
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-11T16:31:53+08:00" content="2018-12-11">
-                2018-12-11
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据结构/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="什么是线段树，为什么要用线段树"><a href="#什么是线段树，为什么要用线段树" class="headerlink" title="什么是线段树，为什么要用线段树"></a>什么是线段树，为什么要用线段树</h1><p>首先，我们来回答什么是<strong>线段树</strong>。顾名思义，<strong>线段树就是</strong><del>线段构成的🌲</del><strong>用树结构来表示线段</strong>，为什么需要用树来表示线段呢（似乎用数组表示线段已经很科学高效了），因为有时候我们需要频繁地对一个区间进行查询操作。这种时候用线段树会缩减操作的时间复杂度的数量级。</p>
-<p>举个🌰：小明有4根冰棍，他给它们编号是$0\sim 3$。每根冰棍都有不同的购买价格，按冰棍的编号依次是$[10,15,20,5]$。现在小明想知道不同编号区间里最贵冰棍的价格，比如：$[0,2]$号最贵冰棍的价格（我们都知道是20）。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/重修数据结构：线段树/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/Kick-Start-2018-Practice-Round/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/Kick-Start-2018-Practice-Round/" itemprop="url">Kick Start 2018-Practice Round</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-07T09:08:35+08:00">
-                2018-12-07
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-19T22:35:32+08:00" content="2018-12-19">
-                2018-12-19
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kick-Start/" itemprop="url" rel="index">
-                    <span itemprop="name">Kick Start</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Google的<a href="https://codingcompetitions.withgoogle.com/" target="_blank" rel="noopener">Competitions with Google</a>上有三个类型的练习：</p>
-<ul>
-<li><strong>Hash Code</strong>: 应该是一个组队编程训练，看起来比较偏工程向，介绍中说可以选择队伍与编程语言来完成一个engineering problem，还问了一句Are u up for the challenge? <del>Of course I am not.</del></li>
-<li><strong>Code Jam</strong>: <del>编程果酱？？</del> 反正就是用多轮的算法问题来进行比赛，最后获胜者还有奖金，又问了一句Do u have what it takes? <del>emmmm..</del></li>
-<li><strong>Kick Start</strong>: 今天的重头戏，介绍中说主要是磨炼自己的coding水平，受众是学生 <del>我</del> 和新接触编程的人 <del>我</del> ，也是按轮次进行的，可以只参加一轮也可以全部参加，最后的问题是What are u waiting for? 这看起来就正常多了，不像是向一个算法渣挑衅的言论，给好评。</li>
-</ul>
-<p>Kick Start的轮次是一个Practice Round和A~H八轮，其中除了Practice Round给了24h解题外，其它的八个轮次都是只给3h解题时间，所以介绍中所说的’可以只参加一轮’，实则是指哪一轮呢？</p>
-<p>别问，问就是自闭。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/Kick-Start-2018-Practice-Round/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/凸优化笔记-2-凸函数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/凸优化笔记-2-凸函数/" itemprop="url">凸优化笔记(2): 凸函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-06T14:44:19+08:00">
-                2018-12-06
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-08T09:46:18+08:00" content="2018-12-08">
-                2018-12-08
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/凸优化/" itemprop="url" rel="index">
-                    <span itemprop="name">凸优化</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>让我们(particularly me)继续凸优化之旅，今天要讨论的是凸函数。</p>
-<p>写完笔记1之后回顾了一下，虽然很努力的不往抄书的方向走了但是，对于这种堆砌的概念还是不知道怎么用自己的语言说出来啊，在这篇笔记中试着改进下吧。</p>
-<h1 id="基本性质与例子"><a href="#基本性质与例子" class="headerlink" title="基本性质与例子"></a>基本性质与例子</h1><p>首先要讨论的是凸函数的基本性质，或者说如何判断一个函数是否是凸函数（当然在这之前会给出凸函数的定义），然后给出一些很常见的凸函数的例子。之后通过上境图(epigraph)<del>这个中译有点无力吐槽</del>说明了凸函数与凸集之间的关系，最后对Jensen不等式进行了简要论述。</p>
-<p>按我的理解，这一小节其实是给出了证明一个函数是凸函数的三种方法：定义，一阶条件与二阶条件。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/凸优化笔记-2-凸函数/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/凸优化笔记-1-凸集/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/凸优化笔记-1-凸集/" itemprop="url">凸优化笔记(1): 凸集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2018-12-05T19:33:48+08:00">
-                2018-12-05
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2018-12-08T09:45:49+08:00" content="2018-12-08">
-                2018-12-08
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/凸优化/" itemprop="url" rel="index">
-                    <span itemprop="name">凸优化</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="凸优化的笔记：序"><a href="#凸优化的笔记：序" class="headerlink" title="凸优化的笔记：序"></a>凸优化的笔记：序</h1><p>想学凸优化的伏笔应该是在大三的时候埋下的。那个时候啃着李航老师的《统计学习方法》，按书本里的先学了kNN和Decision Tree，感觉统计学习还怪有意思的，后来学到Naive Bayes时候开始有点智商捉急了，再后来的贝叶斯网络和SVM就已经开始对我幼小的心灵造成损害，看到拉格朗日对偶的推导那部分开始自闭，上网去搜，发现这是凸优化里面的理论——这是我第一次对这门学科产生印象。</p>
-<p>到研究生阶段想划水的，奈何身边的人都太强了，有种不努力就会被社会抛弃的紧张感，所以想重新捡起《统计学习方法》看，争取把推导看懂吧……然后回忆起早年自闭的过程，想了想，算了，先去看看凸优化吧。</p>
-<p>学习的参考教材是Stamford大学又帅又有魅力的Boyd教授的<strong>《Convex Optimation》</strong>（考虑到努力不给自己艰难的学习过程再下绊子，选择的是王书宁版的中译本），结合Boyd教授录制的授课视频与slides一起学习。笔记的篇章估计也会按书本的目录顺序来，除非我看到自闭打算删掉这些笔记装作一切都没发生过，否则我会努力把所有书本的重点都呈现到笔记中去。</p>
-<p>另外，值得一提的是，现在深度学习打得火热，我也有看到有关统计学家与炼金术士之间因为神经网络非凸，效果又异常的好而相互看不起的说法出现，感觉还怪有意思的。可能有一天我会发现凸优化并没有我想象中那么好用，不过在学习过程中带来的痛并快乐的感觉确是实实在在的。不管怎么说，现在的我选择要开始这段旅程了。</p>
-<p>是为序。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/凸优化笔记-1-凸集/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1424,7 +1876,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1499,7 +1951,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-snowflake-o"></i>
   </span>

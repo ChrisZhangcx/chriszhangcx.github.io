@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="论文的立意是在 联邦学习\ 过程中，结合 对比学习\ ，用局部与全局的两种 蒸馏\ 方式来 无监督\ 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ECCV&#39;22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
+<meta property="og:url" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="论文的立意是在 联邦学习\ 过程中，结合 对比学习\ ，用局部与全局的两种 蒸馏\ 方式来 无监督\ 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/002.png">
+<meta property="og:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/003.png">
+<meta property="og:updated_time" content="2024-07-23T11:37:21.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ECCV&#39;22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
+<meta name="twitter:description" content="论文的立意是在 联邦学习\ 过程中，结合 对比学习\ ，用局部与全局的两种 蒸馏\ 方式来 无监督\ 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。 关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation">
+<meta name="twitter:image" content="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/">
+
+
+
+
+
+  <title>[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:37:01+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:37:21+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>论文的立意是在 <strong><em>联邦学习\</em></strong> 过程中，结合 <strong><em>对比学习\</em></strong> ，用局部与全局的两种 <strong><em>蒸馏\</em></strong> 方式来 <strong><em>无监督\</em></strong> 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。</p>
+<p>关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监督学习（Unsupervised Learning）。</p>
+<p>联邦学习的整体流程如下图所示：</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png" alt="img"></p>
+<p>其中：</p>
+<ol>
+<li>Local Update：每个client各自学习自己的样本表示，获得各自独立的本地参数模型；</li>
+<li>Local model update：将本地参数模型上传到中心服务器；</li>
+<li>Global aggregation：中心服务器对所有client上传的模型进行聚合，最简单的方式是（假设本地模型都是同构的）根据client各自拥有样本数量的占比进行加权平均；</li>
+<li>Global model download：每个client将global model各自下载到本地。</li>
+</ol>
+<p>论文主要聚焦的是步骤1。</p>
+<a id="more"></a>
+<p>以SimCLR为例，传统对比学习的损失函数如下所示：</p>
+<p>其中，$B$与$\tilde B$分别表示原批次的训练样本，与进行了数据增强后的训练样本，即从一个真实样本中采用窗口看到的某个截图； $sim$ 表示某种对两个向量的相似性度量方法（比如余弦相似度，值得注意的是，作者在论文中也提到了余弦相似度，不过在实际的代码实现里用的是两个正则化（torch.F.normalize）后的向量内积）， $\tau$ 类似知识蒸馏中用于控制程度的超参（temperature）。</p>
+<p>整个函数的目标是：对于样本 $i$ ，已知模型最后一个隐层对于它的向量表示 $z_i$ ，及其增强后的样本 $\tilde{z_i}$ ，希望两者的向量更加接近，其相似度更高；而对于两个批次中其他 $2n-1$ 个负样本，希望其向量相似度越低。</p>
+<p>在此背景基础上，论文提出，在本地模型更新时，除了每个样本和自己的增强后样本进行对比学习，两者还可以从彼此的分布中进一步学习，谓之为 <strong>关系损失（relational loss）</strong> 。特别地，给定：</p>
+<p>公式（2）表示了正样本 $i$ 的隐层向量 $z_i$ 对于一个随机采样的批次 $B_r$ 中任意一个样本 $j$ 的隐层向量 $z_j$ 的概率分布。与之对应，正样本在对比学习中的增强样本隐层向量 $\tilde{z_i}$ 与后者也会有一个对应的向量分布：</p>
+<p>作者提出的关系损失理念是：如果模型真的能辨认出增强前后的样本归属于同一个样本（或者标签），那么，除了对比学习本身设计的目标——这两个样本间的相似度高于同批次中其他负样本的相似度——以外，<strong>这两个样本对于某个随机的负样本的相似度分布函数也应该相似</strong>。</p>
+<p>但是这个相似度要怎么度量呢？作者提出将这两个概率向量相加作为两者要学习的目标，即：</p>
+<p>其中$KL$指的是KL散度，也即相对熵（其实就是真实分布不是one-hot前提下的交叉熵）。</p>
+<p>正如上面所述，这个损失函数最小化的目标是两个概率分布对于其分布均值之间的距离。举个具体的例子，比如正样本及其增强分别代表下图中的同一只狗的两种不同的视角：</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/002.png" alt="img"></p>
+<p>那么，对于另一个随机采样的样本（比如猫的某个视角），正样本的向量和随机采样样本的向量的相似度，预期上应该是低于正样本的向量和另一张狗的随机采样样本的相似度的；而作为正样本的增强样本，它对于不同的随机样本，也应该具有这样相似的特性。</p>
+<p>最后，将对比学习的损失函数与关系损失函数加和，得到了联邦学习的步骤1中的最终损失函数：</p>
+<hr>
+<p>除了局部的损失函数外，作者也引入了全局的损失函数，出于这样的考虑：模型不但要从自己独立的样本中来学习分布，自然也要从全局模型中学习信息，所以在全局上提出了与式（6）类似的全局损失函数。唯一的差别在于，全局损失函数的关系损失函数中，随机采样的<strong>负样本的表示向量从全局模型中取得</strong>（此时全局模型的参数是不冻结的，只用于提供特征向量）。</p>
+<p>作者在CIFAR-10，SVHN，F-MNIST三个数据集上进行了实验，使用Dirichlet分布模拟联邦学习中各个client分得的样本分布，采用了SimCLR，MoCo，BYOL，ProtoCL，FedU一共5个方法作为基线模型，将各自加入关系损失后的+FedX方法作为提出的方法，在三个数据集上分别取得了4.29pp, 5.52pp和1.58pp的增长。</p>
+<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/003.png" alt="img"></p>
+<p>此外，作者也进行了一系列的有效性实验（在此不再赘述）包括：</p>
+<ol>
+<li>验证模块有效性的消融实验（本地关系损失函数+全局关系损失函数+一个额外添加的两层全连接层变换） ；</li>
+<li>参数敏感性实验：控制不同的数据量，不同的client数量与不同的本地-全局模型交互次数；</li>
+<li>Embed空间：全局模型与局部模型向量间的分布情况，预期上类内更加相似，类间更加不同。</li>
+</ol>
+<p>最后，作者也提出了将FedX扩展到半监督学习的场景中的设定，在这个场景下，首先用未标注数据对模型进行参数的初始化，然后再在模型上层添加一个全连接层，使用标注数据再额外训练一定的轮次做微调。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/" rel="next" title="[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration">
+                <i class="fa fa-chevron-left"></i> [ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/CIKM-22-Towards-Understanding-the-Overfitting-Phenomenon-of-Deep-Click-Through-Rate-Prediction-Models/" rel="prev" title="[CIKM'22] Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models">
+                [CIKM'22] Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

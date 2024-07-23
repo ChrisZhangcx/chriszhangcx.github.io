@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
+<meta property="og:url" content="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-07-23T11:36:00.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ICML&#39;22] Federated Learning with Label Distribution Skew via Logits Calibration">
+<meta name="twitter:description" content="假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。 背景：联邦学习中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个统一的模型来在样本全集上拥有相对更好的效果。 问题">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+
+
+
+
+
+  <title>[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:35:37+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:36:00+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。</p>
+<p>背景：<strong>联邦学习</strong>中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个<strong>统一的模型</strong>来在样本全集上拥有相对更好的效果。</p>
+<p>问题：不同用户的数据子集分布是有差异的，差异体现在两方面：特征分布差异与标签分布差异，本文主要聚焦于标签分布的差异。</p>
+<p>公式描述：</p>
+<p>其中 $Cal$ 表示<strong>校准</strong>后的交叉熵损失函数，$y$ 是样本 $x$ 的真实标签， $f(x)$ 表示logits分布。右侧是一个非常类似交叉熵损失函数的式子，唯一不同的是，对于真实标签 $y$ 的logits值 $f_y(x)$ ，将其logits减去了一个基于该标签数量 $n_y$ 的正则项 $\tau n_y^{-1/4}$ ，其中 $\tau$ 是一个超参数，用来控制平滑程度。</p>
+<a id="more"></a>
+<p>简单理解这个公式起到的作用：如果某个标签 $y$ 是少数类，即该标签的样本数量很少，那么对应的 $\tau n_y^{-1/4}$ 就会比较大，该标签的logits值会被减去一个相对更大的数目，而其它非真实标签的logits会被减去一个相对较小的值，使得 $\log$ 函数内的分式总值变大，最终计算出来的损失值 $\mathcal{L}_{Cal}$ 会比校正前更小。</p>
+<p>从结果上来讲，只要一个类是少数类，它的样本所计算出来的损失值会被变相地缩小，具体的缩小幅度是由超参数 $\tau$ 控制的， $\tau$ 越大表示越不重视少数类的权重。</p>
+<p>可以想象，如果不在意自己样本子集内的少数类，那么在子集少数类上的过拟合就会减小。联邦学习到最后统一的模型中，各自模型都聚焦于自己样本较多、训练较为充分的那部分，最终的效果就会更好。</p>
+<p>实验：</p>
+<ul>
+<li>2种标签偏离情况：quantity-based, distribution-based （后者更接近真实的分布），以及两者的组合</li>
+<li>数据集-真实：SVHN, CIFAR-10, CIFAR-100, ImageNet,</li>
+<li>数据集-模拟：人工合成的数据集, FEMNIST</li>
+</ul>
+<p>本文的优点：和原文几乎等量的附录，用于证明文中提出的公式的有效性。</p>
+<hr>
+<p>多想一步，这个函数能不能使用在更加普适的场景里，比如标签不平衡的数据集？</p>
+<p>直觉上应该是不行的，因为这里的设定是，原分布标签是均匀或接近均匀的，而样本子集的标签是有偏的，为了使得样本子集不在少数类上过拟合，从而降低了少数类的权重；而目前在数据（标签）分布不均匀的问题上，都是采用采样或者调整loss的方式让少数类的权重更高（使模型更focus在少数类问题的分类准确度上），所以解决问题的初衷是不一致的。</p>
+<p>那广义来讲，这个损失函数能用在什么场景里呢？</p>
+<p>假设我们已知标签的分布是基本均匀的，但因为某些原因我们的训练数据里的标签不均匀，此时可以用这个方式来调整训练数据的标签权重。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TODO：阅读附录，确认loss所造成的影响和理解的是否一致</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" rel="next" title="[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
+                <i class="fa fa-chevron-left"></i> [PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/" rel="prev" title="[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation">
+                [ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

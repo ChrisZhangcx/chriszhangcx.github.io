@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTR模型中数值特征的embedding - [KDD&#39;21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+<meta property="og:url" content="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2024-07-23T11:41:59.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CTR模型中数值特征的embedding - [KDD&#39;21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+<meta name="twitter:description" content="最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇文章，正好借机把CTR模型中关于数值特征的embedding方法整理一下。  No Embedding：数值拼接后作为特征直接输入到模型中； [Google Play] Wide &amp;amp; Deep [JD] DMT [YouTube] DNN: 原始值、乘方、开方三者拼接 [Facebook] DLRM: 两层全连接">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
+
+
+
+
+
+  <title>CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:41:41+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:41:59+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近在做一些ratio预估方面的工作，看了华为诺亚实验室和上交合作的一篇<a href="https://dl.acm.org/doi/abs/10.1145/3447548.3467077" target="_blank" rel="noopener">文章</a>，正好借机把CTR模型中关于数值特征的embedding方法整理一下。</p>
+<ol>
+<li>No Embedding：数值拼接后作为特征直接输入到模型中；<ol>
+<li>[Google Play] Wide &amp; Deep</li>
+<li>[JD] DMT</li>
+<li>[YouTube] DNN: 原始值、乘方、开方三者拼接</li>
+<li>[Facebook] DLRM: 两层全连接</li>
+</ol>
+</li>
+<li>Field Embedding：多用于学术界。每一个数值都对应一个向量，数值的embedding是值与向量的乘积；</li>
+<li>Discretization：离散化，多用于工业界。离散边界的选择有下面三种方式：<ol>
+<li>基于固定距离/固定频数；</li>
+<li>取对数（Kaggle某比赛的冠军使用过）后向下取整；</li>
+<li>基于模型的分桶方式，如GBDT</li>
+</ol>
+</li>
+</ol>
+<p>论文提出：离散化的方式存在三个比较关键的问题：</p>
+<ol>
+<li>分桶指标的选择比较固定，往往需要一个独立的模块，没法做成端到端的方式；</li>
+<li>桶的上边界和上一个桶的下边界，两者数值相差可能很小，但实际的embedding差异很大；</li>
+<li>同一个桶的上边界和下边界，两者数值相差可能很大，但实际的embedding是相同的。</li>
+</ol>
+<p>论文主要的思路是将每个数值域的桶都用可学习的矩阵形式表示（行数为桶，列数为每个桶的embedding），随后学习一个长度为桶数的权重，来将每一个数值转化为每一个桶的权重。</p>
+<a id="more"></a>
+<p>论文的模型主要有三部分构成：</p>
+<ol>
+<li><p>Meta-embeddings：每个数值类型特征学习一个向量，例如第$j$个数值域，学习$R^{H_j\times d}$的向量，其中$H_j$表示特征域$j$的桶数，$d$表示embedding维度；</p>
+</li>
+<li><p>Automatic Discretization：通过学习权重矩阵的方式获得每一个数值的分桶结果，这个结果不是一个$0\sim H_j$中的一个值，而是每一个桶对应的权重。例如对于数值$x_j$：</p>
+<p>其中$w_j\in\textbf{R}^{1\times H_j}$，$W_j\in\textbf{R}^{H_j\times H_j}$，都是可学习的矩阵，$\alpha$是自定义的skip-connection的权重。最终获得的$\widetilde{x_j}\in{1\times H_j}$，这个向量经过带temperature的softmax作为数值$x_j$在每一个桶中的权重。</p>
+</li>
+</ol>
+<p>值得注意的是，temperature $\tau$也是一个可学习的值，在此不再赘述。</p>
+<ol>
+<li>Aggregation Function：作者提出了三种方法，但实际选择的默认就是最后一种：带权聚合。<ol>
+<li>Max-pooling：softmax后选择值最大的一个取下标作为分到的桶</li>
+<li>Top-K Sum：取softmax后值最大的K个，将对应的桶向量求和</li>
+<li>Weighted-Average：使用softmax后的权重乘到1中的meta-embedding中，获得对应数值最终的权重。</li>
+</ol>
+</li>
+</ol>
+<p>实验的结果可参见原文。整体来说，和上面的方法比起来，论文的亮点是其中第二个部分，也就是使用soft分桶结果来替换掉了原来的（称之为hard）分桶结果，避免了上面提出的离散化三个问题的发生。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/" rel="next" title="[WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace">
+                <i class="fa fa-chevron-left"></i> [WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

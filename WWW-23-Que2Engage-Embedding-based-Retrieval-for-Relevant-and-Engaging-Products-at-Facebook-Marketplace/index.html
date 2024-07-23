@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Facebook(Meta) 发表的一篇关于使用对比学习+多任务学习，增强推荐商品相关性的一篇文章，目前在Facebook Marketplace里A/B测试了两周，能够将用户-推荐商品的交互率增加4.5%。 有意思的一点是，这个一作哥们一次性在arXiv上挂了两篇文章，发表在不同的顶会上，起了类似的名字 名称+解释+facebook marketplace ，说明F家的线上值得介绍的新方法应用还">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[WWW&#39;23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace">
+<meta property="og:url" content="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="Facebook(Meta) 发表的一篇关于使用对比学习+多任务学习，增强推荐商品相关性的一篇文章，目前在Facebook Marketplace里A/B测试了两周，能够将用户-推荐商品的交互率增加4.5%。 有意思的一点是，这个一作哥们一次性在arXiv上挂了两篇文章，发表在不同的顶会上，起了类似的名字 名称+解释+facebook marketplace ，说明F家的线上值得介绍的新方法应用还">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/001.png">
+<meta property="og:image" content="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/002.png">
+<meta property="og:updated_time" content="2024-07-23T11:43:05.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[WWW&#39;23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace">
+<meta name="twitter:description" content="Facebook(Meta) 发表的一篇关于使用对比学习+多任务学习，增强推荐商品相关性的一篇文章，目前在Facebook Marketplace里A/B测试了两周，能够将用户-推荐商品的交互率增加4.5%。 有意思的一点是，这个一作哥们一次性在arXiv上挂了两篇文章，发表在不同的顶会上，起了类似的名字 名称+解释+facebook marketplace ，说明F家的线上值得介绍的新方法应用还">
+<meta name="twitter:image" content="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/">
+
+
+
+
+
+  <title>[WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[WWW'23] Que2Engage: Embedding-based Retrieval for Relevant and Engaging Products at Facebook Marketplace</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:40:36+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:43:05+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Facebook(Meta) 发表的一篇关于使用对比学习+多任务学习，增强推荐商品相关性的一篇文章，目前在Facebook Marketplace里A/B测试了两周，能够将用户-推荐商品的交互率增加4.5%。</p>
+<p>有意思的一点是，这个一作哥们一次性在arXiv上挂了两篇文章，发表在不同的顶会上，起了类似的名字 <em><a href="https://arxiv.org/abs/2302.10527" target="_blank" rel="noopener">名称+解释+facebook marketplace</a></em> ，说明F家的线上值得介绍的新方法应用还挺多。 <del>然而还是被美国马裁员了4/5，令人唏嘘。</del></p>
+<p>文章一如工业界的行事风格，不整弯弯绕绕的理论分析，直接给方法+线上效果，有种简单有效的美。</p>
+<hr>
+<p>文章的亮点在于，除了比较基础的对 &lt;用户query，推荐商品&gt; 使用对比学习来获得两者的表示以外，还加入了另一个任务来更好地匹配线上的推荐逻辑。具体来说，由于线上的推荐过程包含了检索、排序在内的多阶段步骤，所以仅仅获得语义相关的向量表示是不够的（例如，基于cos-similarity优化的对比学习向量表示只能增强检索阶段的效果，但对排序阶段的效果增强不够显著，甚至会起负作用）。作者引入了easy/hard negative sample的概念，加入了另一个学习任务，使得获得的向量表示对线上使用更加有效。</p>
+<p><img src="/./WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/001.png" alt="img"></p>
+<hr>
+<a id="more"></a>
+<p>具体来说，输入的样本是 &lt;用户query，推荐商品&gt; 对，样本对中的每一条数据意味着用户在输入query后，对于推荐的商品 <strong>进行了互动</strong>。这个概念相对重要，因为需要与后面的hard negative sample区分开。</p>
+<p>通过构造批次内负样本，可以进行对比学习，从而获得query与商品间的表示向量，以使得相关的向量的相关性最大。对比学习的损失函数为：</p>
+<p>简单解释如下：$B$为当前batch size，对于batch中的每一个正样本对$(q_i,d_i)$，可以构造$B-1$个负样本对$(q_i,d_j)$，损失函数旨在最大化真正的正样本占所有样本对的概率：</p>
+<blockquote>
+<p>也代表最大化softmax后的分子，极端情况下，分子的logits值很大，分母的logits趋近于分子的值，softmax后大括号内分式的值 $\frac{\exp \{s\cdot k(q_i,d_i)\}}{\sum_{j=1}^B\exp \{s\cdot k(q_i,d_j)\}}$ 趋近于1，因此损失趋近于0。</p>
+</blockquote>
+<p>其中，$k$表示的是某种度量相关性的指标（例如cos-similarity），$s$表示一个放缩值，在这个实验中作者选择的是20。将logits乘以一个固定值后再做softmax，能够从某种程度使得分布更加的sharp，从而加快收敛的速度。</p>
+<p>以上的描述其实是对传统的对比学习样本构造的描述，在论文中，作者提出了一个新的问题：<strong>在当前的任务中，这样构造的负样本有些过于容易学习了</strong>，例如：我们选择了正样本对 &lt;小棕瓶，雅诗兰黛小棕瓶&gt; ，这是一个用户进行了<strong>交互</strong>的正样本，假设同批次里另一个样本是 &lt;苹果，山东红富士&gt; ，这样对于前者，我们构造出来的负样本是 &lt;小棕瓶，山东红富士&gt; ，这是一个用脚趾想都不对的负样本推荐结果，作者管这种传统对比学习在同批次内构造出来的负样本叫“简单负样本”（easy negative sample）。 —— 由此我们能够明白，为什么作者认为这样的传统学习只能增加样本间的相关性，提升系统中召回阶段的效果，但对于实际系统的排序过程反而会起到负作用 —— 山东红富士 压根不会出现在搜索小棕瓶后的推荐名单里，所以模型的训练目标完全没有顾及到系统的排序阶段。</p>
+<hr>
+<p>为了解决这个问题，这篇论文的亮点在于提出了另一个辅助任务，从而将传统的对比学习任务变成了一个多任务训练的设定。辅助任务的损失函数如下:</p>
+<p>其中$c_i=s\cdot k(q_i,d_i)$。</p>
+<p>这不就是一个简单的BCE嘛！那它究竟有什么不一样呢？值得注意的是，这里的样本对其实是由真正的正样本，与作者构造的“困难负样本”构成，而这个辅助任务也就是希望模型能够区分正负样本的一个辅助分类任务。困难负样本，是作者特意从实际的系统中搜索得到的，当前系统<strong>在用户query后给出了推荐，但没有被用户触发交互的商品</strong>。</p>
+<p>通过这个辅助任务，就能在通过对比学习增加样本对的相关性的同时，也顾及到模型进行排序的能力，因为模型需要真正认识到究竟哪些样本是用户真正会点击的，而哪些样本相关性虽然高，但不会被点击到的。</p>
+<p>最终多任务学习目标的损失函数如下，其中$\lambda$是控制任务重要性占比的超参数。</p>
+<p>在学习过程中， <strong>困难负样本与正样本一起在对比学习中被视为正样本</strong> ，而只在辅助的分类任务中被打上不同的标签以作为区分，这样就能在不改变对比学习的学习模式下，引入一个新的任务了（只需要给每个样本对一个辅助标签，表示是否被用户触发后续的交互）。</p>
+<hr>
+<p>在实验中，作者实际收集了150m个 展示给客户的样本对，其中有75m个是实际获得用户交互的，剩下的作为困难正样本使用。整体的训练效果如下图所示：</p>
+<p><img src="/./WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/002.png" alt="img"></p>
+<p>表1是Que2Engage的表现（我理解和之前同组提出的Que2Search只是替换了一半的样本 - 如果样本数量是一致的话 - 并加了一个辅助任务），可以看到加入了多任务训练以及modality dropout以后，新模型能在相关性保持基本一致的情况下，很大幅度地提升了交互方面的性能。</p>
+<blockquote>
+<p>modality dropout是作者在文中提出的一个随机mask一些embedding的方法，但从实验结果来看其实只是想用一些trick保证relevance metric不比原来的更低，所以在这里就不赘述了。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Transformer-family/" rel="next" title="Transformer family">
+                <i class="fa fa-chevron-left"></i> Transformer family
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/" rel="prev" title="CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+                CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. PrefaceKDD 2022，唐杰老师课题组的paper，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple Transform">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[KDD&#39;22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries">
+<meta property="og:url" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="1. PrefaceKDD 2022，唐杰老师课题组的paper，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple Transform">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/002.png">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/003.png">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/004.png">
+<meta property="og:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/005.png">
+<meta property="og:updated_time" content="2024-07-23T11:33:49.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[KDD&#39;22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries">
+<meta name="twitter:description" content="1. PrefaceKDD 2022，唐杰老师课题组的paper，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。 论文有几方面的亮点：  把KG里面的节点关系（relation/edge）转换成了关系节点，从而把两个节点+两者的关系变成了一个三元组。文中称之为 Triple Transform">
+<meta name="twitter:image" content="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
+
+
+
+
+
+  <title>[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:30:37+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:33:49+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>KDD 2022，唐杰老师课题组的paper，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。</p>
+<p>论文有几方面的亮点：</p>
+<ol>
+<li>把KG里面的节点关系（relation/edge）转换成了<strong>关系节点</strong>，从而把两个节点+两者的关系变成了一个三元组。文中称之为 <strong>Triple Transformation Method</strong>；</li>
+<li>使用了<strong>两阶段pre-training</strong>。第一阶段主要是通过两种Random Walk来对整个图进行随机采样，然后进行训练；第二阶段是通过预定义的一些范式（1p/2p/3p/2i/3i）来采样并训练；文中分别称为<strong>Dense initialization与Sparse refinement</strong>；预训练的任务与BERT相类似，都是通过mask其中若干节点，并要求模型预测这些节点；（值得注意的是，在二阶段pre-training与整个fine-tune过程中，也会mask若干节点，但只要求模型预测出最终节点）；</li>
+<li>在Multi-Head Attention上层训练多个FFN，以模拟出多专家投票的效果，来增大模型参数量；使用Gating的方式控制每次只选择2个FFN产出结果，以节省计算时间。文中称之为<strong>Mix-of-Experts（MoE）</strong>。</li>
+</ol>
+<p>文中提出的这些方法使得kgTransformer具有以下优势：</p>
+<ol>
+<li>动态的KG embedding（因为使用了transformer，此处可以参照GloVe embed与ELMo embed）；</li>
+<li>模型的学习过程与应用的目标是匹配的（这句话是针对部分模型，训练目标是补全一阶的graph relation link，而应用到多跳的逻辑查询）。</li>
+</ol>
+<a id="more"></a>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><h3 id="2-1-Complex-Logical-Query"><a href="#2-1-Complex-Logical-Query" class="headerlink" title="2.1 Complex Logical Query"></a>2.1 Complex Logical Query</h3><p>本文主要解决的问题是复杂逻辑查询，包括：补充边（imputed edges）、多源的实体、Existential Positive First-Order（EPFO）逻辑，以及未知的中间实体等。下面是EPFO的一个示例：</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/001.png" alt="001"></p>
+<p>具体地，对于一句自然语言：</p>
+<blockquote>
+<p>What musical instrucments did Minnesota-born Nobel Prize winners play?</p>
+</blockquote>
+<p>所解析得到的EPFO查询，里面蕴含了一个若干约束的二跳（2-hop）知识图谱查询：</p>
+<ol>
+<li>第一个约束是查询一个实体，出生在Minnesota；</li>
+<li>第二个约束是查询一个实体，获得了诺贝尔奖，与上一个约束指向同一个实体；</li>
+<li>第二跳是查询上面得到的实体所Play的乐器。</li>
+</ol>
+<p>可知，第二跳的查询结果才是问句所想要得到的答案。</p>
+<p>此类EPFO查询的难点在于：</p>
+<ol>
+<li>EPFO查询的解析复杂度与hop之间的关系是指数级的；</li>
+<li>EPFO查询要求模型具有比较强的迁移与泛化能力。</li>
+</ol>
+<h3 id="2-2-Contributions"><a href="#2-2-Contributions" class="headerlink" title="2.2 Contributions"></a>2.2 Contributions</h3><p>论文的贡献在于：</p>
+<ol>
+<li>kgTransformer: 提出了kgTransformer，使用Triple Transformation策略来将知识图谱带有属性的边（relation）转换为不带属性的有向边；提出了MoE来顺应GNN稀疏激活的特性。</li>
+<li>Masked Pre-Training: 为了提升泛化能力，作者将复杂逻辑查询问题看作一个预测mask的问题，通过两阶段预训练来训练模型；在FB15k-237与NELL995两个数据集上进行了验证，说明了模型具有SoTA的效果。</li>
+</ol>
+<h2 id="3-KG-Pre-Training-Framework"><a href="#3-KG-Pre-Training-Framework" class="headerlink" title="3. KG Pre-Training Framework"></a>3. KG Pre-Training Framework</h2><h3 id="3-1-kgTransformer"><a href="#3-1-kgTransformer" class="headerlink" title="3.1 kgTransformer"></a>3.1 kgTransformer</h3><p>kgTransformer主要思想是把图作为sequence，放到transformer里面进行预训练与微调。为了实现这个目的，首先需要进行数据的准备。</p>
+<p>怎么将图转换为序列呢？节点之间的邻接关系可以通过random walk的方式获得，但relation edge带有的属性不好嵌入到这样的结构中去。所以作者提出在做数据准备的时候，把所有的relation edge也转换成节点加入的图中，而由relation node所连接的两个entity node，所使用的边都是有向边。</p>
+<p>值得注意的是，在这样的图里，<strong>实体节点与这个关系节点是需要做类型区分</strong>的，作者在transformer的输入层<strong>加入一个特殊的node type embedding</strong>来实现了这个目的。</p>
+<p>文中所使用的transformer<strong>大体</strong>结构及其内部公式与 <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention Is All You Need</a> 是一致的，只是sequence中每个token从原来的文字变成了现在的节点。在encoding的时候，通过Multi-Head Attention来计算得到每个节点相邻节点与它的关系重要程度，并通过FFN来进行变换得到最终输出。</p>
+<p>有一点与transformer不一样的是，对于MHA上面的FFN，作者初始化了多达32个（实际实验中选择的数量）FFN来进行学习，以模型专家投票的机制，称为Mix-of-Expert（MoE）。</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/002.png" alt="002"></p>
+<ul>
+<li>在训练时，门控机制只会选择权重最大的两个FFN，将其输出进行求和作为最终输出，以保证训练过程中的时间不过长；</li>
+<li>在预测时，不使用门控机制，将所有的FFN结果求和作为最终输出。</li>
+</ul>
+<p>为什么加入这样的MoE会让效果变好呢？作者提出：在transformer中，已经有研究发现FFN与key-value network效果是等同的，即FFN通过全连接的方式实现了与attention类似的效果，其全连接的权重可以从侧面被看做是输入间的重要性关系。因为这个原因，transformer里FFN输出的元素里大部分都是0，是很<strong>稀疏</strong>的。在此基础上，作者也做了一些前置研究，发现EPFO里的FFN一般只有10%-20%的神经元被激活（除了最后的decoder层）。正因为有稀疏性的存在，作者认为使用MoE，把一个很大的FFN分解成若干个小的FFN，能够更好的增强模型泛化能力。</p>
+<h3 id="3-2-Masked-Pre-Training-and-Fine-Tuning"><a href="#3-2-Masked-Pre-Training-and-Fine-Tuning" class="headerlink" title="3.2 Masked Pre-Training and Fine-Tuning"></a>3.2 Masked Pre-Training and Fine-Tuning</h3><p>在定义kgTransformer的结构与输入数据模式之后，开始进行模型的预训练与微调。作者又把预训练分为了两个阶段，在第一个阶段，使用随机游走采样出不同的子图，进行模型的初始化；在第二个阶段，使用预先定义好的一些meta-graph结构继续预训练。</p>
+<p>为什么要分成两个阶段进行预训练呢？作者认为，第一个阶段是尽可能将KG中的知识嵌入到模型中去，在此时采样窗口一般会设置得比较大，采样结果是稠密（dense）的，并且追求采样出来的子图的多样性，从而让模型见识尽可能多的pattern；但是，在实际应用时，大部分的逻辑查询结果是稀疏（甚至out-of-domain）的，而只进行第一阶段的预训练，会让模型的迁移能力变差。</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/003.png" alt="003"></p>
+<h4 id="2-stage-pre-training"><a href="#2-stage-pre-training" class="headerlink" title="2-stage pre-training"></a>2-stage pre-training</h4><p>在预训练的第一个阶段：dense initialization，作者使用了两类随机游走的策略对原始图像进行采样，分别是 <strong><em>random walk with restart (RWR)\</em></strong> 与 <strong><em>tree-based RWR\</em></strong>。专门加入tree-base是因为EPFO的逻辑连接关系更像是树状的结构。</p>
+<p>设kgTransformer内部参数为 $\theta$，随机mask的实体集合为$\varepsilon_{mask}$ ，随机采样后的子图原始输入为 $X=[x_{e_0}^{(0)},…,x_{e_T}^{(0)}]$，mask之后的子图输入为$\hat{X}$ ，第一阶段dense initialization的学习目标是最小化损失函数：</p>
+<p>其中 $A$ 表示节点之间的邻接关系，是由随机游走采样得到的。</p>
+<p>在预训练的第二个阶段：sparse refinement，作者使用了基础的EPFO pattern: $1p,2p,3p,2i,3i$ 作为meta-graph，保证每个子图中不会包含超过4个实体，随后仍然采用mask的方式让模型预测mask前的entity embedding，但在这个阶段，模型只会最小化所有目标实体的损失函数，即：</p>
+<h4 id="fine-tuning"><a href="#fine-tuning" class="headerlink" title="fine-tuning"></a>fine-tuning</h4><p>尽管预训练的第二阶段已经比较接近于想要解决的任务，但作者发现使用目标数据集进行fine-tune仍然是比较重要的（原文附录表2中进行了论证）；此处的训练目标是最小化所有可行解的损失，给定一组可行的答案$\varepsilon_A$，微调阶段对于每个查询的损失函数记为：</p>
+<p>其中加入的$\exp$意为这是softmax的最终输出，整个式子要求所有可行实体的softmax输出概率之和尽可能大。</p>
+<p>此外，作者注意到最近的NLP研究指出多任务学习能够有效避免模型过拟合，且从彼此的训练过程中受益。因此作者首先在所有的任务中进行了预训练，随后逐个在不同的任务中进行了微调。而在out-of-domain的泛化中，部分pattern是由几个meta-graph查询组合得到的，对于这些特殊的pattern，作者采用了一个比较tricky的分解预测的方法，分别求得子查询的结果后，将其概率转换为概率排名，取第一名作为最终的预测结果。</p>
+<h2 id="4-Experiments"><a href="#4-Experiments" class="headerlink" title="4. Experiments"></a>4. Experiments</h2><p>作者在FB15k-237与NELL995两个数据集的9个reasoning任务（包含了in-domain与out-of-domain）中测试了kgTransformer的泛化能力，结果如图所示：</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/004.png" alt="004"></p>
+<p>其中加粗部分为所有实验中效果最好的，下划线部分为实验中效果次好的。可以发现，与此前的SoTA方法CQD相比，作者提出的kgTransformer在NELL995上取得了绝对值2.4%（相对值4.6%）的提升，在FB15k-237数据上取得了绝对值3.5%（相对值12.1%）的提升，提升效果比较显著。</p>
+<p>作者对kgTransformer的组成方法：2-stage pre-training与fine-tune进行了缺省实验，结果如下所示：</p>
+<p><img src="/./KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/005.png" alt="005"></p>
+<p>作者发现，pre-training与fine-tuning作为模型的训练过程都是十分重要的，不管缺少哪一个部分，都会带来非常大的效果下降。而对于pre-training过程中的两个阶段，其中第二个阶段对于FB15k-237几乎没有影响，而给NELL995带来了显著的提升。考虑到<em>sparse refinement</em>的提出动机，说明NELL995中的稀疏pattern更多。</p>
+<p>对于MoE的效果，论文进行了不同数量MoE下的性能与模型效果比较，证明了使用合适数量（实验中为32个）的Experts+Gating机制，能够给kgTransformer带来16倍的size提升，而实际的计算成本只增加了11.6%-38.7%</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/浅谈无监督场景下的句向量表示方法/" rel="next" title="浅谈无监督场景下的句向量表示方法">
+                <i class="fa fa-chevron-left"></i> 浅谈无监督场景下的句向量表示方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" rel="prev" title="[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
+                [PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Preface"><span class="nav-number">1.</span> <span class="nav-text">1. Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">2.</span> <span class="nav-text">2. Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Complex-Logical-Query"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Complex Logical Query</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Contributions"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Contributions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-KG-Pre-Training-Framework"><span class="nav-number">3.</span> <span class="nav-text">3. KG Pre-Training Framework</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-kgTransformer"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 kgTransformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Masked-Pre-Training-and-Fine-Tuning"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Masked Pre-Training and Fine-Tuning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-stage-pre-training"><span class="nav-number">3.2.1.</span> <span class="nav-text">2-stage pre-training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fine-tuning"><span class="nav-number">3.2.2.</span> <span class="nav-text">fine-tuning</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Experiments"><span class="nav-number">4.</span> <span class="nav-text">4. Experiments</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

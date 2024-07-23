@@ -2,177 +2,240 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/Transformer-family/</loc>
+    
+    <lastmod>2024-07-23T11:43:49.878Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/</loc>
+    
+    <lastmod>2024-07-23T11:43:05.402Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/CTR%E6%A8%A1%E5%9E%8B%E4%B8%AD%E6%95%B0%E5%80%BC%E7%89%B9%E5%BE%81%E7%9A%84embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/</loc>
+    
+    <lastmod>2024-07-23T11:41:59.627Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/CIKM-22-Retrieval-Based-Time-Series-Forecasting/</loc>
+    
+    <lastmod>2024-07-23T11:39:24.779Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/CIKM-22-Towards-Understanding-the-Overfitting-Phenomenon-of-Deep-Click-Through-Rate-Prediction-Models/</loc>
+    
+    <lastmod>2024-07-23T11:38:45.945Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/</loc>
+    
+    <lastmod>2024-07-23T11:37:21.726Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/</loc>
+    
+    <lastmod>2024-07-23T11:36:00.784Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/</loc>
+    
+    <lastmod>2024-07-23T11:34:14.255Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/</loc>
+    
+    <lastmod>2024-07-23T11:33:49.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>/%E6%B5%85%E8%B0%88%E6%97%A0%E7%9B%91%E7%9D%A3%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E5%8F%A5%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</loc>
+    
+    <lastmod>2024-07-23T11:22:48.314Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>/%E6%B5%85%E8%B0%88%E5%B5%8C%E5%A5%97%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB/</loc>
     
-    <lastmod>2020-04-11T08:32:42.220Z</lastmod>
+    <lastmod>2020-04-11T08:32:42.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E6%B5%85%E8%B0%88Knowledge-Injected-BERTs/</loc>
     
-    <lastmod>2020-03-02T06:36:38.158Z</lastmod>
+    <lastmod>2020-03-02T06:36:38.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%B2%E8%AE%B2/</loc>
     
-    <lastmod>2019-11-03T09:43:04.233Z</lastmod>
+    <lastmod>2019-11-03T09:43:04.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Dataset-for-AI-Practice/</loc>
     
-    <lastmod>2019-09-28T05:14:53.851Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>/python-pytorch%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97/</loc>
-    
-    <lastmod>2019-09-16T12:46:26.847Z</lastmod>
+    <lastmod>2019-09-28T05:14:53.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Sequence-Models-2-NLP-Word-Embedding/</loc>
     
-    <lastmod>2019-02-28T12:27:52.316Z</lastmod>
+    <lastmod>2019-02-28T12:27:52.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E4%BA%8C%E6%AC%A1%E5%85%83%E4%BC%B4%E4%BE%A3XiaoIce%E7%9A%84%E5%85%BB%E6%88%90/</loc>
     
-    <lastmod>2019-02-23T08:53:16.958Z</lastmod>
+    <lastmod>2019-02-23T08:53:16.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E5%A6%82%E4%BD%95%E7%8C%9C%E5%87%BA%E5%A5%B3%E6%9C%8B%E5%8F%8B%E8%AF%9D%E4%B8%AD%E7%9A%84%E5%90%AB%E4%B9%89%EF%BC%9F%E2%80%94%E2%80%94%E5%85%B3%E4%BA%8E%E4%BA%8B%E4%BB%B6%E6%8A%BD%E5%8F%96-Event-Extraction/</loc>
     
-    <lastmod>2019-02-12T08:44:23.273Z</lastmod>
+    <lastmod>2019-02-12T08:44:23.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Sequence-Models-1-%E5%BE%AA%E7%8E%AF%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/</loc>
     
-    <lastmod>2019-01-11T12:42:08.860Z</lastmod>
+    <lastmod>2019-01-11T12:42:08.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E9%87%8D%E4%BF%AE%E5%86%B3%E7%AD%96%E6%A0%91%EF%BC%9A%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8A%E4%B8%8EGini%E7%B3%BB%E6%95%B0/</loc>
     
-    <lastmod>2019-01-06T03:38:18.641Z</lastmod>
+    <lastmod>2019-01-06T03:38:18.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Crash-Paper-Attention-Is-All-You-Need/</loc>
     
-    <lastmod>2018-12-30T05:25:37.324Z</lastmod>
+    <lastmod>2018-12-30T05:25:37.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Internship-%E5%85%B3%E4%BA%8ESoftware-Engineering-Prep-Doc/</loc>
     
-    <lastmod>2018-12-29T08:56:56.304Z</lastmod>
+    <lastmod>2018-12-29T08:56:56.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0%E7%B4%A2%E5%BC%95/</loc>
     
-    <lastmod>2018-12-28T11:49:14.804Z</lastmod>
+    <lastmod>2018-12-28T11:49:14.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-111-120%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2018-12-27T13:19:18.204Z</lastmod>
+    <lastmod>2018-12-27T13:19:18.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-131-140%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2018-12-27T13:18:30.976Z</lastmod>
+    <lastmod>2018-12-27T13:18:30.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-121-130%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2018-12-27T13:18:27.342Z</lastmod>
+    <lastmod>2018-12-27T13:18:27.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-101-110%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2018-12-27T13:18:12.589Z</lastmod>
+    <lastmod>2018-12-27T13:18:12.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Leetcode-89-100%E8%A7%A3%E9%A2%98%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2018-12-27T13:18:08.449Z</lastmod>
+    <lastmod>2018-12-27T13:18:08.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Kick-Start-2018-Practice-Round/</loc>
     
-    <lastmod>2018-12-19T14:35:32.630Z</lastmod>
+    <lastmod>2018-12-19T14:35:32.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E9%87%8D%E4%BF%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E7%BA%BF%E6%AE%B5%E6%A0%91/</loc>
     
-    <lastmod>2018-12-11T08:31:53.551Z</lastmod>
+    <lastmod>2018-12-11T08:31:53.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/Crash-Paper-SMN-Sequential-Matching-Network/</loc>
     
-    <lastmod>2018-12-09T11:47:24.344Z</lastmod>
+    <lastmod>2018-12-09T11:47:24.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E5%87%B8%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0-2-%E5%87%B8%E5%87%BD%E6%95%B0/</loc>
     
-    <lastmod>2018-12-08T01:46:18.562Z</lastmod>
+    <lastmod>2018-12-08T01:46:18.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/%E5%87%B8%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0-1-%E5%87%B8%E9%9B%86/</loc>
     
-    <lastmod>2018-12-08T01:45:49.143Z</lastmod>
+    <lastmod>2018-12-08T01:45:49.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/tags/index.html</loc>
     
-    <lastmod>2018-12-04T11:00:03.077Z</lastmod>
+    <lastmod>2018-12-04T11:00:03.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>/categories/index.html</loc>
     
-    <lastmod>2018-12-04T10:58:43.658Z</lastmod>
+    <lastmod>2018-12-04T10:58:43.000Z</lastmod>
     
   </url>
   

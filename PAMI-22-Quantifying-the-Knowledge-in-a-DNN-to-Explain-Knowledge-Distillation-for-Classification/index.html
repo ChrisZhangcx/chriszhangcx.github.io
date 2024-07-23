@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. Preface张拳石老师的一作，发表在PAMI上的论文，最近买了他参与编著的《可解释人工智能导论》，正好又在Arxiv上看到了这篇文章，就拿来学习一番。 文章主要目标是以信息论为基础，解释知识蒸馏为什么能让学生模型比一个从头学起的新模型效果更好的原因。为了更好地阐述新的概念，作者首先提出了知识点 Knowledge Point （下文有时将其简称为KP）：KP指的是样本中的一组输入单元（in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[PAMI&#39;22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
+<meta property="og:url" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="1. Preface张拳石老师的一作，发表在PAMI上的论文，最近买了他参与编著的《可解释人工智能导论》，正好又在Arxiv上看到了这篇文章，就拿来学习一番。 文章主要目标是以信息论为基础，解释知识蒸馏为什么能让学生模型比一个从头学起的新模型效果更好的原因。为了更好地阐述新的概念，作者首先提出了知识点 Knowledge Point （下文有时将其简称为KP）：KP指的是样本中的一组输入单元（in">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/001.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/002.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/003.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/004.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/005.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/006.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/007.png">
+<meta property="og:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/008.png">
+<meta property="og:updated_time" content="2024-07-23T11:34:14.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[PAMI&#39;22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification">
+<meta name="twitter:description" content="1. Preface张拳石老师的一作，发表在PAMI上的论文，最近买了他参与编著的《可解释人工智能导论》，正好又在Arxiv上看到了这篇文章，就拿来学习一番。 文章主要目标是以信息论为基础，解释知识蒸馏为什么能让学生模型比一个从头学起的新模型效果更好的原因。为了更好地阐述新的概念，作者首先提出了知识点 Knowledge Point （下文有时将其简称为KP）：KP指的是样本中的一组输入单元（in">
+<meta name="twitter:image" content="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/">
+
+
+
+
+
+  <title>[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:33:36+08:00">
+                2024-07-23
+              </time>
+            
+
+            
+            <span class="post-updated">
+              &nbsp; | &nbsp; 
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              更新时间
+
+              <time itemprop="dateUpdated" datetime="2024-07-23T19:34:14+08:00" content="2024-07-23">
+                2024-07-23
+              </time>
+            </span>
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>张拳石老师的一作，发表在PAMI上的论文，最近买了他参与编著的《可解释人工智能导论》，正好又在Arxiv上看到了这篇文章，就拿来学习一番。</p>
+<p>文章主要目标是以信息论为基础，解释知识蒸馏为什么能让学生模型比一个从头学起的新模型效果更好的原因。为了更好地阐述新的概念，作者首先提出了知识点 <code>Knowledge Point</code> （下文有时将其简称为KP）：KP指的是<em>样本中的一组输入单元（input unit），相对于其它的输入单元，在DNN中它的信息损失明显地更少</em>。在文中先给出了KP的公式化定义，随后，作者提出了三个假设，并对应地提出了三个评估指标来验证它们。</p>
+<ol>
+<li>通过知识蒸馏学出来的模型，所包含的 <strong><em>有效KP\</em></strong> 更多；</li>
+<li>知识蒸馏的学习过程会让学生模型 <strong><em>同时学习多个KP\</em></strong> ，而从头开始训练的模型是序贯地学习KP；</li>
+<li>知识蒸馏学习开始时，学生模型相比于从头训练的模型 <strong><em>优化更加稳定\</em></strong> 。</li>
+</ol>
+<a id="more"></a>
+<p>个人视角下，文章具有的几个优点：</p>
+<ul>
+<li>文章具有较强的创新性。除了提出一种新的视角来看待知识蒸馏以外，其实知识点这个思路完全能够被使用在传统的DNN分析上（事实上，作者在论文的结尾部分也尝试使用了KP来解释模型的fine-tune过程，不知道未来是否会有进一步的研究发表）。</li>
+<li>实验翔实，3个评估指标 * 3类实验，作者都一一给出了实验结果与对应的分析；同时，对于文中几乎所有的解释，作者又会附上补充实验加以验证。</li>
+<li>贯承期刊的风格，这篇文章的结构组织比较清晰，阐述逻辑冗而不杂，阅读的时候基本没有遇到障碍，给个好评。<del>这或许也说明了想要清楚地解释人工智能，首先需要的是清楚地解释自己的解释。</del></li>
+</ul>
+<p>最后，考虑到我们一般把知识蒸馏过程中的两个模型叫做teacher network与student network， “知识点” 这个翻译实在是有点奇妙的韵律感，让我不禁联想到考试前，老师给学生划重点的熟悉场面 <del>“重点？我讲过的都是重点”</del> 。</p>
+<h2 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2. Introduction"></a>2. Introduction</h2><p>尽管知识蒸馏在图像分类、3D分割，NLP等诸多领域都有了长足的应用，迄今为止对于知识蒸馏为何有效的研究却并不算多。相关的文章主要有：将蒸馏认为是对训练样本的重赋权<a href="#fn_1">1</a>、认为是对部分重要信息的学习<a href="#fn_2">2</a>，其效果近似于标签平滑<a href="#fn_3">3</a>以及快速收敛<a href="#fn_4">4</a>等。</p>
+<p>基于信息论，这篇文章提出了另一种认识知识蒸馏有效性的方式：<strong>量化深度模型学到的知识点（Knowledge Points）</strong>。特别地，给定一个模型与一个特定的样本，作者量化地定义样本中的KP为：输入单元中没有显著信息损失的部分（经过模型以后）。如下图所示，在一个图像分类任务中，对鸟进行分类时，模型往往会关注鸟类的翅膀作为一个KP。</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/001.png" alt="001"></p>
+<p>通过对于知识点的量化，文章首先关于知识蒸馏为何会有效，提出了三点假设。</p>
+<p>首先：<strong>知识蒸馏使得DNN能够学到更多的KP</strong>。信息瓶颈理论<a href="#fn_5">5</a> <a href="#fn_6">6</a>认为一个深度神经模型倾向于保留与任务相关的特征，并且忽略掉那些和任务不相关的特征。在知识蒸馏中，一个教师模型往往能够编码与更多任务相关的KP，而由于学生模型在蒸馏时尝试模拟教师模型的输出，所以相较于一个从头开始训练的模型，也能够保留更多与任务相关的KP。</p>
+<p>其次，<strong>知识蒸馏让学生模型能够同时地学习KP</strong>。因为知识蒸馏的过程会让学生模型同时去模拟教师模型所编码的所有知识点，在第一个epoch时候就喂给它所有的有效信息。</p>
+<p>最后，<strong>知识蒸馏让学生模型的优化过程更加稳定</strong>。一个从头开始训练的DNN，在训练的开始阶段，会去尝试各种可能对任务有帮助的KP，在一定时间后收敛到真正有帮助的KP；而知识蒸馏在最开始，教师模型就把所有的有效KP告诉了学生模型，从而让后者少走弯路。特别地，作者把前面的现象称之为 <strong><em>detours\</em></strong> 。</p>
+<p>为了验证这三个假设的正确性，作者进一步提出了验证它们的评估指标：</p>
+<ol>
+<li>统计模型学到的KP的<strong>质量</strong>（quantity）与<strong>数量</strong>（quality）；</li>
+<li>模型学习KP的平均<strong>速度</strong>（不同的KP是否是以相同的速度被学习）；</li>
+<li>DNN在学习过程中是否经历了 <strong>detour</strong> 。</li>
+</ol>
+<p>值得注意的是，作者特意指出了这篇文章分析的范围与前置条件：</p>
+<ol>
+<li>作为让后续实验更加公平的必需条件，知识蒸馏所使用的教师模型一定是在目标任务上进行了<strong>很好的调试</strong>；</li>
+<li>知识蒸馏一般有两种应用方式，第一种是对模型<em>接近输出层的</em>中间层输出进行学习（一般是高维的特征），这种情况下学生模型会去尝试学习教师模型所编码的实际知识；第二种是对模型softmax之前的输出进行学习（一般是低维的特征，和label size相同），这种情况下学生模型只会去挑选。</li>
+</ol>
+<p>总的来说，这篇文章有以下贡献：</p>
+<ol>
+<li>文章中所提出的知识点的概念是一种全新的分析DNN的视角；</li>
+<li>以知识点为基础，提出了三个评估指标来解释知识蒸馏的机制；</li>
+<li>提出了知识蒸馏有效的三个假设，并在多种类型的实验（图像分类，三维点云分类，二元情感分类，问答）中进行了验证。</li>
+</ol>
+<h2 id="3-Hypothesis-amp-Metrics"><a href="#3-Hypothesis-amp-Metrics" class="headerlink" title="3. Hypothesis &amp; Metrics"></a>3. Hypothesis &amp; Metrics</h2><p>这部分主要阐述文章的主要部分：关于信息损失的详细定义，从而引出知识点这个概念；通过知识点的概念详细解释3个假设，以及如何设计指标去进行量化的评估。为了行文通顺，这部分不会苛求与原文的结构一致，以能够将概念解释清楚为准。</p>
+<h3 id="3-1-信息损失与知识点"><a href="#3-1-信息损失与知识点" class="headerlink" title="3.1 信息损失与知识点"></a>3.1 信息损失与知识点</h3><h4 id="3-1-1-信息损失（information-discarding）"><a href="#3-1-1-信息损失（information-discarding）" class="headerlink" title="3.1.1 信息损失（information discarding）"></a>3.1.1 信息损失（information discarding）</h4><p>基于信息瓶颈（information-bottleneck）理论，作者提出将DNN里的前向传播过程看作是对输入的 <strong>信息丢弃</strong>（information discarding）的过程，如果模型有多层，每一层都会丢弃掉一些信息。在底层中，大部分的输入信息都会用于特征计算，而在高层中，只有少数真正与模型推理相关的特征会被用于特征计算 —— 大部分的对任务没有帮助的信息在这个过程中被丢弃了。</p>
+<p>那么，怎么去量化在模型前向传播过程中，某个输入单元被丢弃了多少信息呢？作者在这里quote了自己课题组之前发表的两篇文章<a href="#fn_7">7</a> <a href="#fn_8">8</a>，旨在说明 <strong>对模型的某一中间层做一个独立同分布的扰动，其对模型最终输出的扰动会小于该扰动乘以一个常量</strong> 。这里会稍有些难以理解，作者使用的式子（这里稍作了点变动以更好的理解）为：</p>
+<p>其中 是普希茨常数（Lipschitz constant）。式子表示的含义为：对于两个不同的输入特征 以及模型的中间层对它们的特征表示 ，模型的最终输出 差距是<strong>有一个理论上限</strong>的，其上限不会超过它们中间层特征的差距乘以一个常数。</p>
+<p>为了便于后续的实验，作者在这里把这个式子进行了延伸，把右边的 <em>中间层差距</em> 改为模型 <em>原始输入特征</em> 的差距，即：</p>
+<p>这样有什么好处呢？在上式中 代表的是两个不同的输入样本，也可以代表 <strong><em>原始样本\</em></strong> 与 <strong><em>添加了扰动之后的样本\</em></strong> 。由此，因为给模型输入添加扰动以后，其输出的扰动是存在上限的，我们可以给模型的原始输入添加扰动，然后观察这个原始输入的输出变化情况。由此，我们进一步定义熵 来表示给<strong>原始样本添加扰动以后，一直到让模型改变对这个样本的预测结果之前，究竟有多少信息可以被丢弃：</strong></p>
+<p>这里的 是常数 中的一个参数，也可以视为一个常数。</p>
+<p>由于样本的输入特征是一个集合（比如图像的输入特征是像素点的集合），我们给每一个特征添加一个 <strong><em>独立同分布的高斯噪声\</em></strong>，这样原始样本的整体扰动 又可以被解构为样本中每一个特征添加的扰动之和：</p>
+<p>其中表示样本的特征数，基于最大熵法则，我们能算出每个像素点在给定扰动下的信息损失值：</p>
+<p>至此，我们成功的量化了每一个像素点（以图像分类任务为例）的信息损失 ，这对我们后续定义知识点至关重要。</p>
+<h4 id="3-1-2-知识点（knowledge-points）"><a href="#3-1-2-知识点（knowledge-points）" class="headerlink" title="3.1.2 知识点（knowledge points）"></a>3.1.2 知识点（knowledge points）</h4><p>在正式定义知识点之前，首先给出两个概念：<strong><em>前景\</em></strong>（foreground）与<strong><em>背景\</em></strong>（background）。对于图像而言，前景与背景定义十分明晰。很多实验都已经表明，对于一个图像分类任务而言，背景的特征重要性相对而言远小于前景（比如辨识不同的鸟类，可以看它们的毛色/翅膀形态，但看天上的云帮助就不大）。基于此，作者首先提出，对于其它没有明确前背景概念的任务（如NLP）而言，前景指代会对任务分类有帮助的特征集合，而背景表示对该分类任务没有帮助（或者帮助很小）的特征集合。</p>
+<p>综合上面的阐述，作者提出 <strong>知识点</strong> 的公式如下：</p>
+<p>其中， ，表示所有属于背景的像素点/集合的信息损失的期望值（对于某一次扰动也就是它们的平均值），而 是一个人为设定的超参数阈值。</p>
+<p>整个公式对于知识点（KP）的定义是：<strong>这样的一组像素点/像素集合，在给样本添加高斯噪声后，它们的信息损失，超过了所有背景像素点/像素集合的信息损失的平均值，超过的幅度大于</strong>。</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/002.png" alt="002"></p>
+<p>从个人理解的角度，这个公式其实具有很强的解释意义：给某个像素点加了扰动后，出现了超过一定阈值的信息损失，那么这样的像素点一定对于模型预测很有帮助，而以背景像素点为代表的其它像素点，即使添加了一定的扰动，也对模型最终结果影响不大，所以我们管前者叫知识点。</p>
+<h3 id="3-2-假设与评估"><a href="#3-2-假设与评估" class="headerlink" title="3.2 假设与评估"></a>3.2 假设与评估</h3><p>在了解知识点定义的情况下，可以回头重新来看针对知识蒸馏为什么会比从头训练一个模型更有效，作者所提出的三个假设。</p>
+<h4 id="3-2-1-假设1"><a href="#3-2-1-假设1" class="headerlink" title="3.2.1 假设1"></a>3.2.1 假设1</h4><blockquote>
+<p>假设1：相比较于一个从头开始训练的模型，知识蒸馏使得学到的DNN编码了更多的KP。</p>
+</blockquote>
+<p>作者提出了两个评估指标来验证这个假设：</p>
+<ol>
+<li>知识点的数量</li>
+<li>知识点的质量</li>
+</ol>
+<p>对于知识点的数量的定义十分明确：给定一个训练后的模型与一组样本，添加扰动后，所算出来的该模型对于样本的知识点的数量的平均值。但如何评价知识点的质量呢？</p>
+<p>作者认为，我们观察到的一个结论是：如果一个知识点处于前景，这个知识点对于模型做分类任务会很有帮助，而如果一个知识点处于背景，相对而言帮助就没那么大。所以作者定义 <strong>前景KP占总KP的比率</strong> 作为知识点质量的考察指标。</p>
+<h4 id="3-2-2-假设2"><a href="#3-2-2-假设2" class="headerlink" title="3.2.2 假设2"></a>3.2.2 假设2</h4><blockquote>
+<p>假设2：知识蒸馏使得（学生）模型能够同时学多个KP，而一个从头训练的模型序贯学习不同的KP。</p>
+</blockquote>
+<p>这个关于并行串行的假设其实有点绝对了，在文中作者实际的论证点在于：知识蒸馏学习KP的速度会相对更快、<strong><em>更加\</em></strong>同时。</p>
+<p>为了验证这个假设，作者提出的评估指标是：随着训练轮次的增长，学到的 <strong>前景</strong> 知识点是不是增长得更快（数量上+时间上）。容易理解：如果数量增长更快，说明知识蒸馏能够使得模型在同一时间学习更多的知识点；如果时间更快（即更快地达到了模型能获取到的最大知识点），说明知识蒸馏使得模型学习知识点的速度更快。</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/003.png" alt="003"></p>
+<p>这里作者给了一个示例图，值得注意的是，作者实际使用的横坐标不是训练轮次（epoch数量），而是weight distance ，其中表示不同的训练轮次，表示第次的参数，表示能训练出最多的KP的那个轮次。使用weight distance而不是训练轮次作为横坐标的好处是：模型的参数往往会在开始的几个轮次里有比较强烈的变化，而后面的轮次里变化相对较小，所以使用weight distance能够更好的观察出前面的增长速率。</p>
+<p>对于这样的一条折线，求出一直到最大轮次 时的均值 与方差 ，就能表示该模型在学习过程中的学习速率与稳定性。如果均值越低，说明模型学习知识点在时间上<strong>更快</strong>，如果方差越低，说明模型能够同时学习<strong>更多</strong>数量的知识点。</p>
+<h4 id="3-2-3-假设3"><a href="#3-2-3-假设3" class="headerlink" title="3.2.3 假设3"></a>3.2.3 假设3</h4><blockquote>
+<p>假设3：知识蒸馏学习模型的优化过程比从头学习的模型更加稳定。</p>
+</blockquote>
+<p>直觉上，有了教师模型的帮助，一个学生模型会比一个从头开始训练的模型 <strong>更快地找到真正有用的知识点</strong> ，而后者在训练的最开始往往会尝试更多的知识点，以此来确定真正有效的那一组。也就是说，有了知识蒸馏的帮助，学生模型会少走更多弯路，它在整个训练过程中所考察过的KP，会比从头训练的模型更少。作者基于此设计了指标：</p>
+<p>其中，表示最终使用的模型轮次，表示第轮选择出来的KP集合。</p>
+<p>值得注意的是，假设2与假设3中的所有KP集合都仅指代所有的前景KP，而不考虑背景的KP。</p>
+<h2 id="4-Experiments"><a href="#4-Experiments" class="headerlink" title="4. Experiments"></a>4. Experiments</h2><p>在给定以上三个假设及其评价指标的基础上，如果假设均成立，我们应该观测到的现象是：</p>
+<ol>
+<li>对于假设1：知识蒸馏后的模型（student model，下称S）的知识点数量会多于从头训练的模型（baseline model，下称B），且质量（即属于前景的知识点占总知识点的比值）优于B；</li>
+<li>对于假设2：如果所有样本到达其最高知识点数目的weight distance均值越小，说明模型学习知识点的速度越快，而如果所有样本到的其知识点数目的weight distance方差越小，说明越多的知识点在接近的时间到达其稳定状态， 因此S的 均小于B；</li>
+<li>对于假设3：样本到达其最多前景知识点的过程中，所出现过的全部前景知识点集合越少越好，即S的 会大于B。</li>
+</ol>
+<h3 id="4-1-实验细节"><a href="#4-1-实验细节" class="headerlink" title="4.1 实验细节"></a>4.1 实验细节</h3><p>论文选择了三类不同的任务来验证所提出的假设：</p>
+<ul>
+<li><p>图像分类任务</p>
+<ul>
+<li>模型：AlexNet，VGG-11，VGG-16，VGG-19，ResNet-50，ResNet-101，ResNet-152</li>
+<li>数据：ILSVRC-2014 DET，CUB200-2011，Pascal VOC 2012</li>
+</ul>
+</li>
+<li><p>自然语言处理任务 —— 值得注意的是，自然语言处理数据中的使用的</p>
+<p><em>前景与背景</em></p>
+<p>知识点是由人工定义的，即由人工来判断样本中某个token对于样本的结果是否有显著的影响。</p>
+<ul>
+<li>问答：BERT+SQuAD</li>
+<li>情感分类：BERT+SST-2</li>
+</ul>
+</li>
+<li><p>3D点云分类任务 —— 由于数据中没有提供背景，作者基于采样的方式手动构造了样本的背景。</p>
+<ul>
+<li>模型：PointNet，DGCNN，PointConv，PointNet++</li>
+<li>数据：ModelNet40</li>
+</ul>
+</li>
+</ul>
+<p>在考察蒸馏效果时，作者选择了顶层的CNN与所有的FC层。此外，作者根据不同任务的不同模型选择了不同的值：图像分类和NLP的大部分模型阈值设定在0.2，除了AlexNet设定在0.25，而3D点云分类任务的值设定在0.25.</p>
+<h3 id="4-2-实验结果"><a href="#4-2-实验结果" class="headerlink" title="4.2 实验结果"></a>4.2 实验结果</h3><p><strong>图像分类任务</strong>的不同模型效果如下表所示：</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/004.png" alt="004"></p>
+<p>可以看到，在大部分的实验组别（以及同一个模型的不同中间层）中，基于知识蒸馏学得的S模型都优于B模型，说明学生模型确实能从知识蒸馏中获得相对更多的KP数量与更高的KP质量、获得更快的KP学习速率、经历更少的KP候选。</p>
+<p>不过在少数的CNN中间层中，其经历的KP候选集（假设3）反而会高于从头开始训练的模型，作者认为这是因为CNN通常不会被充分地微调（对于预训练模型来说），因此其所在的教师模型反而会在其中嵌入一些噪声（比如模型用于预训练ImageNet中有许多域外标签），因此不满足作者在最初提出的条件：教师模型必须是在目标任务上进行了充分的调试（在这儿等着呢）。</p>
+<p>为了验证这个分析是否合理，作者额外进行了一组实验，在Tiny-ImageNet上进行了微调，因为这个数据集有充足的训练集来使得CNN在微调过程中充分收敛。</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/005.png" alt="005"></p>
+<p>可以看出，在充分微调以后，CNN中间层也能满足假设3了。</p>
+<p>对于<strong>自然语言处理</strong>中的问答任务与情感分析任务的实验结果如下图所示，可以看到三个假设都能被满足，但在第一个假设中，尽管学生模型的前景KP数量与其KP质量均优于从头训练的模型，但其背景KP的数量在情感分析任务中也会大于从头训练的模型。</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/006.png" alt="006"></p>
+<p>这种现象在3D点云分类任务中更加明显：</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/007.png" alt="007"></p>
+<p>在满足作者所提出的3个假设的基础上，仍然可以观察到在相当一部分数据中，使用了知识蒸馏的学生模型的背景KP数量会比从头训练的更多，所以这个现象仍然有一定的普遍性。</p>
+<p>这是什么原因呢？作者提出是因为这些模型在蒸馏时使用的是在大量数据上进行过预训练的大模型，而这些模型由于进行了充分的预训练和微调过程，往往会编码远超必需的知识点，从而导致下游的学生模型的背景KP也有所增多。但由于其编码的前景KP也相对变得更多了，最终的质量仍然显著优于从头训练的模型。</p>
+<h3 id="4-3-其它"><a href="#4-3-其它" class="headerlink" title="4.3 其它"></a>4.3 其它</h3><p>比较有趣的一点是，在实验的最后部分，作者在fine-tuning过程中也使用了知识点进行分析，想要看看知识点是否对于分析一些传统的迁移学习方法有所帮助：从知识点的角度，一个模型的微调过程对模型产生了什么影响？</p>
+<p><img src="/./PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/008.png" alt="008"></p>
+<p>作者在VGG-16网络上通过Tiny-ImageNet数据集进行了fine-tune，并使用了一个从头训练的VGG-16进行对比，可以看到，fine-tune的过程使得模型在前景知识点上学习得更加迅速，并且不需要尝试过多的无用知识点（即满足了假设2与3）。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<ol>
+<li><p>T. Furlanello, Z. C. Lipton, M. Tschannen, L. Itti, and A. Anandkumar. Born again neural networks, arXiv preprint arXiv:1805.04770, 2018<a href="#reffn_1"> ↩</a></p>
+</li>
+<li><p>D. Lopez-Paz, L. Bottou, B. Scholkopf, and V. Vapnik. Unifying distillation and privileged information. In ICLR, 2016<a href="#reffn_2"> ↩</a></p>
+</li>
+<li><p>J. Tang, R. Shivanna, Z. Zhao, D. Lin, A. Singh, E.H. Chi, and S. Jain. Understanding and improving knowledge distillation. arXiv preprint arXiv:2002.03532, 2020<a href="#reffn_3"> ↩</a></p>
+</li>
+<li><p>M. Phuong and C. Lampert. Towards understanding knowledge distillation. In International Conference on Machine Learning, pages 5142-5151, 2019<a href="#reffn_4"> ↩</a></p>
+</li>
+<li><p>R. Shwartz-Ziv and N. Tishby. Opening the black box of deep neural networks via information. arXiv preprint arXicv:1703.00810, 2017<a href="#reffn_5"> ↩</a></p>
+</li>
+<li><p>N. Wolchover: New theory cracks open the black box of deep learning. In Quanta Magazine, 2017<a href="#reffn_6"> ↩</a></p>
+</li>
+<li><p>C. Guan, X. Wang, Q. Zhang, R. Chen, D. He, and X. Xie. Towards a deep and unified understanding of deep neural models in nlp. In International Conference on Machine Learning, pages 2454–2463, 2019.<a href="#reffn_7"> ↩</a></p>
+</li>
+<li><p>H. Ma, Y. Zhang, F. Zhou, and Q. Zhang. Quantifying layerwise information discarding of neural networks. In arXiv:1906.04109, 2019.<a href="#reffn_8"> ↩</a></p>
+</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/" rel="next" title="[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries">
+                <i class="fa fa-chevron-left"></i> [KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/" rel="prev" title="[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration">
+                [ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Preface"><span class="nav-number">1.</span> <span class="nav-text">1. Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Introduction"><span class="nav-number">2.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Hypothesis-amp-Metrics"><span class="nav-number">3.</span> <span class="nav-text">3. Hypothesis &amp; Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-信息损失与知识点"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 信息损失与知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-信息损失（information-discarding）"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 信息损失（information discarding）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-知识点（knowledge-points）"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 知识点（knowledge points）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-假设与评估"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 假设与评估</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-假设1"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 假设1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-假设2"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 假设2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-假设3"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 假设3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Experiments"><span class="nav-number">4.</span> <span class="nav-text">4. Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-实验细节"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 实验细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-实验结果"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 实验结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-其它"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 其它</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
