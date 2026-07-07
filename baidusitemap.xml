@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/Transformer-family/</loc>
-    <lastmod>2024-07-23T11:43:49.878Z</lastmod>
+    <loc>/Wan-multimodal-training-and-application/</loc>
+    <lastmod>2026-03-12T02:00:00.000Z</lastmod>
   </url>  <url>
-    <loc>/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/</loc>
-    <lastmod>2024-07-23T11:43:05.402Z</lastmod>
+    <loc>/Sounding-video-generation-a-brief-introduction/</loc>
+    <lastmod>2026-01-05T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E6%B5%85%E8%B0%88LoRA/</loc>
+    <lastmod>2025-11-18T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E5%AF%BC%E8%AF%BB-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/</loc>
+    <lastmod>2025-04-01T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2025-01-13T02:00:00.000Z</lastmod>
   </url>  <url>
     <loc>/CTR%E6%A8%A1%E5%9E%8B%E4%B8%AD%E6%95%B0%E5%80%BC%E7%89%B9%E5%BE%81%E7%9A%84embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/</loc>
-    <lastmod>2024-07-23T11:41:59.627Z</lastmod>
+    <lastmod>2024-05-21T12:14:06.000Z</lastmod>
+  </url>  <url>
+    <loc>/WWW-23-Que2Engage-Embedding-based-Retrieval-for-Relevant-and-Engaging-Products-at-Facebook-Marketplace/</loc>
+    <lastmod>2024-02-13T09:48:31.000Z</lastmod>
+  </url>  <url>
+    <loc>/Transformer-family/</loc>
+    <lastmod>2023-11-05T13:06:44.000Z</lastmod>
   </url>  <url>
     <loc>/CIKM-22-Retrieval-Based-Time-Series-Forecasting/</loc>
-    <lastmod>2024-07-23T11:39:24.779Z</lastmod>
+    <lastmod>2023-07-22T10:35:12.000Z</lastmod>
   </url>  <url>
     <loc>/CIKM-22-Towards-Understanding-the-Overfitting-Phenomenon-of-Deep-Click-Through-Rate-Prediction-Models/</loc>
-    <lastmod>2024-07-23T11:38:45.945Z</lastmod>
+    <lastmod>2023-04-12T14:11:09.000Z</lastmod>
   </url>  <url>
     <loc>/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/</loc>
-    <lastmod>2024-07-23T11:37:21.726Z</lastmod>
+    <lastmod>2023-01-07T08:27:53.000Z</lastmod>
   </url>  <url>
     <loc>/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/</loc>
-    <lastmod>2024-07-23T11:36:00.784Z</lastmod>
+    <lastmod>2022-09-29T12:52:18.000Z</lastmod>
   </url>  <url>
     <loc>/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/</loc>
-    <lastmod>2024-07-23T11:34:14.255Z</lastmod>
+    <lastmod>2022-06-18T11:09:35.000Z</lastmod>
   </url>  <url>
     <loc>/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/</loc>
-    <lastmod>2024-07-23T11:33:49.316Z</lastmod>
+    <lastmod>2022-03-02T07:46:22.000Z</lastmod>
   </url>  <url>
     <loc>/%E6%B5%85%E8%B0%88%E6%97%A0%E7%9B%91%E7%9D%A3%E5%9C%BA%E6%99%AF%E4%B8%8B%E7%9A%84%E5%8F%A5%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/</loc>
-    <lastmod>2024-07-23T11:22:48.314Z</lastmod>
+    <lastmod>2021-11-21T10:18:07.000Z</lastmod>
   </url>  <url>
     <loc>/%E6%B5%85%E8%B0%88%E5%B5%8C%E5%A5%97%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB/</loc>
     <lastmod>2020-04-11T08:32:42.000Z</lastmod>

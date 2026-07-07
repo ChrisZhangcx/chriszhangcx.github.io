@@ -250,6 +250,789 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Wan-multimodal-training-and-application/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Wan-multimodal-training-and-application/" itemprop="url">Wan: multimodal training and application</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2026-03-12T10:00:00+08:00">
+                2026-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Wan-Fundamentation"><a href="#Wan-Fundamentation" class="headerlink" title="Wan Fundamentation"></a>Wan Fundamentation</h2><h3 id="Data-pipeline"><a href="#Data-pipeline" class="headerlink" title="Data pipeline"></a>Data pipeline</h3><h4 id="Pre-training-data"><a href="#Pre-training-data" class="headerlink" title="Pre-training data"></a>Pre-training data</h4><p>目标：在大量带噪数据中挑选出高质量、高多样性的数据。</p>
+<p>数据构成：内部版权数据+公开数据。</p>
+<p>数据构造：四阶段数据清洗。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Wan-multimodal-training-and-application/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Sounding-video-generation-a-brief-introduction/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/Sounding-video-generation-a-brief-introduction/" itemprop="url">Sounding video generation: a brief introduction</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2026-01-05T10:00:00+08:00">
+                2026-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="The-ways-to-generate-sounding-video"><a href="#The-ways-to-generate-sounding-video" class="headerlink" title="The ways to generate sounding-video"></a>The ways to generate sounding-video</h2><p>Trends: From multi-stage to end2end.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>IO Pattern</th>
+<th>Approach</th>
+<th>Input</th>
+<th>Output</th>
+<th>Official demo</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-stage<br></td>
+<td>Audio->Video<br><em>Most with lip-sync</em></td>
+<td><a href="https://arxiv.org/abs/2412.09262v2" target="_blank" rel="noopener">LatentSync</a><br></td>
+<td>Video/Image (Extend to video)<br>Audio</td>
+<td>Video<br></td>
+<td><a href="https://github.com/bytedance/LatentSync/blob/main/docs/changelog_v1.6.md" target="_blank" rel="noopener">Link</a><br></td>
+<td><strong>Lip-edit</strong> in video<br>Pixel 512*512 only</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://arxiv.org/abs/2410.07718" target="_blank" rel="noopener">Hallo2</a></td>
+<td>Image<br>Audio<br>[opt.] Text: emotion control (calm, angry)</td>
+<td>Video</td>
+<td><a href="https://github.com/fudan-generative-vision/hallo2?tab=readme-ov-file" target="_blank" rel="noopener">Link</a><br></td>
+<td>Extremely long video generation<br>Not good performance</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://arxiv.org/abs/2509.08519" target="_blank" rel="noopener">HuMo</a><br></td>
+<td>Text<br>[opt.] Audio<br>[opt.] Image</td>
+<td>Video</td>
+<td><a href="https://phantom-video.github.io/HuMo/" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://github.com/meituan-longcat/LongCat-Video/blob/main/assets/LongCat-Video-Avatar-Tech-Report.pdf" target="_blank" rel="noopener">LongCat-Video-Avatar</a><br></td>
+<td>Text<br>Audio<br>[opt.] Image</td>
+<td>Video<br></td>
+<td><a href="https://meigen-ai.github.io/LongCat-Video-Avatar/" target="_blank" rel="noopener">Link</a></td>
+<td>Long video generation<br>SoTA</td>
+</tr>
+<tr>
+<td></td>
+<td>Video->Audio<br><em>Only for ambient, no lip-sync</em></td>
+<td><a href="https://arxiv.org/abs/2412.15322" target="_blank" rel="noopener">MMAudio</a></td>
+<td>Video<br>[opt.] Text</td>
+<td>Audio</td>
+<td><a href="https://hkchengrex.com/MMAudio/" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://arxiv.org/abs/2512.24731" target="_blank" rel="noopener">EchoFoley</a></td>
+<td>Video<br>[opt.] Text</td>
+<td>Audio</td>
+<td><a href="https://echofoley.github.io/" target="_blank" rel="noopener">Link</a></td>
+<td></td>
+</tr>
+<tr>
+<td>End2End</td>
+<td>Text -> Audio-Video<br></td>
+<td><a href="https://arxiv.org/pdf/2509.06155v1" target="_blank" rel="noopener">UniVerse-1</a><br></td>
+<td>Image (As first frame)<br>Text</td>
+<td>Sounding video<br></td>
+<td><a href="https://dorniwang.github.io/UniVerse-1/" target="_blank" rel="noopener">Link</a></td>
+<td>A valuable try<br>No pretraining</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://arxiv.org/abs/2510.01284" target="_blank" rel="noopener">OVi</a><br></td>
+<td>Text<br>[opt.] Image</td>
+<td>Sounding video<br></td>
+<td><a href="https://aaxwaz.github.io/Ovi/" target="_blank" rel="noopener">Link</a></td>
+<td>SoTA</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><a href="https://arxiv.org/abs/2512.13677" target="_blank" rel="noopener">JoVA</a><br>Closed-source</td>
+<td>Text<br>[opt.] Image</td>
+<td>Sounding video<br></td>
+<td><a href="https://visual-ai.github.io/jova/" target="_blank" rel="noopener">Link</a></td>
+<td>SoTA?</td>
+</tr>
+</tbody>
+</table>
+</div>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/Sounding-video-generation-a-brief-introduction/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/浅谈LoRA/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/浅谈LoRA/" itemprop="url">浅谈LoRA</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2025-11-18T10:00:00+08:00">
+                2025-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是LoRA"><a href="#什么是LoRA" class="headerlink" title="什么是LoRA"></a>什么是LoRA</h2><h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h3><p>提出的背景：当时主流AR GPT-2的参数量是1.5b，主流AE BERT-large的参数量是340m，而新提出来的GPT-3有175b参数，且（当时视角下）未来若干月/年后可能有更大参数量的模型出现。</p>
+<p>延伸出来的问题：如果逐任务做全量参数微调，意味着需要重复部署全量参数的模型，对<strong>部署</strong>有很大挑战。</p>
+<p>LoRA的优势：</p>
+<ol>
+<li><p>参数量少。相比较GPT-3，可训练参数量减少10000倍，GPU内存需求减少3倍。</p>
+</li>
+<li><p>效率更高。（1）训练时硬件门槛降低，因为不需要为大部分参数计算梯度。（2）推理时没有额外延迟，因为LoRA参数可以与原模型合并。</p>
+</li>
+<li><p>可扩展。LoRA与很多其他后训练方法正交。</p>
+</li>
+</ol>
+<p>在部署层面，可以通过维护一个冻结的原模型参数，以及一些训练好用来实现不同功能的LoRA参数，就可以快速实现不同任务间的切换。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/浅谈LoRA/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/" itemprop="url">[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2025-04-01T10:00:00+08:00">
+                2025-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h2><h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ol>
+<li><p>开源</p>
+<ol>
+<li><p>模型权重<a href="https://huggingface.co/collections/deepseek-ai/deepseek-r1-678e1e131c0169c0bc89728d" target="_blank" rel="noopener">开源</a>（R1-Zero/R1/6 distilled）；</p>
+</li>
+<li><p>训练细节<a href="https://arxiv.org/pdf/2501.12948" target="_blank" rel="noopener">开源</a>；</p>
+</li>
+</ol>
+</li>
+<li><p>分享并探讨了复刻<a href="https://cdn.openai.com/o1-system-card-20241205.pdf" target="_blank" rel="noopener">OpenAI o1</a>这类闭源<strong>推理</strong>模型的可行性，且在效果上与o1接近（在使用更小算力的前提下）；</p>
+<ol>
+<li>R1性能与o1接近；利用R1蒸馏的Qwen、Llama等小模型超过o1-mini</li>
+</ol>
+</li>
+</ol>
+<h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><p>为什么R1的效果突出：</p>
+<ol>
+<li><p>站在巨人的肩膀上：现代LLM模型在写作的质量跟能力上已经有了质的飞跃，能够生成高质量的数据，让蒸馏这个行为变得可操作；</p>
+</li>
+<li><p>推理任务本身的特殊性：能够基于现有工具或模型实现自动验证或标注；</p>
+</li>
+<li><p>一条正确的路和从善如流的精神：从MoE，MLA到V3。本文中的大规模RL和回头草SFT。</p>
+</li>
+</ol>
+<h3 id="Insights"><a href="#Insights" class="headerlink" title="Insights"></a>Insights</h3><ol>
+<li><p>RL中奖励模型不使用PRM/ORM，而是直接对结果进行奖励，让模型通过大规模RL自主强化推理能力</p>
+</li>
+<li><p>对于小模型（32B以下），蒸馏比大规模RL更有效，可能是因为小模型的参数限制了它从大规模RL里提取范式的能力</p>
+<ol>
+<li>虽然蒸馏策略既经济又有效，但想要突破智能的边界仍然需要更强大的基础模型，和更大规模的强化学习。</li>
+</ol>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/对比学习分享/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/对比学习分享/" itemprop="url">对比学习分享</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2025-01-13T10:00:00+08:00">
+                2025-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="一、对比学习"><a href="#一、对比学习" class="headerlink" title="一、对比学习"></a>一、对比学习</h2><h3 id="1-1-自监督学习与对比学习"><a href="#1-1-自监督学习与对比学习" class="headerlink" title="1.1 自监督学习与对比学习"></a>1.1 自监督学习与对比学习</h3><p>如果“有监督”代表数据是否存在<strong>原始</strong>标签，那么对比学习是无监督学习分类下的自监督学习方法。</p>
+<p><strong>有监督学习</strong>和<strong>无监督学习</strong>是机器学习中两种基本的范式。监督学习是根据已有的数据集，知道输入和输出结果之间的关系。根据这种已知的关系，训练得到一个最优的模型<strong>。</strong>无监督学习是不依赖任何标签值，通过对数据内在特征的挖掘，找到样本间的关系。</p>
+<p>除此以外，还有一些其他衍生的学习范式，如半监督、远程监督、自监督等。</p>
+<ul>
+<li><p>半监督学习：大量的无标注数据与少量有标注数据；</p>
+</li>
+<li><p>远程监督学习：利用外部知识库、外部模型对未标注数据进行标注；</p>
+</li>
+<li><p>自监督学习：利用辅助任务从无监督的数据中挖掘自身的信息，从而学习数据的有效表征。</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/对比学习分享/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -282,23 +1065,11 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:41:41+08:00">
-                2024-07-23
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-05-21T20:14:06+08:00">
+                2024-05-21
               </time>
             
 
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:41:59+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
             
 
             
@@ -443,23 +1214,11 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:40:36+08:00">
-                2024-07-23
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-02-13T17:48:31+08:00">
+                2024-02-13
               </time>
             
 
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:43:05+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
             
 
             
@@ -587,23 +1346,11 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:39:56+08:00">
-                2024-07-23
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-11-05T21:06:44+08:00">
+                2023-11-05
               </time>
             
 
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:43:49+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
             
 
             
@@ -723,23 +1470,11 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:39:07+08:00">
-                2024-07-23
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-07-22T18:35:12+08:00">
+                2023-07-22
               </time>
             
 
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:39:24+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
             
 
             
@@ -868,23 +1603,11 @@
               
                 <span class="post-meta-item-text">发表时间</span>
               
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:38:27+08:00">
-                2024-07-23
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2023-04-12T22:11:09+08:00">
+                2023-04-12
               </time>
             
 
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:38:45+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
             
 
             
@@ -975,737 +1698,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/" itemprop="url">[ECCV'22] FedX: Unsupervised Federated Learning with Cross Knowledge Distillation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:37:01+08:00">
-                2024-07-23
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:37:21+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>论文的立意是在 <strong><em>联邦学习\</em></strong> 过程中，结合 <strong><em>对比学习\</em></strong> ，用局部与全局的两种 <strong><em>蒸馏\</em></strong> 方式来 <strong><em>无监督\</em></strong> 地学习样本的向量表示，阅读下来的感觉是与其说FedX是一种新的算法/模型，更不如说它是一种用于扩展在传统对比学习的无监督损失函数。</p>
-<p>关键词：联邦学习（Federated Learning），对比学习（Contrastive Learning），知识蒸馏（Knowledge Distillation），无监督学习（Unsupervised Learning）。</p>
-<p>联邦学习的整体流程如下图所示：</p>
-<p><img src="/./ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/001.png" alt="img"></p>
-<p>其中：</p>
-<ol>
-<li>Local Update：每个client各自学习自己的样本表示，获得各自独立的本地参数模型；</li>
-<li>Local model update：将本地参数模型上传到中心服务器；</li>
-<li>Global aggregation：中心服务器对所有client上传的模型进行聚合，最简单的方式是（假设本地模型都是同构的）根据client各自拥有样本数量的占比进行加权平均；</li>
-<li>Global model download：每个client将global model各自下载到本地。</li>
-</ol>
-<p>论文主要聚焦的是步骤1。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/ECCV-22-FedX-Unsupervised-Federated-Learning-with-Cross-Knowledge-Distillation/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/" itemprop="url">[ICML'22] Federated Learning with Label Distribution Skew via Logits Calibration</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:35:37+08:00">
-                2024-07-23
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:36:00+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>假设已知当前用来训练的样本集合对于样本全集有偏差（且全集所有样本接近均匀分布），可以用当前样本标签数量之间的相对大小，来调整模型logits（softmax前的layer输出）的大小，从而使得模型学习不在少数类标签中过拟合，以及对于缺失标签有更好的泛化能力。</p>
-<p>背景：<strong>联邦学习</strong>中，不同客户拥有不同的数据子集（可能有overlap），而最终目标是使用一个<strong>统一的模型</strong>来在样本全集上拥有相对更好的效果。</p>
-<p>问题：不同用户的数据子集分布是有差异的，差异体现在两方面：特征分布差异与标签分布差异，本文主要聚焦于标签分布的差异。</p>
-<p>公式描述：</p>
-<p>其中 $Cal$ 表示<strong>校准</strong>后的交叉熵损失函数，$y$ 是样本 $x$ 的真实标签， $f(x)$ 表示logits分布。右侧是一个非常类似交叉熵损失函数的式子，唯一不同的是，对于真实标签 $y$ 的logits值 $f_y(x)$ ，将其logits减去了一个基于该标签数量 $n_y$ 的正则项 $\tau n_y^{-1/4}$ ，其中 $\tau$ 是一个超参数，用来控制平滑程度。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/ICML-22-Federated-Learning-with-Label-Distribution-Skew-via-Logits-Calibration/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" itemprop="url">[PAMI'22] Quantifying the Knowledge in a DNN to Explain Knowledge Distillation for Classification</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:33:36+08:00">
-                2024-07-23
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:34:14+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>张拳石老师的一作，发表在PAMI上的论文，最近买了他参与编著的《可解释人工智能导论》，正好又在Arxiv上看到了这篇文章，就拿来学习一番。</p>
-<p>文章主要目标是以信息论为基础，解释知识蒸馏为什么能让学生模型比一个从头学起的新模型效果更好的原因。为了更好地阐述新的概念，作者首先提出了知识点 <code>Knowledge Point</code> （下文有时将其简称为KP）：KP指的是<em>样本中的一组输入单元（input unit），相对于其它的输入单元，在DNN中它的信息损失明显地更少</em>。在文中先给出了KP的公式化定义，随后，作者提出了三个假设，并对应地提出了三个评估指标来验证它们。</p>
-<ol>
-<li>通过知识蒸馏学出来的模型，所包含的 <strong><em>有效KP\</em></strong> 更多；</li>
-<li>知识蒸馏的学习过程会让学生模型 <strong><em>同时学习多个KP\</em></strong> ，而从头开始训练的模型是序贯地学习KP；</li>
-<li>知识蒸馏学习开始时，学生模型相比于从头训练的模型 <strong><em>优化更加稳定\</em></strong> 。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/PAMI-22-Quantifying-the-Knowledge-in-a-DNN-to-Explain-Knowledge-Distillation-for-Classification/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/" itemprop="url">[KDD'22] Mask and Reason: Pre-Training Knowledge Graph Transformers for Complex Logical Queries</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:30:37+08:00">
-                2024-07-23
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:33:49+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-Preface"><a href="#1-Preface" class="headerlink" title="1. Preface"></a>1. Preface</h2><p>KDD 2022，唐杰老师课题组的paper，主要讲了一种用transformers结构来做KGe (Knowledge Graph embedding) ，以在知识的复杂逻辑查询中有比较好的表现。</p>
-<p>论文有几方面的亮点：</p>
-<ol>
-<li>把KG里面的节点关系（relation/edge）转换成了<strong>关系节点</strong>，从而把两个节点+两者的关系变成了一个三元组。文中称之为 <strong>Triple Transformation Method</strong>；</li>
-<li>使用了<strong>两阶段pre-training</strong>。第一阶段主要是通过两种Random Walk来对整个图进行随机采样，然后进行训练；第二阶段是通过预定义的一些范式（1p/2p/3p/2i/3i）来采样并训练；文中分别称为<strong>Dense initialization与Sparse refinement</strong>；预训练的任务与BERT相类似，都是通过mask其中若干节点，并要求模型预测这些节点；（值得注意的是，在二阶段pre-training与整个fine-tune过程中，也会mask若干节点，但只要求模型预测出最终节点）；</li>
-<li>在Multi-Head Attention上层训练多个FFN，以模拟出多专家投票的效果，来增大模型参数量；使用Gating的方式控制每次只选择2个FFN产出结果，以节省计算时间。文中称之为<strong>Mix-of-Experts（MoE）</strong>。</li>
-</ol>
-<p>文中提出的这些方法使得kgTransformer具有以下优势：</p>
-<ol>
-<li>动态的KG embedding（因为使用了transformer，此处可以参照GloVe embed与ELMo embed）；</li>
-<li>模型的学习过程与应用的目标是匹配的（这句话是针对部分模型，训练目标是补全一阶的graph relation link，而应用到多跳的逻辑查询）。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/KDD-22-Mask-and-Reason-Pre-Training-Knowledge-Graph-Transformers-for-Complex-Logical-Queries/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="/浅谈无监督场景下的句向量表示方法/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chengxi Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chris Zhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/浅谈无监督场景下的句向量表示方法/" itemprop="url">浅谈无监督场景下的句向量表示方法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表时间</span>
-              
-              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2024-07-23T19:22:34+08:00">
-                2024-07-23
-              </time>
-            
-
-            
-            <span class="post-updated">
-              &nbsp; | &nbsp; 
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              更新时间
-
-              <time itemprop="dateUpdated" datetime="2024-07-23T19:22:48+08:00" content="2024-07-23">
-                2024-07-23
-              </time>
-            </span>
-            
-
-            
-          </span>
-          
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="浅谈无监督场景下的句向量表示方法"><a href="#浅谈无监督场景下的句向量表示方法" class="headerlink" title="浅谈无监督场景下的句向量表示方法"></a>浅谈无监督场景下的句向量表示方法</h1><p>如何无监督地获得一个句子的向量表示？</p>
-<p>或许上过NLP或大数据课程的同学会想到课程小作业的王者：TF-IDF。掌握一些NLP基础的同学可能还会想到静态或动态的词向量：Word2Vec、GloVe、ELMo，BERT——有着探索精神的同学或许会再试试BERT的一些为人所熟知的变种：RoBERTa、DistillBERT。对BERT的结构及其各层表达能力有所了解的同学（底层学基础特征，中部学句法信息，上层学语义信息）<a href="#fn_1">1</a>会试着取出多层的词向量表示后再做聚合。当然，还需要将这些词向量汇总成一个句子的最终向量，不外乎求和、平均、各种Pooling……最后，也会有同学去寻找一些专门为词向量表达能力进行过强化的预训练模型Sent2Vec、SentenceBERT。总之，换模型、换方法、换idea，已经21世纪了，调参调包谁不会呢？</p>
-<p>有所不同的是，除了盘点上述常用的无监督句向量获得方式外（作为快速获得无监督词向量的途径，上面的方法在落地时具有轮子齐全、即插即用的巨大优势），本文<strong>还将介绍一些获得无监督句向量表示的较新方法</strong>。这些方法或是解决了上述方法在形式上过于简单粗暴而存在的一些问题，或是在句向量表达能力的评估系统（如STS tasks）中具有压倒性的优势——众所周知，在21世纪，SoTA与Accept呈显著正相关。</p>
-<p>现在就让我们开始吧。</p>
-<p>本文第一部分会介绍基于词袋模型的一系列句向量表示方法，第二部分主要讲述基于预训练词向量的Power Mean Embedding表示方法，第三部分将通过4篇论文串讲的方式，从0到1地介绍对比学习（Contrastive Learning）在无监督句向量中的应用，最后在文末整理了一些值得思考与讨论的点，希望能为大家的工作带来一些微小的启发。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/浅谈无监督场景下的句向量表示方法/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1751,7 +1748,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1826,7 +1823,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-snowflake-o"></i>
   </span>

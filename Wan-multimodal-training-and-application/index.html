@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Wan FundamentationData pipelinePre-training data目标：在大量带噪数据中挑选出高质量、高多样性的数据。 数据构成：内部版权数据+公开数据。 数据构造：四阶段数据清洗。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wan: multimodal training and application">
+<meta property="og:url" content="/Wan-multimodal-training-and-application/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="Wan FundamentationData pipelinePre-training data目标：在大量带噪数据中挑选出高质量、高多样性的数据。 数据构成：内部版权数据+公开数据。 数据构造：四阶段数据清洗。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2019.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/截屏2026-03-10%2014.53.06.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%205.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%204.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%207.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2021.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2025.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2016.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2015.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2012.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%206.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2010.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2022.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2024.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2028.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2023.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2027.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%201.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%209.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2018.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2026.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2013.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2011.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2020.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%208.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%202.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2017.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2014.png">
+<meta property="og:image" content="/Wan-multimodal-training-and-application/图片和附件/image%203.png">
+<meta property="og:updated_time" content="2026-03-12T02:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wan: multimodal training and application">
+<meta name="twitter:description" content="Wan FundamentationData pipelinePre-training data目标：在大量带噪数据中挑选出高质量、高多样性的数据。 数据构成：内部版权数据+公开数据。 数据构造：四阶段数据清洗。">
+<meta name="twitter:image" content="/Wan-multimodal-training-and-application/图片和附件/image%2019.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/Wan-multimodal-training-and-application/">
+
+
+
+
+
+  <title>Wan: multimodal training and application | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/Wan-multimodal-training-and-application/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Wan: multimodal training and application</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2026-03-12T10:00:00+08:00">
+                2026-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Wan-Fundamentation"><a href="#Wan-Fundamentation" class="headerlink" title="Wan Fundamentation"></a>Wan Fundamentation</h2><h3 id="Data-pipeline"><a href="#Data-pipeline" class="headerlink" title="Data pipeline"></a>Data pipeline</h3><h4 id="Pre-training-data"><a href="#Pre-training-data" class="headerlink" title="Pre-training data"></a>Pre-training data</h4><p>目标：在大量带噪数据中挑选出高质量、高多样性的数据。</p>
+<p>数据构成：内部版权数据+公开数据。</p>
+<p>数据构造：四阶段数据清洗。</p>
+<a id="more"></a>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th>工具</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础维度</td>
+<td>文本检测</td>
+<td>轻量级OCR检测器</td>
+<td>过滤过多文本元素的视频和图像</td>
+</tr>
+<tr>
+<td></td>
+<td>审美评估</td>
+<td>LAION-5B</td>
+<td>过滤低质量数据</td>
+</tr>
+<tr>
+<td></td>
+<td>NSFW检测</td>
+<td>内部安全评估模型</td>
+<td>过滤不当内容</td>
+</tr>
+<tr>
+<td></td>
+<td>水印与标志检测</td>
+<td>?</td>
+<td>裁剪图像/视频</td>
+</tr>
+<tr>
+<td></td>
+<td>黑框检测</td>
+<td>启发式检测方法</td>
+<td>裁剪黑色边框</td>
+</tr>
+<tr>
+<td></td>
+<td>过曝检测</td>
+<td>内部训练的分类器</td>
+<td>过滤异常色调分布的数据</td>
+</tr>
+<tr>
+<td></td>
+<td>合成图像检测</td>
+<td>内部训练的分类器</td>
+<td>过滤“污染”图像<br>&gt; Even minimal contamination (\<10%\) by="" generated="" images="" can="" significantly="" degrade="" the="" performance="" of="" model\.<br="">&gt; <br>&gt;</10%\)></td>
+</tr>
+<tr>
+<td></td>
+<td>模糊检测</td>
+<td>内部训练的回归模型</td>
+<td>过滤视觉上不清晰的内容</td>
+</tr>
+<tr>
+<td></td>
+<td>时长/分辨率</td>
+<td>/</td>
+<td>过滤时长不超过4s的视频；在不同训练阶段会过滤掉过低分辨率的图像与视频</td>
+</tr>
+<tr>
+<td>视觉质量</td>
+<td>聚类\&amp;打分</td>
+<td>/</td>
+<td>使用视觉质量对数据进行过滤<br>1. 将数据分为100个簇；<br>2. 每个簇中挑选一部分数据进行人工打分（1-5），训练分类器；<br>3. 使用分类器对所有数据进行打分。</td>
+</tr>
+<tr>
+<td>运动质量</td>
+<td>质量分类</td>
+<td>?</td>
+<td>- 最佳：显著的运动、视角、幅度变化，干净、平滑的运动；<br>- 中等：明显的运动，但可能存在多个主体/部分遮挡；可以在预训练中使用，帮助模型理解时空关系；<br>- 静态：聊天/访谈类风格，运动少，但质量较高；需要使用，但降低采样比例；<br>- 相机驱动：主体运动少，相机驱动画面运动（如航拍）；大幅降低采样比例；<br>- 低质量运动：过多主体的严重遮挡，模糊主体（如拥挤的街道）；过滤；<br>- 抖动：业余拍摄的带明显抖动的画面，导致运动模糊/前背景区分不明确；过滤；</td>
+</tr>
+<tr>
+<td>视觉文本数据</td>
+<td>数据构造</td>
+<td>/</td>
+<td>提高文字渲染的真实性<br>- 在纯白色背景上渲染汉字，生成几亿张图片；<br>- 真实图片/视频里用OCR识别->Qwen2-VL生成自然语言描述</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2019.png" alt="image\.png"></p>
+<h4 id="Post-training-data"><a href="#Post-training-data" class="headerlink" title="Post-training data"></a>Post-training data</h4><p>目标：通过高质量的数据，提高生成视频的视觉保真度以及运动的动态效果。图像数据经过优化以提升视觉质量，视频数据经过专门处理以提升运动质量。</p>
+<ul>
+<li><p>图像处理：使用专家模型预测得分前20%的图像（考虑风格与类别因素保证分布多样性）；人工收集高质量图像，填补数据集中的缺失的概念。收集了几百万张图像。</p>
+</li>
+<li><p>视频处理：视觉质量+运动质量分类器同时过滤，将近千万量级。</p>
+</li>
+</ul>
+<h4 id="Caption-train-VL-model"><a href="#Caption-train-VL-model" class="headerlink" title="Caption (train VL model)"></a>Caption (train VL model)</h4><p>训练一个内部caption模型，给每张图像和视频都生成高度描述性的标注。</p>
+<p>训练数据集：</p>
+<ul>
+<li><p>开源：通用标注能力。caption数据集，visual QA数据（动作、QA、OCR），纯文本指令数据；</p>
+</li>
+<li><p>内部：特定领域的能力。名人、地标、电影角色生成；计数能力；OCR能力；相机角度与运动；细粒度分类；空间关系理解；重标注能力；编辑能力；图像组描述；人工标注的图像和视频caption（高质量数据，用于模型训练的最后阶段）。</p>
+</li>
+</ul>
+<blockquote>
+<p>训练数据集是怎么构造的？除了开源数据，以及少部分内部数据外，猜测相当一部分都是蒸馏其他模型的数据（we collect/curate/create/gather）。</p>
+</blockquote>
+<p>模型结构：和<a href="https://arxiv.org/pdf/2304.08485" target="_blank" rel="noopener">LLaVa</a>类似，先ViT提取视觉embedding，通过两层MLP变换后输入给Qwen LLM；</p>
+<ul>
+<li><p>对于图像输入，采用动态高分辨率，把一张图片最多分成7个patch，对于每个patch都pooling到12*12的网格表示来减少计算量；</p>
+</li>
+<li><p>对于视频输入，使用抽帧的方式：每秒采样3帧，最多采样129帧。采用slow-fast encoding策略：每4帧里保留一帧为原清晰度，其他的帧做avg pooling。</p>
+</li>
+</ul>
+<p>三阶段训练：</p>
+<ol>
+<li><p>冻结ViT与LLM，仅训练MLP（1e-3）；</p>
+</li>
+<li><p>全量数据，同时训练所有模块（LLM/MLP 1e-5，ViT 1e-6）；</p>
+</li>
+<li><p>高质量数据上训练（LLM/MLP 1e-5，ViT 1e-6）。</p>
+</li>
+</ol>
+<p>评估：基于CAPability开发评估流水线，与Gemini Pro 1.5比较。在视频事件、相机角度与运动、风格和物体方面表现更好。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/截屏2026-03-10%2014.53.06.png" alt="截屏2026\-03\-10 14\.53\.06\.png"></p>
+<h3 id="Model-architecture-training-evaluation"><a href="#Model-architecture-training-evaluation" class="headerlink" title="Model: architecture, training, evaluation"></a>Model: architecture, training, evaluation</h3><h4 id="Wan-VAE"><a href="#Wan-VAE" class="headerlink" title="Wan-VAE"></a>Wan-VAE</h4><p>模型结构：</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%205.png" alt="image\.png"></p>
+<p>给定一个$V\in \textbf{R}^{(1+T)\times H\times W \times 3}$，Wan-VAE将其时空维度压缩到$[1+T/4,H/8,W/8]$，将通道数C扩展到16。其中第一帧只进行空间压缩，不进行时序压缩，方便更好的处理图像数据。</p>
+<p>时间因果性：确保未来帧不影响过去帧。将Group-norm替换为RMSNorm来保持时间因果性。使用3D Causal卷积，空间维度不设因果限制，时间维度只对过去补零。</p>
+<p>Code: <a href="https://github\.com/Wan\-Video/Wan2\.1/blob/main/wan/modules/vae\.py" target="_blank" rel="noopener">https://github\.com/Wan\-Video/Wan2\.1/blob/main/wan/modules/vae\.py</a></p>
+<p>三阶段训练：</p>
+<ol>
+<li><p>在图像数据上训练一个2D图像VAE</p>
+</li>
+<li><p>将训练好的2D VAE用来初始化Wan的3D Causal VAE，使用低分辨率（128*128）与小帧数（5帧）的视频进行训练；损失：L1重构损失，KL损失，LPIPS感知损失。</p>
+</li>
+<li><p>在不同分辨率和帧数的高质量视频上对模型进行微调，合并一个来自3D判别器的GAN损失。</p>
+</li>
+</ol>
+<p>缓存机制：（假设t维度卷积核大小为3）如果t维度不压缩，缓存前2帧；如果t维度2倍压缩，缓存前1帧。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%204.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%207.png" alt="image\.png"></p>
+<h4 id="Model-training"><a href="#Model-training" class="headerlink" title="Model training"></a>Model training</h4><p><strong>基本信息</strong></p>
+<p>模型架构：Wan-VAE，DiT，文本编码器。</p>
+<p>DiT编码器有三个模块：Patchify，transformer block，unpatchify。其中额外有一个MLP+SiLU层用来处理time embedding。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2021.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2025.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2016.png" alt="image\.png"></p>
+<p>文本编码器使用umT5，作者发现umT5具有（1）多语言编码能力强；（2）组合方面基于其他单向注意力机制模型；（3）表现出较好的收敛性。</p>
+<ul>
+<li><p>预训练：损失使用Flow Matching，AdamW优化器，权重衰减系数1e-4，初始学习率1e-4，bf16混合精度。</p>
+<ul>
+<li><p>低分辨率256px文本到图像初始化14B模型参数；</p>
+</li>
+<li><p>使用256px图像+(192px, 16fps, 5s)视频片段联合训练；</p>
+</li>
+<li><p>图像和视频分辨率提升到480px；</p>
+</li>
+<li><p>图像和视频分辨率提升到720px。整个过程中视频长度保持5s不变。</p>
+</li>
+</ul>
+</li>
+<li><p>后训练：使用相同的结构和优化器配置，使用后训练数据集在480px和720px下联合训练。</p>
+</li>
+</ul>
+<p><strong>模型缩放与训练效率</strong></p>
+<p>【TODO】</p>
+<p><strong>提示对齐</strong></p>
+<p>目的：将用户的输入提示与训练期间使用的prompt进行格式与风格的对齐，从而提高模型推理的有效性。</p>
+<p>使用Qwen2.5-Plus作为重写模型。</p>
+<ol>
+<li><p>在训练数据构造时，每张图片或者视频都配有多条描述（长/中/短x正式/非正式/诗意）；</p>
+</li>
+<li><p>LLM prompt准则：不改变原始语义情况下增加细节；包含自然运动属性（添加动作）；视频风格->内容摘要->详细描述。</p>
+</li>
+</ol>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2015.png" alt="image\.png"></p>
+<h4 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h4><p>现有的视频生成提供方法（FVD/FID）和人类体感缺乏一致性。论文提出了Wan-Bench作为评估数据集，包含三个维度：动作质量、图像质量、指令遵循，总计14个细粒度指标。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2012.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%206.png" alt="image\.png"></p>
+<h2 id="Wan-Application"><a href="#Wan-Application" class="headerlink" title="Wan Application"></a>Wan Application</h2><p>重点讲TI2V一系列，从I作为ref，到加入v，到VCU范式；以及实时视频生成。其他的工作不是非常solid，只介绍整体结构。</p>
+<h3 id="T2I"><a href="#T2I" class="headerlink" title="T2I"></a>T2I</h3><p>因为模型在图像和视频上进行了联合训练，Wan天生就有生成高质量图片的能力（模型在图像数据上的训练量几乎是视频数据量的10倍）。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2010.png" alt="image\.png"></p>
+<h3 id="TI2V"><a href="#TI2V" class="headerlink" title="TI2V"></a>TI2V</h3><p>做法简述：将condition latent与noise latent在channel维度拼接，并添加mask。</p>
+<p>我们假设要生成的视频维度是$V\in R^{C\times T \times H\times W}$，对于输入图片$I \in R^{C\times 1 \times H \times W}$，使用零填充的帧在时间维度进行拼接，将图片也填充到$I’\in R^{C\times T \times H \times W}$。两者过Wan-VAE之后的latent shape相同，都为$c\times t\times h \times w$，其中c=16, t=1+(T-1)/4, h=H/8, w=W/8。</p>
+<p>然后初始化mask，用来表示要保留的帧$M\in \{0,1\}^{1\times T\times h \times w}$。将其reshape到$s\times t\times h\times w$，其中$s$是Wan-VAE的时间步幅，在这里值为4。</p>
+<p>将噪声latent，条件latent与mask在channel维度拼接，然后通过Wan的DiT模型。此时TI2V的输入在patchify之前是$(2c+s)\times t\times h\times w$，和Wan模型训练时的$c\times t\times h\times w$不一致。由于patchify过程是将t,h,w维度展开到seq_len，所以channel维度的不一致不会影响seq_len，只会影响hidden_dim，所以<strong>使用了一个额外的MLP用零初始化来保证训练的稳定性。</strong></p>
+<p>图片的信息额外使用CLIP encoder，与text prompt embedding进行交叉注意力之后，再作为一个统一的embedding注入到DiT的每一层。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2022.png" alt="image\.png"></p>
+<p>这个方法（noise+condition+mask）可以扩展到其他的可控生成任务，例如首/尾帧控制、视频续写（Wan-animate核心机制之一）、随机帧插值。只需要设置不同的mask来引导模型即可。</p>
+<p>训练数据：</p>
+<ol>
+<li><p>图像到视频：使用SigLIP保留第一帧与视频内容相似性较大的视频；</p>
+</li>
+<li><p>视频续写：使用前1.5s与后3.5s的SigLIP相似度大于阈值的视频；</p>
+</li>
+<li><p>首尾帧变换：使用首帧与尾帧之间存在显著转移的数据样本比例。</p>
+</li>
+</ol>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2024.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2028.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2023.png" alt="image\.png"></p>
+<h4 id="Bonus-Wan-animate-TIV2V"><a href="#Bonus-Wan-animate-TIV2V" class="headerlink" title="Bonus: Wan-animate (TIV2V)"></a>Bonus: Wan-animate (TIV2V)</h4><p>Wan-animate在Wan-I2V基础上构建。给定一张参考图片与一个参考视频，Wan-animate有两种animation和replacement两种模式。</p>
+<ul>
+<li><p>Animation：让参考图片里的人物像视频里一样动起来；</p>
+</li>
+<li><p>Replacement：把参考视频里的人物替换成参考图片中的人物。</p>
+</li>
+</ul>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2027.png" alt="image\.png"></p>
+<p>要实现这样的目标，有两个问题：</p>
+<ul>
+<li><p>除了I2V基本要素之外，要额外关注什么：需要让模型关注到参考视频中的动作变化。以及，如果有必要，需要让模型额外关注到参考视频中的脸型/口型变化。</p>
+</li>
+<li><p>如何关注：可以在DiT前面拼接，可以在DiT中间使用cross attention，分别代表了信号需要“关注”的强度。</p>
+</li>
+</ul>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%201.png" alt="image\.png"></p>
+<p>Wan-animate探索出来的答案：人物动作通过pose信号注入；脸型/口型需要额外且<strong>更强</strong>的信号注入，在常规的DiT block中间歇插入Face Block来实现。</p>
+<p>关键要素：</p>
+<ul>
+<li><p>注入pose信号：ViTPose进行动作提取，经过Wan-VAE压缩到与latent时空维度相同。在patchify之后直接加和到noise latent中（patchify/add/concat先后顺序似乎与图片中所示不同）。</p>
+</li>
+<li><p>注入脸部信号：利用ViTPose提取的面部骨骼点裁剪出面部区域。在最终输入之前使用数据增强技术，来消除身份信息，只保留表情信息。在40层的Wan-14B模型中每隔5层插入一个Face-Attention，其只对每一个latent对应位置进行attention。</p>
+</li>
+</ul>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%209.png" alt="image\.png"></p>
+<ul>
+<li>重打光LoRA：角色与环境来自不同光源。使用IC-Light构造标签数据。</li>
+</ul>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2018.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2026.png" alt="image\.png"></p>
+<p>训练模式：</p>
+<ol>
+<li><p>只输入pose信号，不输入面部信号，针对Animation模式进行训练；</p>
+</li>
+<li><p>训练Face adapter：加入人脸控制信号，增加头部、眼睛、嘴区域的损失权重；</p>
+</li>
+<li><p>将模块与主模型结合，联合训练；</p>
+</li>
+<li><p>同时训练Animation模式与Replacement模式；</p>
+</li>
+<li><p>训练Relighting LoRA。</p>
+</li>
+</ol>
+<p>推理模式：对于长视频生成，取前面的1/5帧作为时间引导。</p>
+<hr>
+<p>Wan-TI2V沿用的channel维度拼接范式支持用首尾帧、指定位置单帧/多帧，甚至使用一整个视频作为参考条件的后训练，只需要改变不同的mask信号。</p>
+<h3 id="Unified-video-editing"><a href="#Unified-video-editing" class="headerlink" title="Unified video editing"></a>Unified video editing</h3><p>详见VACE：<a href="https://arxiv\.org/pdf/2503\.07598" target="_blank" rel="noopener">https://arxiv\.org/pdf/2503\.07598</a></p>
+<p>统一视频编辑，整合了视频的repainting, editing, controllable generation, customized generation, frame reference generation, efficient generation, ID-referenced video synthesis.</p>
+<p>首先需要对于所有任务，制定统一的输入范式：</p>
+<p>$\begin{equation}<br>V=[T;F;M]<br>\end{equation}$</p>
+<p>其中T是文本表示，F是上下文视频帧序列${u_1,u_2,…,u_n}$，M是掩码${m_1,m_2,…,m_n}$。这里u属于RGB空间且规范化到[-1,1]，而m是二进制，1/0代表需要编辑或者不需要编辑的位置。F与M在空间维度都是对齐的。F与M在时空维度都进行了对齐。</p>
+<p>假设给定了整体的条件上下文C，有两种方式可以加入到预训练好的模型中：</p>
+<ol>
+<li><p>在channel维度拼接到noise latent上（类似wan-animate），然后全量微调模型的参数；</p>
+</li>
+<li><p>使用一个外部的context block注入到模型中，此时只需要训练外部context block的参数。</p>
+</li>
+</ol>
+<p>怎么获得条件上下文C：</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2013.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2011.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2020.png" alt="image\.png"></p>
+<h3 id="Video-personalization"><a href="#Video-personalization" class="headerlink" title="Video personalization"></a>Video personalization</h3><p>目标：生成特征与用户输入的<strong>人物</strong>参考图强一致的视频。可以看作是I2V在一致性方向上的进一步探索。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%208.png" alt="image\.png"></p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%202.png" alt="image\.png"></p>
+<h3 id="Camera-motion-controllability"><a href="#Camera-motion-controllability" class="headerlink" title="Camera motion controllability"></a>Camera motion controllability</h3><p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2017.png" alt="image\.png"></p>
+<h3 id="Real-time-video-generation"><a href="#Real-time-video-generation" class="headerlink" title="Real-time video generation"></a>Real-time video generation</h3><ol>
+<li><p>预训练的Wan模型指定了输出时间长度是5s或是10s，而实时视频生成要求生成无限长的视频，需要将模型从batch改成streaming；</p>
+</li>
+<li><p>模型需要进一步加速。</p>
+</li>
+</ol>
+<p><strong>流式模型</strong></p>
+<p>主要思路：使用一个Streamer，使用预训练好的DiT模型初始化。将注意力计算集中在某个固定长度的窗口内，以队列的形式处理视频token，在指定的降噪步骤之后，最左侧的token被移出队列，在最右侧加入一个新的token。通常设置窗口大小为T，即降噪总步数。</p>
+<p>在训练时，采样数量为2w的视频token，其中w是滑动窗口的大小。前面w个token用于预热模型，只计算后面w个token的损失。在推理时，最开始生成的w个token被丢弃。</p>
+<blockquote>
+<p>速度变快，还是只是为了无限长？</p>
+</blockquote>
+<p><strong>模型加速与压缩</strong></p>
+<ol>
+<li><p>一致性模型蒸馏（CFG蒸馏），变为4步，允许以8-16fps速率渲染；</p>
+</li>
+<li><p>注意力与全连接层使用int8，其他使用TensorRT量化，允许在单个4090上实现8fps的性能。</p>
+</li>
+</ol>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%2014.png" alt="image\.png"></p>
+<h3 id="Audio-generation"><a href="#Audio-generation" class="headerlink" title="Audio generation"></a>Audio generation</h3><p>V2A，只使用了pipeline中的部分数据，没有使用Wan模型参数。对于人声存在局限性。</p>
+<p><img src="/./Wan-multimodal-training-and-application/图片和附件/image%203.png" alt="image\.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Sounding-video-generation-a-brief-introduction/" rel="next" title="Sounding video generation: a brief introduction">
+                <i class="fa fa-chevron-left"></i> Sounding video generation: a brief introduction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Wan-Fundamentation"><span class="nav-number">1.</span> <span class="nav-text">Wan Fundamentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-pipeline"><span class="nav-number">1.1.</span> <span class="nav-text">Data pipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pre-training-data"><span class="nav-number">1.1.1.</span> <span class="nav-text">Pre-training data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Post-training-data"><span class="nav-number">1.1.2.</span> <span class="nav-text">Post-training data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Caption-train-VL-model"><span class="nav-number">1.1.3.</span> <span class="nav-text">Caption (train VL model)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-architecture-training-evaluation"><span class="nav-number">1.2.</span> <span class="nav-text">Model: architecture, training, evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Wan-VAE"><span class="nav-number">1.2.1.</span> <span class="nav-text">Wan-VAE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Model-training"><span class="nav-number">1.2.2.</span> <span class="nav-text">Model training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluation"><span class="nav-number">1.2.3.</span> <span class="nav-text">Evaluation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wan-Application"><span class="nav-number">2.</span> <span class="nav-text">Wan Application</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#T2I"><span class="nav-number">2.1.</span> <span class="nav-text">T2I</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TI2V"><span class="nav-number">2.2.</span> <span class="nav-text">TI2V</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Bonus-Wan-animate-TIV2V"><span class="nav-number">2.2.1.</span> <span class="nav-text">Bonus: Wan-animate (TIV2V)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unified-video-editing"><span class="nav-number">2.3.</span> <span class="nav-text">Unified video editing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Video-personalization"><span class="nav-number">2.4.</span> <span class="nav-text">Video personalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Camera-motion-controllability"><span class="nav-number">2.5.</span> <span class="nav-text">Camera motion controllability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Real-time-video-generation"><span class="nav-number">2.6.</span> <span class="nav-text">Real-time video generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Audio-generation"><span class="nav-number">2.7.</span> <span class="nav-text">Audio generation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

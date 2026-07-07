@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、对比学习1.1 自监督学习与对比学习如果“有监督”代表数据是否存在原始标签，那么对比学习是无监督学习分类下的自监督学习方法。 有监督学习和无监督学习是机器学习中两种基本的范式。监督学习是根据已有的数据集，知道输入和输出结果之间的关系。根据这种已知的关系，训练得到一个最优的模型。无监督学习是不依赖任何标签值，通过对数据内在特征的挖掘，找到样本间的关系。 除此以外，还有一些其他衍生的学习范式，如半">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对比学习分享">
+<meta property="og:url" content="/对比学习分享/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="一、对比学习1.1 自监督学习与对比学习如果“有监督”代表数据是否存在原始标签，那么对比学习是无监督学习分类下的自监督学习方法。 有监督学习和无监督学习是机器学习中两种基本的范式。监督学习是根据已有的数据集，知道输入和输出结果之间的关系。根据这种已知的关系，训练得到一个最优的模型。无监督学习是不依赖任何标签值，通过对数据内在特征的挖掘，找到样本间的关系。 除此以外，还有一些其他衍生的学习范式，如半">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%207.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2027.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%204.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%205.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%203.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2023.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2013.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2022.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%208.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2026.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%209.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2029.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2010.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%206.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2028.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2019.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2018.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2025.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2011.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2017.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%201.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2021.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2020.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2024.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2016.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2014.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2012.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%202.png">
+<meta property="og:image" content="/对比学习分享/图片和附件/image%2015.png">
+<meta property="og:updated_time" content="2025-01-13T02:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对比学习分享">
+<meta name="twitter:description" content="一、对比学习1.1 自监督学习与对比学习如果“有监督”代表数据是否存在原始标签，那么对比学习是无监督学习分类下的自监督学习方法。 有监督学习和无监督学习是机器学习中两种基本的范式。监督学习是根据已有的数据集，知道输入和输出结果之间的关系。根据这种已知的关系，训练得到一个最优的模型。无监督学习是不依赖任何标签值，通过对数据内在特征的挖掘，找到样本间的关系。 除此以外，还有一些其他衍生的学习范式，如半">
+<meta name="twitter:image" content="/对比学习分享/图片和附件/image%207.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/对比学习分享/">
+
+
+
+
+
+  <title>对比学习分享 | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/对比学习分享/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">对比学习分享</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2025-01-13T10:00:00+08:00">
+                2025-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、对比学习"><a href="#一、对比学习" class="headerlink" title="一、对比学习"></a>一、对比学习</h2><h3 id="1-1-自监督学习与对比学习"><a href="#1-1-自监督学习与对比学习" class="headerlink" title="1.1 自监督学习与对比学习"></a>1.1 自监督学习与对比学习</h3><p>如果“有监督”代表数据是否存在<strong>原始</strong>标签，那么对比学习是无监督学习分类下的自监督学习方法。</p>
+<p><strong>有监督学习</strong>和<strong>无监督学习</strong>是机器学习中两种基本的范式。监督学习是根据已有的数据集，知道输入和输出结果之间的关系。根据这种已知的关系，训练得到一个最优的模型<strong>。</strong>无监督学习是不依赖任何标签值，通过对数据内在特征的挖掘，找到样本间的关系。</p>
+<p>除此以外，还有一些其他衍生的学习范式，如半监督、远程监督、自监督等。</p>
+<ul>
+<li><p>半监督学习：大量的无标注数据与少量有标注数据；</p>
+</li>
+<li><p>远程监督学习：利用外部知识库、外部模型对未标注数据进行标注；</p>
+</li>
+<li><p>自监督学习：利用辅助任务从无监督的数据中挖掘自身的信息，从而学习数据的有效表征。</p>
+</li>
+</ul>
+<a id="more"></a>
+<hr>
+<p>根据辅助任务构造的范式不同，目前自监督学习可以大概分为生成式与对比式两类。</p>
+<p><img src="/./对比学习分享/图片和附件/image%207.png" alt="image\.png"></p>
+<p><img src="/./对比学习分享/图片和附件/image%2027.png" alt="image\.png"></p>
+<p>其中，<strong>生成式学习</strong>以Auto-encoder作为代表，主要关注辅助任务中<strong>标签</strong>的损失。一个传统定义下的AE由Encoder-Compressed hidden-Decoder三个部分构成。Encoder会构建一个（或）多个隐藏层，包含了输入信息的低维向量，Decoder通过这个向量重建输入信息。</p>
+<p><img src="/./对比学习分享/图片和附件/image%204.png" alt="image\.png"></p>
+<p><img src="/./对比学习分享/图片和附件/image%205.png" alt="image\.png"></p>
+<p><strong>对比式学习</strong>通过将数据分别与其正例与负例，在<strong>特征空间</strong>进行对比，来学习样本的表示。对比式学习的重点在于如何构造正负样本。</p>
+<p><img src="/./对比学习分享/图片和附件/image%203.png" alt="image\.png"></p>
+<p><img src="/./对比学习分享/图片和附件/image%2023.png" alt="image\.png"></p>
+<p><a href="/./对比学习分享/图片和附件/0f5cab40-75af-11eb-ab9c-3e1a43f1851b.mp4">0f5cab40-75af-11eb-ab9c-3e1a43f1851b.mp4</a></p>
+<h3 id="1-2-一般范式"><a href="#1-2-一般范式" class="headerlink" title="1.2 一般范式"></a>1.2 一般范式</h3><p>对比学习可以分成以下三个步骤：</p>
+<ol>
+<li><p>构造<strong>正负样本</strong>：本质在于从一个样本x中导出多条与之相似的正样本。在CV里，可以通过裁切、旋转、缩放、失真等方式；在NLP里，可以通过掩码、替换、甚至随机dropout的方式。</p>
+</li>
+<li><p>构造模型：将样本转换为向量表示，并且计算样本对之间的相似度（欧氏距离/余弦距离）</p>
+</li>
+<li><p>最小化<strong>损失函数</strong>。</p>
+</li>
+</ol>
+<p>对于输入的数据x，对比学习的目标是学习一个编码器f，使得：</p>
+<p>$\begin{equation}<br>\text{score}(f(x),f(x^+)) &gt;&gt;\text{score}(f(x),f(x^-))<br>\end{equation}$</p>
+<p>其中x是原始样本，x+是构造的正样本，x-是构造的负样本。score是一个打分函数，用来度量x和正负样本之间的相似关系。公式的实际含义是：使得x+与正样本之间的分数，尽可能大于x与负样本x-之间的分数。</p>
+<h2 id="二、损失函数"><a href="#二、损失函数" class="headerlink" title="二、损失函数"></a>二、损失函数</h2><p>对比学习的关键在于（1）设计正负样本的构造方式；（2）设计损失函数。由于损失函数仅由正负样本对数及其使用方式相关，与数据格式、任务类型关系不大，在这里先串一下常见的损失函数，后面再用两个例子具体介绍怎么结合样本构造与损失函数进行对比学习。</p>
+<h3 id="Triplet-Loss"><a href="#Triplet-Loss" class="headerlink" title="Triplet Loss"></a>Triplet Loss</h3><p>Triplet Loss 考虑了三个样本：一个锚点，一个正样本和一个负样本（<strong>一正一负</strong>）。它的目标不仅是使正样本对的距离小于负样本对的距离，而且要确保这两者之间有一个至少为$\alpha$的间距。这意味着它在确保类内相似性的同时，也强调了类间的差异。</p>
+<p>对于一个数据三元组$(x,x^+,x^-)$，三元组的总体距离可以表示为：</p>
+<p>$\begin{equation}<br>L=\max\{d(x,x^+)-d(x,x^-)+\alpha,0\}<br>\end{equation}$</p>
+<p>设置margin（$\alpha$）的目的：</p>
+<ol>
+<li><p>避免模型走捷径（让x+与x-的距离很相近），导致难以区分正负例；</p>
+</li>
+<li><p>使得模型努力学习，拉大锚点与负例距离的同时，缩小与正例之间的距离；</p>
+</li>
+</ol>
+<p><img src="/./对比学习分享/图片和附件/image%2013.png" alt="image\.png"></p>
+<p>$L=0$</p>
+<p><img src="/./对比学习分享/图片和附件/image%2022.png" alt="image\.png"></p>
+<p>$L&gt;\alpha$</p>
+<p><img src="/./对比学习分享/图片和附件/image%208.png" alt="image\.png"></p>
+<p>$L\in(0,\alpha)$</p>
+<p>由三类triplets，也可以反向导出要构造样本的原则：理论上，使用hard triplets训练模型最好，因为这样模型能够有很好的学习能力，但由于margin的存在，这类样本可能模型没法很好的拟合，训练比较困难；其次是使用semi-hard triplet，这类样本是实际使用中最优选择，因为这类样本损失不为0，而且损失不大，模型既可以学习到样本之间的差异，又较容易收敛；至于easy triplet，损失为0，不用拿来训练。</p>
+<p>由于超参数$\alpha$的存在，需要审慎调节参数的大小，太大会导致模型损失过大，难以收敛，过小会导致模型难以区分正负例。</p>
+<p><em>Code: </em><a href="https://bytedance.larkoffice.com/docx/PezidWvb6oeTXbxsQIocjhcKnbg#share-PLPGdlOWPobJ8ZxOnYpcshAwnKf" target="_blank" rel="noopener">对比学习分享</a></p>
+<h3 id="N-Pair-Loss"><a href="#N-Pair-Loss" class="headerlink" title="N-Pair Loss"></a>N-Pair Loss</h3><p>Triplet Loss的一种扩展，考虑了多个负样本（<strong>一正多负</strong>），通过一个锚点，一个正样本和多个负样本的相似性来学习特征表示。</p>
+<p><img src="/./对比学习分享/图片和附件/image%2026.png" alt="image\.png"></p>
+<p>从图中可以发现，实际构造样本时，只需要针对每个原始样本构造一个正样本，随后使用其他样本的正样本，作为当前样本的负样本。</p>
+<p>$\begin{equation}<br>L(\{(x_i,x_i^+)\}_{i=1}^N;f)=\frac{1}{N}\sum_{i=1}^N\log(1+\sum_{j\neq i}\exp(s(f_i,f_j^+)-s(f_i,f_i^+)))<br>\end{equation}$</p>
+<p>其中s是度量相似度的打分函数。</p>
+<p><em>Code: </em><a href="https://bytedance.larkoffice.com/docx/PezidWvb6oeTXbxsQIocjhcKnbg#share-PLPGdlOWPobJ8ZxOnYpcshAwnKf" target="_blank" rel="noopener">对比学习分享</a></p>
+<h3 id="InfoNCE"><a href="#InfoNCE" class="headerlink" title="InfoNCE"></a>InfoNCE</h3><p>相比于Triplet Loss是从向量空间的角度计算损失，InfoNCE是从概率角度来计算损失。</p>
+<p>InfoNCE的提出基于NCE (Noise contrastive estimation)，后者最初被提出来用于多分类问题中类别太多时的softmax计算时间过长的问题，做法是将多元分类转换成二元分类。</p>
+<p><img src="/./对比学习分享/图片和附件/image%209.png" alt="image\.png"></p>
+<p>InfoNCE loss其实就是一个cross entropy loss，做的是一个k+1类的分类任务，目的就是想把q这个图片分到k+这个类，然后概率是它和k+的相似度：</p>
+<p>$\begin{equation}<br>L_q=-\log\frac{\exp(q\cdot k_+/\tau)}{\sum_{i=0}^K\exp(q\cdot k_i/\tau)}<br>\end{equation}$</p>
+<p><em>Code: </em><a href="https://bytedance.larkoffice.com/docx/PezidWvb6oeTXbxsQIocjhcKnbg#share-PLPGdlOWPobJ8ZxOnYpcshAwnKf" target="_blank" rel="noopener">对比学习分享</a></p>
+<h2 id="三、论文分享"><a href="#三、论文分享" class="headerlink" title="三、论文分享"></a>三、论文分享</h2><h3 id="ICML’20：SimCLR"><a href="#ICML’20：SimCLR" class="headerlink" title="ICML’20：SimCLR"></a>ICML’20：SimCLR</h3><p>Hinton组提出的工作，用自监督模型逼近了监督模型的效果。</p>
+<blockquote>
+<p>A linear classifier trained on self-supervised representations learned by SimCLR achieves 76.5% top-1 accuracy, which is a<strong> 7% relative improvement</strong> over previous state-of-the-art, matching the performance of a supervised ResNet-50.</p>
+<p><img src="/./对比学习分享/图片和附件/image%2029.png" alt="image\.png"></p>
+</blockquote>
+<p>SimCLR由四个部分组成：</p>
+<ol>
+<li>数据增强模块，将一个图像随机转换成两个相关的图像，作为正样本对：随机截取；颜色失真；高斯平滑；</li>
+</ol>
+<p><img src="/./对比学习分享/图片和附件/image%2010.png" alt="image\.png"></p>
+<ol>
+<li><p>编码器 $f(\cdot)$：ResNet；</p>
+</li>
+<li><p>全连接层 $g(\cdot)$：$z_i=g(h_i)=W^{(2)}\sigma(W^{(1)}h_i)$，（对比学习损失在两层全连接上效果更好）；</p>
+</li>
+<li><p>对比学习损失：$l_{i,j}=-\log\frac{\exp(sim(z_i,z_j)/\tau)}{\sum_{k=1}^{2N}\mathbb{I}_{k\neq i}\exp(sim(z_i,z_k)/\tau)}$</p>
+</li>
+</ol>
+<p>实际训练时，在每一个batch内部，通过数据增强模块对每一个样本生成两个增强的样本，将batch内所有其他样本作为负样本。</p>
+<p><img src="/./对比学习分享/图片和附件/image%206.png" alt="image\.png"></p>
+<p>实际评估时，不使用模型上面的全连接层$g(\cdot)$，只使用编码器$f(\cdot)$，在上面增加一个线性分类器，<strong>通过监督学习训练</strong>，使用得到的精度作为评估$f(\cdot)$特征提取能力的指标。</p>
+<p>评估结果：</p>
+<ul>
+<li><p>无监督：<strong>更宽的网络(4x)</strong>，参数量更大，叠加有监督训练线性分类器（此时编码器$f(\cdot)$参数冻结），效果和有监督的ResNet50媲美；</p>
+</li>
+<li><p>半监督：只使用1%的标签，能够达到top 5的准确度，超过AlexNet；</p>
+</li>
+</ul>
+<hr>
+<p>几个insights：</p>
+<ul>
+<li>数据增强的有效性：单一的数据增强方法没有很强的效果；组合的数据增强中，裁剪+颜色失真表现最好。</li>
+</ul>
+<p><img src="/./对比学习分享/图片和附件/image%2028.png" alt="image\.png"></p>
+<ul>
+<li>模型参数的影响：对于无监督任务，较大的模型更有效</li>
+</ul>
+<p><img src="/./对比学习分享/图片和附件/image%2019.png" alt="image\.png"></p>
+<ul>
+<li>非线性投影有助于提升向量的质量。但实际使用时，$z=g(h)$不是最好的表示，$h$才是最好的表示。</li>
+</ul>
+<p><img src="/./对比学习分享/图片和附件/image%2018.png" alt="image\.png"></p>
+<h3 id="CVPR’20：MoCo-amp-MoCo-V2"><a href="#CVPR’20：MoCo-amp-MoCo-V2" class="headerlink" title="CVPR’20：MoCo \&amp; MoCo-V2"></a>CVPR’20：MoCo \&amp; MoCo-V2</h3><p>Facebook AI Research，Kaiming一作。<em>从善如流。</em></p>
+<p>整体结构：</p>
+<p><img src="/./对比学习分享/图片和附件/image%2025.png" alt="image\.png"></p>
+<p>损失函数：</p>
+<p>$\begin{equation}<br>L_q=-\log\frac{\exp(q\cdot k_+/\tau)}{\sum_{i=0}^K\exp(q\cdot k_i/\tau)}<br>\end{equation}$</p>
+<p>在损失函数中，有1个正样本和K个负样本。SimCLR的损失函数和这个很像，在采用了数据增强之后，使用了增强后的样本作为候选样本集，有1个正样本和2N-1个负样本。</p>
+<p>在训练时，损失函数的梯度只用来更新Query Encoder，而Momentum Encoder的参数用以下方式更新：</p>
+<p>$\begin{equation}<br>\theta_k \leftarrow m\theta_k+(1-m)\theta_q<br>\end{equation}$</p>
+<p>其中$\theta_k$表示Momentum Encoder的参数，$\theta_q$表示Query Encoder的参数，m表示更新的速度：当m越大，Momentum Encoder的更新速度越慢，</p>
+<p><img src="/./对比学习分享/图片和附件/image%2011.png" alt="image\.png"></p>
+<hr>
+<ol>
+<li><p>为什么要用Momentum Encoder这样的参数更新方式？</p>
+<ol>
+<li><p>和E2E相比：不占用显存，更节省资源；</p>
+</li>
+<li><p>和Memory bank相比：一致性更强，MoCo可以看作是对Query encoder进行平滑得到的，所以当前候选的向量表示在语义上是比较接近的。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p><img src="/./对比学习分享/图片和附件/image%2017.png" alt="image\.png"></p>
+<ol>
+<li><p>这样的更新方式效果如何？</p>
+<ol>
+<li>和E2E、Memory bank等方法相比</li>
+</ol>
+</li>
+</ol>
+<p><img src="/./对比学习分享/图片和附件/image%201.png" alt="image\.png"></p>
+<pre><code>2. 和其他SoTA方法相比
+</code></pre><p>​        </p>
+<p><img src="/./对比学习分享/图片和附件/image%2021.png" alt="image\.png"></p>
+<ol>
+<li>为什么MoCo效果没有SimCLR好？</li>
+</ol>
+<hr>
+<p>MoCo V2 (Tech report)</p>
+<ul>
+<li><p>w/ MLP</p>
+</li>
+<li><p>w/ complex data augmentation</p>
+</li>
+<li><p>w/ cosine learning rate schedule</p>
+</li>
+<li><p>w/ larger epoch size</p>
+</li>
+</ul>
+<p><img src="/./对比学习分享/图片和附件/image%2020.png" alt="image\.png"></p>
+<p>相同机制下，MoCo(V2)与SimCLR的对比：epoch相同，在256的batch size下，效果可以比8192 batch size的SimCLR的高0.9%；再多训练一些epoch的情况下，能够拉大差距到1.8%。</p>
+<p><img src="/./对比学习分享/图片和附件/image%2024.png" alt="image\.png"></p>
+<p>训练时所需的显存和时间：</p>
+<p><img src="/./对比学习分享/图片和附件/image%2016.png" alt="image\.png"></p>
+<h3 id="EMNLP’21：SimCSE"><a href="#EMNLP’21：SimCSE" class="headerlink" title="EMNLP’21：SimCSE"></a>EMNLP’21：SimCSE</h3><p>Danqi Chen通讯作者，Novelty：</p>
+<ul>
+<li><p>在NLP预训练语言模型任务上的对比学习框架，和SimCLR类似，但采用了Dropout方式产生正负样本对；</p>
+</li>
+<li><p>提出了度量对比学习中向量质量的指标：对齐性(Alignment/Closeness)与均匀性(Uniformity)。</p>
+</li>
+</ul>
+<p>对齐性：相似样本拥有相似的特征向量，应该对无关的噪声保持不变。</p>
+<p>$\begin{equation}<br>M_{\text{align}}\triangleq\mathbb{E}_{(x,x^+)\stackrel{\text{i.i.d}}{\sim}p_{data}}||f(x)-f(x^+)||^2<br>\end{equation}$</p>
+<p>均匀性：特征能够保持更多的信息，大致分布在超球面上。</p>
+<p>$\begin{equation}<br>M_{\text{uniform}}\triangleq\mathbb{E}_{(x,x^+)\stackrel{\text{i.i.d}}{\sim}p_{data}}e^{-2||f(x)-f(y)||^2}<br>\end{equation}$</p>
+<p><img src="/./对比学习分享/图片和附件/image%2014.png" alt="image\.png"></p>
+<hr>
+<p>训练框架：</p>
+<p><img src="/./对比学习分享/图片和附件/image%2012.png" alt="image\.png"></p>
+<p>无监督SimCSE：利用Transformers里包含的Dropout，将同一条数据输入到样本中两次。</p>
+<p>给定一批文本样本$\{x_i\}_{i=1}^m$，将经过模型得到的特征向量表示为$h_i^z=f_{\theta}(x_i,z)$，其中$z$表示当次Dropout的随机掩码，另外一组特征向量表示为$h_i^{z’}=f_{\theta}(x_i,z’)$。根据对比学习的思想，SimCSE的优化目标为：</p>
+<p>$\begin{equation}<br>L=-\log\frac{e^{\text{sim}(h_i^{z_i},h_i^{z’_i})/\tau}}{\sum_{j=1}^N e^{\text{sim}(h_i^{z_i},h_i^{z’_j})/\tau}}<br>\end{equation}$</p>
+<p>评估时，从BERT-uncased开始训练，使用[CLS]作为句子的向量表示，在1m随机抽取的英文维基百科句子。</p>
+<p><img src="/./对比学习分享/图片和附件/image.png" alt="image\.png"></p>
+<h2 id="2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输"><a href="#2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输" class="headerlink" title="2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输"></a><a href="https://bytedance.larkoffice.com/wiki/NAzyww9JUil0iykgKtfcxB1bnLg" target="_blank" rel="noopener">2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输</a></h2><p><strong>数据增强</strong></p>
+<p>对精排模型用到的所有序列（除搜索特征外 - 因为搜索是用户的强意图，不需要去噪），进行特征维度的Mask。为了增加对比学习的难度，对同一序列特征进行50%随机的互补Mask方式。</p>
+<p><img src="/./对比学习分享/图片和附件/image%202.png" alt="image\.png"></p>
+<p><strong>特征编码</strong></p>
+<p>两层MLP，压缩成32维，L2 Norm。每一类序列特征（及样本）之间的参数共享，但不同类型序列特征之间的参数独立。</p>
+<p><strong>损失函数</strong></p>
+<p>$\begin{equation}<br>L=-\sum_{i\in N}\log\frac{\exp(s(z_i,z’_i)/\tau}{\sum){j\in B}\exp(s(z_i,z’_j)/\tau}<br>\end{equation}$</p>
+<hr>
+<p>训练时端到端</p>
+<p><img src="/./对比学习分享/图片和附件/image%2015.png" alt="image\.png"></p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><ul>
+<li><p>为什么使用类似softmax的形式，而不是类似：$L_{\text{simple}}=-s_{i,i}+\lambda\sum_{j=1,j\neq i}^Ns_{i,j}$的形式？</p>
+<ul>
+<li>softmax要给相似度更高的样本更大的惩罚。</li>
+</ul>
+</li>
+<li><p>超参数$\tau$起到了什么作用？</p>
+<ul>
+<li><p>$\tau$越大，对比损失越失去对困难负样本的关注能力，即实际效果越接近上面的$L_{\text{simple}}$</p>
+</li>
+<li><p>$\tau$越小，对比损失只倾向于优化最难的负样本</p>
+</li>
+</ul>
+</li>
+<li><p>Cosine learning rate schedule是什么？</p>
+<ul>
+<li>$lr=base\times 0.5\times (1+\cos(\frac{\pi\times epoch}{total \;epochs}))$</li>
+</ul>
+</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><p><a href="https://ankeshanand.com/blog/2020/01/26/contrative-self-supervised-learning.html" target="_blank" rel="noopener">Contrastive Self-Supervised Learning</a></p>
+</li>
+<li><p><a href="https://medium.com/ml-note/autoencoder-%E4%B8%80-%E8%AA%8D%E8%AD%98%E8%88%87%E7%90%86%E8%A7%A3-725854ab25e8" target="_blank" rel="noopener">Auto-encoder认知与理解</a></p>
+</li>
+<li><p><a href="https://arxiv.org/abs/2002.05709" target="_blank" rel="noopener">SimCLR</a></p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/2003.04297" target="_blank" rel="noopener">MoCo-v2</a></p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/2104.08821" target="_blank" rel="noopener">SimCSE</a></p>
+</li>
+<li><p><a href="https://proceedings.neurips.cc/paper_files/paper/2016/file/6b180037abbebea991d8b1232f8a8ca9-Paper.pdf" target="_blank" rel="noopener">N-Pair Loss</a></p>
+</li>
+<li><p>损失函数实现</p>
+<ul>
+<li><p>Triplet loss</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造形状是[BatchSize, Dim]的向量，这里BatchSize是批量大小，Dim是维度</span></span><br><span class="line">x = torch.randn(<span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>], dtype=torch.int)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 获取公式中的三元组triplets，其大小是[3,8]，因采用矩阵计算产生冗余，无冗余时应该是本组最大类别样本数:4</span></span><br><span class="line">pos_adj_mat = (labels.unsqueeze(<span class="number">0</span>) == labels.unsqueeze(<span class="number">1</span>)).byte()</span><br><span class="line">neg_adj_mat = pos_adj_mat ^ <span class="number">1</span></span><br><span class="line">pos_adj_mat.fill_diagonal_(<span class="number">0</span>)</span><br><span class="line">triplets = torch.where(pos_adj_mat.unsqueeze(<span class="number">2</span>) * neg_adj_mat.unsqueeze(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 计算距离项,这里使用L2距离,其形状是[BatchSize,BatchSize],这里是[6,6]</span></span><br><span class="line">x_norm = torch.nn.functional.normalize(x, p=<span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line">distance_matrix = torch.cdist(x_norm, x_norm, p=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 分别计算锚点与正样本的距离,计算锚点与负例样本的距离</span></span><br><span class="line">pos_loss = distance_matrix[[triplets[<span class="number">0</span>], triplets[<span class="number">1</span>]]]</span><br><span class="line">neg_loss = distance_matrix[[triplets[<span class="number">0</span>], tripLets[<span class="number">2</span>]]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 计算最终loss，这里假设最小距离是0.05</span></span><br><span class="line">loss = torch.nn.functional.relu(pos_loss - neg_loss + <span class="number">0.05</span>)</span><br><span class="line">loss = loss[loss &gt; <span class="number">0</span>].mean()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>N-pair loss</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造形状是[BatchSize, Dim]的向量,这里BatchSize是批量大小,D是维度</span></span><br><span class="line"><span class="comment"># 构造三个样本对，位置分别在 (0,3) (1,4) (2,5)</span></span><br><span class="line">x = torch.randn(<span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], dtype=torch.int)</span><br><span class="line"></span><br><span class="line"><span class="comment">#1.从label中获取锚点样本和正样本</span></span><br><span class="line"><span class="comment">#  其中, anchor_idx为[0,1,2], pos_index为[3, 4, 5]</span></span><br><span class="line">pos_adj_mat = (labels.unsqueeze(<span class="number">0</span>) == labels.unsqueeze(<span class="number">1</span>)).byte()</span><br><span class="line">pos_adj_mat.fill_diagonal_(<span class="number">0</span>)</span><br><span class="line">i_indexes, j_indexes = torch.where(pos_adj_mat)</span><br><span class="line">_, unique_idx = np.unique(labels[i_indexes].cpu().numpy(), rreturn_index=<span class="keyword">True</span>)</span><br><span class="line">anchor_idx, pos_index = i_indexes[unique_idx], j_indexes[unique_idx]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 计算锚点与正样本之间的点乘相似度</span></span><br><span class="line">anchor_embedding = torch.nn.functional.normalize(x[anchor_idx], p=<span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line">pos_embedding = torch.nn.functional.normalize(x[pos_index], p=<span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line">similarity_matrix = anchor_embedding @ pos_embedding.T</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 计算交叉熵</span></span><br><span class="line">targets = torch.arange(len(anchor_idx))</span><br><span class="line">loss = torch.nn.functional.cross_entropy(similarity_maatrix, targets)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>InfoNCE loss</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造形状是[B,D]的向量,这里B时批量大小,D是维度</span></span><br><span class="line"><span class="comment"># 构造两对标签,位置分别是(0,3)和(1,2)</span></span><br><span class="line">x = torch.randn(<span class="number">6</span>, <span class="number">2</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>], dtype=torch.int)</span><br><span class="line">temperature = <span class="number">0.07</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 获取标签的邻接矩阵,其形状是[B,B],这里是[6,6]</span></span><br><span class="line">pos_adj_mat = (labels.unsqueeze(<span class="number">0</span>) == labels.unsqueeze(:<span class="number">1</span>).byte()</span><br><span class="line">neg_adj_mat = pos_adj_mat ^ <span class="number">1</span></span><br><span class="line">pos_adj_mat.fill_diagonal_(<span class="number">0</span>)</span><br><span class="line">pos_indices, neg_indices = torch.where(pos_adj_mat), ttorch.where(neg_adj_mat)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 分别计算正样本对和负样本对的距离</span></span><br><span class="line">x_norm = torch.nn.functional.normalize(x, p=<span class="number">2</span>, dim=<span class="number">1</span>)</span><br><span class="line">similarity_matrix = x_norm @ x_norm.T</span><br><span class="line">pos_pairs = similarity_matrix[pos_indices] / temperature</span><br><span class="line">neg_pairs = similarity_matrix[neg_indices] / temperature</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 为每个正样本对构造负样本对,并获取其距离</span></span><br><span class="line">neg_per_pos = neg_indices[<span class="number">0</span>].unsqueeze(<span class="number">0</span>) == pos_indices[<span class="number">0</span>].unsqueeze(<span class="number">1</span>)</span><br><span class="line">neg_pairs = neg_pairs * neg_per_pos.float()</span><br><span class="line">neg_pairs[neg_per_pos == <span class="keyword">False</span>] = torch.finfo(neg_pairs.dtype).min</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 计算最终损失</span></span><br><span class="line">pos_pairs = pos_pairs.unsqueeze(<span class="number">1</span>)</span><br><span class="line">max_val = torch.max(pos_pairs, torch.max(neg_pairs, dim=<span class="number">1</span>, keepdim=<span class="keyword">True</span>)[<span class="number">0</span>]).detach()</span><br><span class="line">numerator = torch.exp(pos_pairs - max_val).squeeze(<span class="number">1</span>)</span><br><span class="line">denominator = torch.sum(torch.exp(neg_pairs - max_val), dim=<span class="number">1</span>) + numerator</span><br><span class="line">loss = -torch.mean(torch.log((numerator / denominator) + torch.finfo(neg_pairs.dtype).tiny))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/CTR模型中数值特征的embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/" rel="next" title="CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction">
+                <i class="fa fa-chevron-left"></i> CTR模型中数值特征的embedding - [KDD'21] An Embedding Learning Framework for Numerical Features in CTR Prediction
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/" rel="prev" title="[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning">
+                [导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、对比学习"><span class="nav-number">1.</span> <span class="nav-text">一、对比学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-自监督学习与对比学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 自监督学习与对比学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-一般范式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 一般范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、损失函数"><span class="nav-number">2.</span> <span class="nav-text">二、损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Triplet-Loss"><span class="nav-number">2.1.</span> <span class="nav-text">Triplet Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-Pair-Loss"><span class="nav-number">2.2.</span> <span class="nav-text">N-Pair Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InfoNCE"><span class="nav-number">2.3.</span> <span class="nav-text">InfoNCE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、论文分享"><span class="nav-number">3.</span> <span class="nav-text">三、论文分享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ICML’20：SimCLR"><span class="nav-number">3.1.</span> <span class="nav-text">ICML’20：SimCLR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR’20：MoCo-amp-MoCo-V2"><span class="nav-number">3.2.</span> <span class="nav-text">CVPR’20：MoCo \&amp; MoCo-V2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EMNLP’21：SimCSE"><span class="nav-number">3.3.</span> <span class="nav-text">EMNLP’21：SimCSE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输"><span class="nav-number">4.</span> <span class="nav-text">2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">5.</span> <span class="nav-text">MISC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
