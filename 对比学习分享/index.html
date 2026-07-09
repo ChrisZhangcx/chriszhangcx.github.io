@@ -112,8 +112,6 @@
 <meta property="og:image" content="/对比学习分享/图片和附件/image%2014.png">
 <meta property="og:image" content="/对比学习分享/图片和附件/image%2012.png">
 <meta property="og:image" content="/对比学习分享/图片和附件/image.png">
-<meta property="og:image" content="/对比学习分享/图片和附件/image%202.png">
-<meta property="og:image" content="/对比学习分享/图片和附件/image%2015.png">
 <meta property="og:updated_time" content="2025-01-13T02:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对比学习分享">
@@ -532,16 +530,6 @@
 <p>$\begin{equation}<br>L=-\log\frac{e^{\text{sim}(h_i^{z_i},h_i^{z’_i})/\tau}}{\sum_{j=1}^N e^{\text{sim}(h_i^{z_i},h_i^{z’_j})/\tau}}<br>\end{equation}$</p>
 <p>评估时，从BERT-uncased开始训练，使用[CLS]作为句子的向量表示，在1m随机抽取的英文维基百科句子。</p>
 <p><img src="/./对比学习分享/图片和附件/image.png" alt="image\.png"></p>
-<h2 id="2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输"><a href="#2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输" class="headerlink" title="2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输"></a><a href="https://bytedance.larkoffice.com/wiki/NAzyww9JUil0iykgKtfcxB1bnLg" target="_blank" rel="noopener">2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输</a></h2><p><strong>数据增强</strong></p>
-<p>对精排模型用到的所有序列（除搜索特征外 - 因为搜索是用户的强意图，不需要去噪），进行特征维度的Mask。为了增加对比学习的难度，对同一序列特征进行50%随机的互补Mask方式。</p>
-<p><img src="/./对比学习分享/图片和附件/image%202.png" alt="image\.png"></p>
-<p><strong>特征编码</strong></p>
-<p>两层MLP，压缩成32维，L2 Norm。每一类序列特征（及样本）之间的参数共享，但不同类型序列特征之间的参数独立。</p>
-<p><strong>损失函数</strong></p>
-<p>$\begin{equation}<br>L=-\sum_{i\in N}\log\frac{\exp(s(z_i,z’_i)/\tau}{\sum){j\in B}\exp(s(z_i,z’_j)/\tau}<br>\end{equation}$</p>
-<hr>
-<p>训练时端到端</p>
-<p><img src="/./对比学习分享/图片和附件/image%2015.png" alt="image\.png"></p>
 <h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><ul>
 <li><p>为什么使用类似softmax的形式，而不是类似：$L_{\text{simple}}=-s_{i,i}+\lambda\sum_{j=1,j\neq i}^Ns_{i,j}$的形式？</p>
 <ul>
@@ -776,7 +764,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、对比学习"><span class="nav-number">1.</span> <span class="nav-text">一、对比学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-自监督学习与对比学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 自监督学习与对比学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-一般范式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 一般范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、损失函数"><span class="nav-number">2.</span> <span class="nav-text">二、损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Triplet-Loss"><span class="nav-number">2.1.</span> <span class="nav-text">Triplet Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-Pair-Loss"><span class="nav-number">2.2.</span> <span class="nav-text">N-Pair Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InfoNCE"><span class="nav-number">2.3.</span> <span class="nav-text">InfoNCE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、论文分享"><span class="nav-number">3.</span> <span class="nav-text">三、论文分享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ICML’20：SimCLR"><span class="nav-number">3.1.</span> <span class="nav-text">ICML’20：SimCLR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR’20：MoCo-amp-MoCo-V2"><span class="nav-number">3.2.</span> <span class="nav-text">CVPR’20：MoCo \&amp; MoCo-V2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EMNLP’21：SimCSE"><span class="nav-number">3.3.</span> <span class="nav-text">EMNLP’21：SimCSE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2024-11-21-中心化电商-ECPP-精排模型序列去噪与表征优化：自监督对比学习与最优传输"><span class="nav-number">4.</span> <span class="nav-text">2024-11-21 中心化电商-ECPP 精排模型序列去噪与表征优化：自监督对比学习与最优传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">5.</span> <span class="nav-text">MISC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、对比学习"><span class="nav-number">1.</span> <span class="nav-text">一、对比学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-自监督学习与对比学习"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 自监督学习与对比学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-一般范式"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 一般范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、损失函数"><span class="nav-number">2.</span> <span class="nav-text">二、损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Triplet-Loss"><span class="nav-number">2.1.</span> <span class="nav-text">Triplet Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-Pair-Loss"><span class="nav-number">2.2.</span> <span class="nav-text">N-Pair Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InfoNCE"><span class="nav-number">2.3.</span> <span class="nav-text">InfoNCE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、论文分享"><span class="nav-number">3.</span> <span class="nav-text">三、论文分享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ICML’20：SimCLR"><span class="nav-number">3.1.</span> <span class="nav-text">ICML’20：SimCLR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR’20：MoCo-amp-MoCo-V2"><span class="nav-number">3.2.</span> <span class="nav-text">CVPR’20：MoCo \&amp; MoCo-V2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EMNLP’21：SimCSE"><span class="nav-number">3.3.</span> <span class="nav-text">EMNLP’21：SimCSE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC"><span class="nav-number">4.</span> <span class="nav-text">MISC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
