@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="TL;DR主要贡献 开源  模型权重开源（R1-Zero/R1/6 distilled）；  训练细节开源；    分享并探讨了复刻OpenAI o1这类闭源推理模型的可行性，且在效果上与o1接近（在使用更小算力的前提下）；  R1性能与o1接近；利用R1蒸馏的Qwen、Llama等小模型超过o1-mini    Preliminaries为什么R1的效果突出：  站在巨人的肩膀上：现代LLM模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning">
+<meta property="og:url" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/index.html">
+<meta property="og:site_name" content="Chris Zhang">
+<meta property="og:description" content="TL;DR主要贡献 开源  模型权重开源（R1-Zero/R1/6 distilled）；  训练细节开源；    分享并探讨了复刻OpenAI o1这类闭源推理模型的可行性，且在效果上与o1接近（在使用更小算力的前提下）；  R1性能与o1接近；利用R1蒸馏的Qwen、Llama等小模型超过o1-mini    Preliminaries为什么R1的效果突出：  站在巨人的肩膀上：现代LLM模型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%207.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%206.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%202.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%205.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%201.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%208.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%203.png">
+<meta property="og:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%204.png">
+<meta property="og:updated_time" content="2025-04-01T02:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning">
+<meta name="twitter:description" content="TL;DR主要贡献 开源  模型权重开源（R1-Zero/R1/6 distilled）；  训练细节开源；    分享并探讨了复刻OpenAI o1这类闭源推理模型的可行性，且在效果上与o1接近（在使用更小算力的前提下）；  R1性能与o1接近；利用R1蒸馏的Qwen、Llama等小模型超过o1-mini    Preliminaries为什么R1的效果突出：  站在巨人的肩膀上：现代LLM模型">
+<meta name="twitter:image" content="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%207.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/">
+
+
+
+
+
+  <title>[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning | Chris Zhang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris Zhang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="/导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chengxi Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris Zhang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[导读] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表时间</span>
+              
+              <time title="创建时间" itemprop="dateCreated datePublished" datetime="2025-04-01T10:00:00+08:00">
+                2025-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+          
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR"></a>TL;DR</h2><h3 id="主要贡献"><a href="#主要贡献" class="headerlink" title="主要贡献"></a>主要贡献</h3><ol>
+<li><p>开源</p>
+<ol>
+<li><p>模型权重<a href="https://huggingface.co/collections/deepseek-ai/deepseek-r1-678e1e131c0169c0bc89728d" target="_blank" rel="noopener">开源</a>（R1-Zero/R1/6 distilled）；</p>
+</li>
+<li><p>训练细节<a href="https://arxiv.org/pdf/2501.12948" target="_blank" rel="noopener">开源</a>；</p>
+</li>
+</ol>
+</li>
+<li><p>分享并探讨了复刻<a href="https://cdn.openai.com/o1-system-card-20241205.pdf" target="_blank" rel="noopener">OpenAI o1</a>这类闭源<strong>推理</strong>模型的可行性，且在效果上与o1接近（在使用更小算力的前提下）；</p>
+<ol>
+<li>R1性能与o1接近；利用R1蒸馏的Qwen、Llama等小模型超过o1-mini</li>
+</ol>
+</li>
+</ol>
+<h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><p>为什么R1的效果突出：</p>
+<ol>
+<li><p>站在巨人的肩膀上：现代LLM模型在写作的质量跟能力上已经有了质的飞跃，能够生成高质量的数据，让蒸馏这个行为变得可操作；</p>
+</li>
+<li><p>推理任务本身的特殊性：能够基于现有工具或模型实现自动验证或标注；</p>
+</li>
+<li><p>一条正确的路和从善如流的精神：从MoE，MLA到V3。本文中的大规模RL和回头草SFT。</p>
+</li>
+</ol>
+<h3 id="Insights"><a href="#Insights" class="headerlink" title="Insights"></a>Insights</h3><ol>
+<li><p>RL中奖励模型不使用PRM/ORM，而是直接对结果进行奖励，让模型通过大规模RL自主强化推理能力</p>
+</li>
+<li><p>对于小模型（32B以下），蒸馏比大规模RL更有效，可能是因为小模型的参数限制了它从大规模RL里提取范式的能力</p>
+<ol>
+<li>虽然蒸馏策略既经济又有效，但想要突破智能的边界仍然需要更强大的基础模型，和更大规模的强化学习。</li>
+</ol>
+</li>
+</ol>
+<a id="more"></a>
+<h2 id="从V3到R1"><a href="#从V3到R1" class="headerlink" title="从V3到R1"></a>从V3到R1</h2><p>DeepSeek的试错三步走模式：</p>
+<ul>
+<li><p>第一步，通过V3，得到R1-Zero</p>
+</li>
+<li><p>第二步，通过V3 + <strong>R1-Zero的数据</strong>，得到X（DeepSeek没有给中间模型起名字）</p>
+</li>
+<li><p>第三步，通过V3 + <strong>V3的数据</strong> + <strong>X的数据</strong>，得到R1</p>
+</li>
+</ul>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%207.png" alt="image\.png"></p>
+<h3 id="从V3到R1-Zero：面向推理的RL（RORL）"><a href="#从V3到R1-Zero：面向推理的RL（RORL）" class="headerlink" title="从V3到R1-Zero：面向推理的RL（RORL）"></a>从V3到R1-Zero：面向推理的RL（RORL）</h3><p>R1-Zero的意义在于，DeepSeek尝试探索不使用任何监督数据（SFT）来增强模型推理能力的方法，证明使用纯RL来提升模型性能是可以实现的。</p>
+<p>比较有趣的是，在上帝视角下，DeepSeek探索R1的三步走过程中，R1-Zero仅仅是作为一个R1训练过程中产生数据的模型（X）的数据的模型出现，是引子的二阶导。DeepSeek带着“使用纯RL替代SFT”的思想开始探索，一步步又把自己带回强依赖SFT的模型上，并靠着模型效果出圈，恰恰证明了高质量数据在LLM的Post-training过程中是必不可少的。</p>
+<h4 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h4><p><strong>GRPO</strong></p>
+<p><a href="https://bytedance.larkoffice.com/docx/Mm4MdlIKgo3xsDxzALkcBafLnHd#share-BZtDd73hVoT0JwxtuYvcWrGznhf" target="_blank" rel="noopener">[导读]DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</a></p>
+<p><a href="https://bytedance.larkoffice.com/docx/NsTjd7b5Co6yjGxHKVRcBO2enjb#share-QdxEduPXXoDVnuxLNyMcfI6Gny0" target="_blank" rel="noopener">[导读]DeepSeek-Prover-V1.5: Harnessing Proof Assistant Feedback for Reinforcement Learning and Monte-Carlo Tree Search </a></p>
+<p><strong>奖励模型</strong></p>
+<p>基于规则的奖励系统，包含两种奖励：</p>
+<ul>
+<li><p>准确率奖励：准确率奖励模型评估响应是否正确。例如，在具有确定性结果的数学问题中，模型需要以指定的格式（box）提供最终答案，从而能够通过基于规则的验证来可靠地确认正确性。同样，对于 LeetCode 问题，可以使用编译器根据预定义的测试用例生成反馈。</p>
+</li>
+<li><p>格式奖励：要求模型将其思考过程放在 \<think\> \&lt;/think> 标签之间。</think\></p>
+</li>
+</ul>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%206.png" alt="image\.png"></p>
+<p>Note：训练过程没有使用基于NN的过程奖励模型，因为DeepSeek发现在大规模的RL训练过程中，NN奖励模型容易被“Reward hacking”；而重新训练这个reward model会增加额外的资源，让整个训练过程复杂化。</p>
+<h4 id="效果与Aha-moment"><a href="#效果与Aha-moment" class="headerlink" title="效果与Aha-moment"></a>效果与Aha-moment</h4><p>先看R1-zero在训练过程中的效果与整体推理数据集上的效果：</p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%202.png" alt="image\.png"></p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%205.png" alt="image\.png"></p>
+<p>在训练过程中，r1-zero对于训练数据的平均回答长度在不停提升，说明模型在主动尝试通过更多的思考时间来解决更复杂的推理问题 (<em>DeepSeek-R1-Zero naturally acquires the ability to solve increasingly complex reasoning tasks by leveraging <strong><strong>extended test-time computation</strong></strong>)，。 </em></p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%201.png" alt="image\.png"></p>
+<p>在这个过程中，模型出现了“Aha Moment”，即模型学会了使用更多的思考时间来重新审视自己最初提出的方法。</p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%208.png" alt="image\.png"></p>
+<h4 id="短板"><a href="#短板" class="headerlink" title="短板"></a>短板</h4><p>r1-zero的推理能力达到了SoTA水平，但是在通用方面存在短板，没有达到开源的水平。</p>
+<ol>
+<li><p>可阅读性较差；</p>
+</li>
+<li><p>语言混淆。</p>
+</li>
+</ol>
+<h3 id="从V3到X：冷启动SFT-RORL-SFT"><a href="#从V3到X：冷启动SFT-RORL-SFT" class="headerlink" title="从V3到X：冷启动SFT + RORL + SFT"></a>从V3到X：冷启动SFT + RORL + SFT</h3><p><em>原文里没有这一部分，单独拎出来是因为这样梳理会让整个探索过程更清晰 - X的作用只是为最后训练出R1提供数据。</em></p>
+<p>DeepSeek-R1-Zero在推理方面的效果几乎达到了o1的水平，但在其他方面存在短板。因为r1-zero是纯RL驱动的，所以自然带来了两个问题：</p>
+<ol>
+<li><p>在深度方面：如果使用一小部分高质量数据作为冷启动，能不能进一步提升推理方面的性能，或者加速模型的收敛？</p>
+</li>
+<li><p>在广度方面：能不能训练出一个更加用户友好的模型，除了在推理任务上有清晰的CoT，同时在其他更通用的领域也有很好的能力？</p>
+</li>
+</ol>
+<h4 id="冷启动：更稳定的起点"><a href="#冷启动：更稳定的起点" class="headerlink" title="冷启动：更稳定的起点"></a>冷启动：更稳定的起点</h4><p>冷启动阶段使用少量的高质量CoT数据对基础模型进行微调，目的是为后续的RL过程提供一个相对稳定的起点。</p>
+<p>两种收集冷启动数据的方式（论文里没有详细提到用于冷启动SFT的数据中这两者的占比）：</p>
+<ul>
+<li><p>使用一些长思维链的回答作为示例，直接提示模型生成包含反思和验证步骤的详细答案；</p>
+</li>
+<li><p>收集r1-zero的输出，通过人工在可读性和结果方面进行细化。</p>
+<ul>
+<li>因为r1-zero的局限性之一是生成的内容不适合阅读：存在语言混淆，或是缺少markdown格式来把结果对用户高亮。所以在人工精细化r1-zero输出的过程中，定义了输出格式为：|SP token|\&lt;推理过程>|SP token|\&lt;总结>。</li>
+</ul>
+</li>
+</ul>
+<p>最终获得用于冷启动的几千条数据，对V3模型进行SFT。</p>
+<h4 id="面向推理的强化学习（RORL）：强化推理能力与可读性"><a href="#面向推理的强化学习（RORL）：强化推理能力与可读性" class="headerlink" title="面向推理的强化学习（RORL）：强化推理能力与可读性"></a>面向推理的强化学习（RORL）：强化推理能力与可读性</h4><p>在冷启动SFT后的模型基础上，在代码和数学领域进行强化学习，来进一步提升模型的推理能力。这一阶段的强化学习和r1-zero基本是一致的，唯一的区别是为了缓解r1-zero存在的语言混乱的问题，在奖励模型中增加了一个语言一致性奖励，计算的方法是目标语言token在CoT中的比例。</p>
+<p>通过将推理任务的准确性和语言一致性奖励直接相加，作为综合的奖励函数，对冷启动后的语言模型进行做RL，直到推理任务上达到收敛。消融实验发现这样的奖励模式会导致模型的表现略有下降，但是更加符合人类的阅读偏好，提升了内容可读性。</p>
+<h4 id="拒绝采样"><a href="#拒绝采样" class="headerlink" title="拒绝采样"></a>拒绝采样</h4><p>通过对第二步模型的ckpt进行拒绝采样，生产推理数据。</p>
+<ul>
+<li><p>生产推理数据600k：目标是蒸馏强化学习模型的专用/通用推理能力。过滤了混合语言、长段落和代码块的思维链。</p>
+<ul>
+<li><p>对于数学、代码等领域，使用基于规则的奖励模型评估采样的结果，保留质量最好的样本；</p>
+</li>
+<li><p>对于无法用规则奖励进行验证的推理问题，使用DeepSeek-V3作为奖励模型，把标签和模型输出结果一起输入到V3，由V3生成一个得分，并基于这个得分进行拒绝采样。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>通过直接使用V3的SFT数据，或是引导V3生成带思维链的数据，生产通用数据。</p>
+<ul>
+<li><p>生产非推理数据200k：目标是让模型适配更加通用的推理任务</p>
+<ul>
+<li>复用部分DeepSeek-V3的SFT数据。对于这些非推理的任务，输入prompt要求V3在输出答案之前输出可能的CoT。对于特别简单的任务（如“Hello”）不加入CoT数据。</li>
+</ul>
+</li>
+</ul>
+<h3 id="从V3到R1：SFT-全场景RL"><a href="#从V3到R1：SFT-全场景RL" class="headerlink" title="从V3到R1：SFT + 全场景RL"></a>从V3到R1：SFT + 全场景RL</h3><p>使用收集的600k推理数据+200k通用数据对DeepSeek-V3进行2个epoch的SFT。</p>
+<p>如果是小规模的蒸馏模型（如Qwen/Llama），到这一步就结束了。而R1在这个基础上又做了一次全场景的强化学习。</p>
+<h4 id="全场景RL"><a href="#全场景RL" class="headerlink" title="全场景RL"></a>全场景RL</h4><p>使用组合的奖励信号和多样化的提示词来训练模型，使模型在保持推理能力的同时，能对齐人类偏好。</p>
+<ul>
+<li><p>对于推理数据，使用X的方法进行强化学习（与r1-zero不同的是，这部分数据已经经过奖励模型筛选，保证了推理能力的同时也对齐了人类的偏好）</p>
+</li>
+<li><p>对于通用数据，使用两个维度的模型进行偏好对齐。</p>
+<ul>
+<li><p>帮助性奖励模型只接受最终的摘要作为输入，防止对推理过程产生干扰</p>
+</li>
+<li><p>无害性奖励模型的输入会涉及整个输出（CoT+答案）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="效果评估与讨论"><a href="#效果评估与讨论" class="headerlink" title="效果评估与讨论"></a>效果评估与讨论</h2><h3 id="Baseline"><a href="#Baseline" class="headerlink" title="Baseline"></a>Baseline</h3><ul>
+<li><p>DeepSeek-V3</p>
+</li>
+<li><p>Claude-Sonnet-3.5-1022</p>
+</li>
+<li><p>GPT-4o-0513</p>
+</li>
+<li><p>OpenAI-o1-mini</p>
+</li>
+<li><p>OpenAI-o1-1217（因为在大陆调用API很困难，直接使用了官方报告中的效果）</p>
+</li>
+</ul>
+<p>对于蒸馏模型，增加了对QwQ-32B-Preview的比较。</p>
+<h3 id="评估数据集"><a href="#评估数据集" class="headerlink" title="评估数据集"></a>评估数据集</h3><ul>
+<li><p>数学推理：AIME 2024, MATH-500</p>
+</li>
+<li><p>代码：LiveCodeBench, Codeforces</p>
+</li>
+<li><p>知识问答：MMLU, GPQA Diamond, SimpleQA</p>
+</li>
+<li><p>开放式生成场景：AlpacaEval2.0, ArenaHard</p>
+</li>
+<li><p>格式：IF-Eval</p>
+</li>
+</ul>
+<p>对于蒸馏模型，比较了AIME 2024, MATH-500, LiveCodeBench, Codeforces, GPQA Diamond上的效果。</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p>对于面向教育的知识评测集（MMLU/MMLU-Pro/GPQA），R1效果明显优于V3，说明<strong>大规模强化学习能够显著提升STEM相关问题的准确性</strong>。</p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image.png" alt="image\.png"></p>
+<p>蒸馏模型的结果：</p>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%203.png" alt="image\.png"></p>
+<h3 id="其他讨论"><a href="#其他讨论" class="headerlink" title="其他讨论"></a>其他讨论</h3><ol>
+<li><p>对于小模型（32B以下），蒸馏比大规模RL更有效，可能是因为小模型的参数限制了它从大规模RL里提取范式的能力。</p>
+<ol>
+<li>虽然蒸馏策略既经济又有效，但想要突破智能的边界仍然需要更强大的基础模型，和更大规模的强化学习。</li>
+</ol>
+</li>
+</ol>
+<p><img src="/./导读-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/图片和附件/image%204.png" alt="image\.png"></p>
+<ol>
+<li><p>一些无效的尝试</p>
+<ol>
+<li><p>基于过程的奖励模型（PRM）效果不佳，推测是因为存在三方面的局限性：</p>
+<ol>
+<li><p>在推理中<strong>定义出细粒度的步骤</strong>是非常有挑战性的；</p>
+</li>
+<li><p><strong>判断当前中间步骤是否正确</strong>是另一项具有挑战性的任务，使用模型标注不一定有令人满意的结果，而人工标注又无法规模化；</p>
+</li>
+<li><p>一旦引入基于模型的PRM，不可避免的会导致reward hacking，而重新训练奖励模型又需要花费额外的训练资源，使整个训练流程变得更复杂。</p>
+</li>
+</ol>
+</li>
+<li><p><a href="https://bytedance.larkoffice.com/docx/NsTjd7b5Co6yjGxHKVRcBO2enjb#share-YtvsdZXNboQolCxwRkQcXOnPnPd" target="_blank" rel="noopener">蒙特卡洛树搜索</a>：搜索空间太大，token生成意味着指数级增加的搜索空间；价值模型直接影响了生成质量。</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><p>论文原文：<a href="https://arxiv\.org/pdf/2501\.12948" target="_blank" rel="noopener">https://arxiv\.org/pdf/2501\.12948</a></p>
+</li>
+<li><p>OpenAI O1 System Card：<a href="https://cdn\.openai\.com/o1\-system\-card\-20241205\.pdf" target="_blank" rel="noopener">https://cdn\.openai\.com/o1\-system\-card\-20241205\.pdf</a></p>
+</li>
+<li><p><a href="https://zhuanlan\.zhihu\.com/p/21175143007" target="_blank" rel="noopener">https://zhuanlan\.zhihu\.com/p/21175143007</a></p>
+</li>
+<li><p><a href="https://zhuanlan\.zhihu\.com/p/30975143045" target="_blank" rel="noopener">https://zhuanlan\.zhihu\.com/p/30975143045</a></p>
+</li>
+<li><p><a href="https://newsletter\.languagemodels\.co/p/the\-illustrated\-deepseek\-r1" target="_blank" rel="noopener">https://newsletter\.languagemodels\.co/p/the\-illustrated\-deepseek\-r1</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/对比学习分享/" rel="next" title="对比学习分享">
+                <i class="fa fa-chevron-left"></i> 对比学习分享
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/浅谈LoRA/" rel="prev" title="浅谈LoRA">
+                浅谈LoRA <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Chengxi Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Is life always this hard, or is it just when you're a kid?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/chriszhangcx" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chengxi_zhang@pku.edu.cn" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.</span> <span class="nav-text">TL;DR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要贡献"><span class="nav-number">1.1.</span> <span class="nav-text">主要贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preliminaries"><span class="nav-number">1.2.</span> <span class="nav-text">Preliminaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insights"><span class="nav-number">1.3.</span> <span class="nav-text">Insights</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从V3到R1"><span class="nav-number">2.</span> <span class="nav-text">从V3到R1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从V3到R1-Zero：面向推理的RL（RORL）"><span class="nav-number">2.1.</span> <span class="nav-text">从V3到R1-Zero：面向推理的RL（RORL）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强化学习"><span class="nav-number">2.1.1.</span> <span class="nav-text">强化学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#效果与Aha-moment"><span class="nav-number">2.1.2.</span> <span class="nav-text">效果与Aha-moment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#短板"><span class="nav-number">2.1.3.</span> <span class="nav-text">短板</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从V3到X：冷启动SFT-RORL-SFT"><span class="nav-number">2.2.</span> <span class="nav-text">从V3到X：冷启动SFT + RORL + SFT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#冷启动：更稳定的起点"><span class="nav-number">2.2.1.</span> <span class="nav-text">冷启动：更稳定的起点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#面向推理的强化学习（RORL）：强化推理能力与可读性"><span class="nav-number">2.2.2.</span> <span class="nav-text">面向推理的强化学习（RORL）：强化推理能力与可读性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拒绝采样"><span class="nav-number">2.2.3.</span> <span class="nav-text">拒绝采样</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从V3到R1：SFT-全场景RL"><span class="nav-number">2.3.</span> <span class="nav-text">从V3到R1：SFT + 全场景RL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全场景RL"><span class="nav-number">2.3.1.</span> <span class="nav-text">全场景RL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果评估与讨论"><span class="nav-number">3.</span> <span class="nav-text">效果评估与讨论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Baseline"><span class="nav-number">3.1.</span> <span class="nav-text">Baseline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评估数据集"><span class="nav-number">3.2.</span> <span class="nav-text">评估数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果"><span class="nav-number">3.3.</span> <span class="nav-text">效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他讨论"><span class="nav-number">3.4.</span> <span class="nav-text">其他讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chengxi Zhang</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/lib/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"lib/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/lib/assets/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

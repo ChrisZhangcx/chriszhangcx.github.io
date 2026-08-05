@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>/Wan-multimodal-training-and-application/</loc>
+    <lastmod>2026-03-12T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/Sounding-video-generation-a-brief-introduction/</loc>
+    <lastmod>2026-01-05T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E6%B5%85%E8%B0%88LoRA/</loc>
+    <lastmod>2025-11-18T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E5%AF%BC%E8%AF%BB-DeepSeek-R1-Incentivizing-Reasoning-Capability-in-LLMs-via-Reinforcement-Learning/</loc>
+    <lastmod>2025-04-01T02:00:00.000Z</lastmod>
+  </url>  <url>
+    <loc>/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2025-01-13T02:00:00.000Z</lastmod>
+  </url>  <url>
     <loc>/CTR%E6%A8%A1%E5%9E%8B%E4%B8%AD%E6%95%B0%E5%80%BC%E7%89%B9%E5%BE%81%E7%9A%84embedding-KDD-21-An-Embedding-Learning-Framework-for-Numerical-Features-in-CTR-Prediction/</loc>
     <lastmod>2024-05-21T12:14:06.000Z</lastmod>
   </url>  <url>
